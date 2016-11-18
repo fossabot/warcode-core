@@ -1,4 +1,4 @@
-import { ACTIONS } from './constants.js';
+import { ACTIONS } from './constants';
 
 /**
  * Start the match.

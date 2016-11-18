@@ -1,11 +1,11 @@
-import Viz from 'viz.js';
+import Viz from 'viz';
 import documentation from 'documentation';
 import fs from 'fs';
-import {STATES, PSEUDOSTATES} from '../src/constants.js';
-import StateMachine from '../src/StateMachine.js';
+import {STATES, PSEUDOSTATES} from '../src/constants';
+import StateMachine from '../src/StateMachine';
 
 (function documentActionCreators() {
-  const docs = documentation.buildSync(['./src/actionCreators.js'], {});
+  const docs = documentation.buildSync(['./src/actionCreators'], {});
 
   documentation.formats.md(docs, {}, function(err, res) {
     if (err) {

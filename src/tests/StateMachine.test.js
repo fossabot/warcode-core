@@ -1,8 +1,8 @@
-import {STATES, PSEUDOSTATES} from '../constants.js';
-import actionCreators from '../actionCreators.js';
-import StateMachine from '../StateMachine.js';
+import {STATES, PSEUDOSTATES} from '../constants';
+import actionCreators from '../actionCreators';
+import StateMachine from '../StateMachine';
 import testConfig from './config.json';
-import MatchConfig from '../MatchConfig.js';
+import MatchConfig from '../MatchConfig';
 import expect from 'expect';
 
 const transitions = StateMachine.getEdges();
@@ -105,7 +105,7 @@ test('test transitions through initial games setup moves', () => {
   expect(state.stateKey).toEqual(STATES.FORTIFYING);
   state = stateMachine.reduce(state, actionCreators.endTurn());
   expect(state.stateKey).toEqual(STATES.PLACING_NEW_ARMIES);
-  
+
   // todo - battle
   // todo - roll dice
   // todo - foritify

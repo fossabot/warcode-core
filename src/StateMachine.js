@@ -1,5 +1,5 @@
-import {ACTIONS, STATES, PSEUDOSTATES} from './constants.js';
-import nextPlayerIndex from './transitions/nextPlayerIndex.js';
+import {ACTIONS, STATES, PSEUDOSTATES} from './constants';
+import nextPlayerIndex from './transitions/nextPlayerIndex';
 import Transition from './transitions/Transition';
 import StartMatch from './transitions/StartMatch';
 import SelectFirstPlayer from './transitions/SelectFirstPlayer';

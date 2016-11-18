@@ -1,4 +1,4 @@
-import {ACTIONS} from '../constants.js';
+import {ACTIONS} from '../constants';
 import TransitionGuarded from './TransitionGuarded';
 
 /**
@@ -20,7 +20,7 @@ export default function(matchConfig, extendedState) {
   const reduce = (action) => {
     const {armies} = action;
     const {attackingTerritoryIndex, defendingTerritoryIndex} = activeBattle;
-    
+
     return {
       ...extendedState,
       territories: Object.assign([], extendedState.territories, {

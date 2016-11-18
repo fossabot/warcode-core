@@ -1,7 +1,7 @@
-import actionCreators from './actionCreators.js';
-import {ACTIONS, STATES, PSEUDOSTATES} from './constants.js';
-import MatchConfig from './MatchConfig.js';
-import StateMachine from './StateMachine.js';
+import actionCreators from './actionCreators';
+import {ACTIONS, STATES, PSEUDOSTATES} from './constants';
+import MatchConfig from './MatchConfig';
+import StateMachine from './StateMachine';
 
 const matchConfig = new MatchConfig();
 const stateMachine = new StateMachine(matchConfig);

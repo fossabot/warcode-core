@@ -1,4 +1,4 @@
-import {ACTIONS, STATES, PSEUDOSTATES} from '../../constants.js';
+import {ACTIONS, STATES, PSEUDOSTATES} from '../../constants';
 import StartMatch from '../StartMatch';
 import TransitionGuarded from '../TransitionGuarded';
 import MatchConfig from '../../MatchConfig';

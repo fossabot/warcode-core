@@ -14,7 +14,7 @@
   "homepage": "https://github.com/matthewspivey/warcode-core#readme",
   "version": "0.0.1",
   "scripts": {
-    "build": "./node_modules/babel-cli/bin/babel.js src --out-file dist/index.js",
+    "build": "./node_modules/babel-cli/bin/babel.js src --out-dir dist",
     "document": "./node_modules/babel-cli/bin/babel-node.js ./scripts/document.js",
     "test": "./node_modules/jest-cli/bin/jest.js",
     "eslint": "./node_modules/.bin/eslint --ignore-path .gitignore ."

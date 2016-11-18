@@ -1,5 +1,5 @@
-import nextPlayerIndex from './nextPlayerIndex.js';
-import Transition from './Transition.js';
+import nextPlayerIndex from './nextPlayerIndex';
+import Transition from './Transition';
 
 /**
  * At the beginning of your turn, you are awarded armies based on occupied

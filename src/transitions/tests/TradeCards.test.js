@@ -1,4 +1,4 @@
-import {ACTIONS, STATES, PSEUDOSTATES} from '../../constants.js';
+import {ACTIONS, STATES, PSEUDOSTATES} from '../../constants';
 import TradeCards from '../TradeCards';
 import TransitionGuarded from '../TransitionGuarded';
 import MatchConfig from '../../MatchConfig';
