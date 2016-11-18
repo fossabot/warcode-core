@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.reduce = exports.isActionValid = exports.actionCreators = exports.PSEUDOSTATES = exports.STATES = exports.ACTIONS = undefined;
+exports.reduce = exports.isActionValid = exports.matchConfig = exports.actionCreators = exports.PSEUDOSTATES = exports.STATES = exports.ACTIONS = undefined;
 
 var _constants = require('./constants');
 
@@ -40,10 +40,10 @@ var _actionCreators2 = _interopRequireDefault(_actionCreators);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var matchConfig = new _MatchConfig2.default();
+var stateMachine = new _StateMachine2.default(matchConfig);
+
 exports.actionCreators = _actionCreators2.default;
-
-
-var stateMachine = new _StateMachine2.default(new _MatchConfig2.default());
-
+exports.matchConfig = matchConfig;
 var isActionValid = exports.isActionValid = stateMachine.isActionValid;
 var reduce = exports.reduce = stateMachine.reduce;
