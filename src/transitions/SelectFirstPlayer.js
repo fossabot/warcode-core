@@ -1,0 +1,26 @@
+import {ACTIONS} from '../constants.js';
+import TransitionGuarded from './TransitionGuarded';
+
+/**
+ * Select player to take first move, similarly to each player rolling
+ * a die to determine the first player at the beginning the game.
+ */
+export default function(matchConfig, extendedState) {
+  const {players} = extendedState;
+
+  const guard = (action) => {
+    const {firstPlayerIndex} = action;
+    return Number.isInteger(firstPlayerIndex)
+      && firstPlayerIndex >= 0
+      && firstPlayerIndex < players.length;
+  };
+
+  const reduce = (action) => {
+    return {
+      ...extendedState,
+      currentPlayerIndex: action.firstPlayerIndex
+    };
+  };
+
+  return new TransitionGuarded(ACTIONS.SELECT_FIRST_PLAYER, guard, reduce);
+}

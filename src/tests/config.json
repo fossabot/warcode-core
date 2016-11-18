@@ -1,0 +1,27 @@
+{
+  "name": "test-config",
+  "version": "1.0.0",
+  "territories" : [
+    ["A",0,[1,2]],
+    ["B",0,[0,3]],
+    ["C",1,[0,3]],
+    ["D",1,[1,2]]
+  ],
+  "continents": [
+    ["AB", 2],
+    ["CD", 2]
+  ],
+  "cards": [
+    [3,0],
+    [2,1],
+    [1,2],
+    [0,3],
+    [3,null],
+    [3,null]
+  ],
+  "minPlayers": 2,
+  "maxPlayers": 3,
+  "cardTypeNames": ["Infantry","Cavalry","Artillery","Wild"],
+  "startingArmiesByPlayers": [0,0,4,3],
+  "cardOccupiedTerritoryReward": 2
+}
