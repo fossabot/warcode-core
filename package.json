@@ -3,23 +3,28 @@
   "description": "Library managing WarCode match state",
   "main": "./dist/index.js",
   "author": "Matt Spivey <spivey.matthew@gmail.com>",
+  "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/matthewspivey/warcode-core.git"
+    "url": "git+https://github.com/matthewspivey/warcode-wopr.git"
   },
+  "bugs": {
+    "url": "https://github.com/matthewspivey/warcode-core/issues"
+  },
+  "homepage": "https://github.com/matthewspivey/warcode-core#readme",
   "version": "0.0.1",
   "scripts": {
     "build": "./node_modules/babel-cli/bin/babel.js src --out-file dist/index.js",
     "document": "./node_modules/babel-cli/bin/babel-node.js ./scripts/document.js",
-    "test": "./node_modulels/.bin/jest",
+    "test": "./node_modules/jest-cli/bin/jest.js",
     "eslint": "./node_modules/.bin/eslint --ignore-path .gitignore ."
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
-    "babel-eslint": "^7.1.0",
+    "babel-eslint": "^7.1.1",
     "babel-jest": "^17.0.2",
-    "babel-loader": "^6.2.7",
+    "babel-loader": "^6.2.8",
     "babel-plugin-syntax-flow": "^6.18.0",
     "babel-plugin-transform-es2015-destructuring": "^6.19.0",
     "babel-plugin-transform-flow-strip-types": "^6.18.0",
@@ -32,7 +37,7 @@
     "expect": "^1.20.2",
     "jest": "^17.0.3",
     "jest-cli": "^17.0.3",
-    "viz.js": "^1.3.0",
+    "viz.js": "^1.4.0",
     "webpack": "^1.13.3"
   },
   "jest": {
