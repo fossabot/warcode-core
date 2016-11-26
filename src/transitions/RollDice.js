@@ -66,7 +66,7 @@ export default function(matchConfig: MatchConfig, extendedState: MatchState): Tr
 
 function getLoses(attackerDice, defenderDice) {
   const diceToCompare = Math.min(attackerDice.length, defenderDice.length);
-  const sortDecending = (a,b) => (a < b ? 1 : -1); // TODO - test that equalities are handled properly
+  const sortDecending = (a,b) => (a < b ? 1 : -1);
   const attackerDiceSorted = [...attackerDice].sort(sortDecending);
   const defenderDiceSorted = [...defenderDice].sort(sortDecending);
   const loses = {

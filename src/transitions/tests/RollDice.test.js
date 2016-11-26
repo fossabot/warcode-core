@@ -53,7 +53,7 @@ test('guard checks player and territory', () => {
 test('reduce updates state', () => {
   const {attackingTerritoryIndex, defendingTerritoryIndex} = matchExtendedState.activeBattle;
   const transition: TransitionGuarded = new RollDice(matchConfig, matchExtendedState);
-  const action = actionCreators.rollDice([1, 2, 3], [1, 4]);
+  const action = actionCreators.rollDice([1, 3, 4], [2, 4]);
   const n = transition.reduce(action);
 
   expect(n.activeBattle).toInclude(matchExtendedState.activeBattle);
