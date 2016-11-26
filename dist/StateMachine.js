@@ -194,8 +194,8 @@ function StateMachine(matchConfig) {
       return territories[extendedState.activeBattle.defendingTerritoryIndex].armies === 0;
     };
     var hasPlayerEarnedCard = function hasPlayerEarnedCard() {
-      return capturedTerritories > 0 && cards.some(function (c) {
-        return c.owner !== undefined;
+      return capturedTerritories > 0 && cardOwner.some(function (owner) {
+        return owner !== undefined;
       });
     };
     var hasTooManyCardsFromDefeat = function hasTooManyCardsFromDefeat() {

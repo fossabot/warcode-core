@@ -103,7 +103,7 @@ function StateMachine(matchConfig) {
       return territories[extendedState.activeBattle.defendingTerritoryIndex].armies === 0;
     };
     const hasPlayerEarnedCard = function() {
-      return capturedTerritories > 0 && cards.some(c => { return c.owner !== undefined; });
+      return capturedTerritories > 0 && cardOwner.some(owner => owner !== undefined);
     };
     const hasTooManyCardsFromDefeat = function() {
       const cardsHeld = territories.filter(c => { return c.owner === currentPlayerIndex; });

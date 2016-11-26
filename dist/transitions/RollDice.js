@@ -88,7 +88,7 @@ function getLoses(attackerDice, defenderDice) {
   var diceToCompare = Math.min(attackerDice.length, defenderDice.length);
   var sortDecending = function sortDecending(a, b) {
     return a < b ? 1 : -1;
-  }; // TODO - test that equalities are handled properly
+  };
   var attackerDiceSorted = [].concat(_toConsumableArray(attackerDice)).sort(sortDecending);
   var defenderDiceSorted = [].concat(_toConsumableArray(defenderDice)).sort(sortDecending);
   var loses = {

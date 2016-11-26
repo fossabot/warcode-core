@@ -72,7 +72,7 @@ test('reduce updates state', function () {
       defendingTerritoryIndex = _matchExtendedState$a.defendingTerritoryIndex;
 
   var transition = new _RollDice2.default(matchConfig, matchExtendedState);
-  var action = _actionCreators2.default.rollDice([1, 2, 3], [1, 4]);
+  var action = _actionCreators2.default.rollDice([1, 3, 4], [2, 4]);
   var n = transition.reduce(action);
 
   (0, _expect2.default)(n.activeBattle).toInclude(matchExtendedState.activeBattle);
