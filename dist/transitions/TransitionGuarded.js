@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -8,11 +8,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _Transition2 = require("./Transition");
-
-var _Transition3 = _interopRequireDefault(_Transition2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _Transition2 = require('./Transition');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -34,21 +30,21 @@ var TransitionGuarded = function (_Transition) {
   }
 
   _createClass(TransitionGuarded, [{
-    key: "guard",
+    key: 'guard',
 
 
     /** @returns true or false */
     value: function guard(action) {
-      return this.expectedActionType === action.type && _get(TransitionGuarded.prototype.__proto__ || Object.getPrototypeOf(TransitionGuarded.prototype), "guard", this).call(this, action);
+      return this.expectedActionType === action.type && !!_get(TransitionGuarded.prototype.__proto__ || Object.getPrototypeOf(TransitionGuarded.prototype), 'guard', this).call(this, action);
     }
   }, {
-    key: "action",
+    key: 'action',
     get: function get() {
       return this.expectedActionType;
     }
   }]);
 
   return TransitionGuarded;
-}(_Transition3.default);
+}(_Transition2.Transition);
 
 exports.default = TransitionGuarded;

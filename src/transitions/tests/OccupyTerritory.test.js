@@ -1,11 +1,11 @@
 import {ACTIONS, STATES, PSEUDOSTATES} from '../../constants';
 import OccupyTerritory from '../OccupyTerritory';
 import TransitionGuarded from '../TransitionGuarded';
-import MatchConfig from '../../MatchConfig';
+import {parseMatchConfig} from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 import expect from 'expect';
 
-const matchConfig = new MatchConfig();
+const matchConfig = parseMatchConfig();
 const matchExtendedState = {
   stateKey: STATES.OCCUPYING,
   currentPlayerIndex: 0,

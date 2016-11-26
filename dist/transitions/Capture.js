@@ -21,28 +21,30 @@ exports.default = function (matchConfig, extendedState) {
 
   var guard = function guard(action) {
     var armies = action.armies;
-    var attackingTerritoryIndex = activeBattle.attackingTerritoryIndex,
-        attackingDiceCount = activeBattle.attackingDiceCount;
 
-    return Number.isInteger(armies) && armies >= attackingDiceCount && armies < territories[attackingTerritoryIndex].armies;
+    return !!activeBattle && Number.isInteger(armies) && armies >= activeBattle.attackingDiceCount && armies < territories[activeBattle.attackingTerritoryIndex].armies;
   };
 
   var reduce = function reduce(action) {
-    var _Object$assign;
+    var _replaceElements;
 
     var armies = action.armies;
+
+    if (!activeBattle) {
+      return extendedState;
+    }
     var attackingTerritoryIndex = activeBattle.attackingTerritoryIndex,
         defendingTerritoryIndex = activeBattle.defendingTerritoryIndex;
 
 
     return _extends({}, extendedState, {
-      territories: Object.assign([], extendedState.territories, (_Object$assign = {}, _defineProperty(_Object$assign, attackingTerritoryIndex, {
+      territories: (0, _replaceElements3.default)(extendedState.territories, (_replaceElements = {}, _defineProperty(_replaceElements, attackingTerritoryIndex, {
         owner: extendedState.territories[attackingTerritoryIndex].owner,
         armies: extendedState.territories[attackingTerritoryIndex].armies - armies
-      }), _defineProperty(_Object$assign, defendingTerritoryIndex, {
+      }), _defineProperty(_replaceElements, defendingTerritoryIndex, {
         owner: currentPlayerIndex,
         armies: armies
-      }), _Object$assign)),
+      }), _replaceElements)),
       capturedTerritories: extendedState.capturedTerritories + 1,
       activeBattle: undefined
     });
@@ -56,6 +58,10 @@ var _constants = require('../constants');
 var _TransitionGuarded = require('./TransitionGuarded');
 
 var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
+
+var _replaceElements2 = require('./replaceElements');
+
+var _replaceElements3 = _interopRequireDefault(_replaceElements2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

@@ -1,5 +1,8 @@
+//@flow
+import type {MatchState} from '../MatchState';
+
 // MUST BE RUN AT END OF TURN, USING EXTENDED STATE TO BE RETURNED BY REDUCER
-export default function nextPlayerIndex({players, territories, currentPlayerIndex}) {
+export default function nextPlayerIndex({players, territories, currentPlayerIndex}: MatchState) {
   const activePlayers =  activePlayerIndicies({players, territories});
 
   const i = activePlayers.indexOf(currentPlayerIndex);

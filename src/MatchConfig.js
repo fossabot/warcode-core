@@ -1,29 +1,31 @@
+//@flow
 import traditionalConfig from '../data/traditional.json';
 
-class MatchConfig {
-  constructor({name, version, territories, continents, cards, cardTypes, cardTypeNames, minPlayers, maxPlayers, startingArmiesByPlayers, cardOccupiedTerritoryReward} = traditionalConfig) {
-    this.name = name;
-    this.verison = version;
-    this.territories = territories;
-    this.continents = continents;
-    this.cards = cards; // [type, territoryIndex]
-    this.cardTypeNames = cardTypeNames; // "cardTypeNames": ["Infantry","Cavalry","Artillery","Wild"]
-    this.minPlayers = minPlayers;
-    this.maxPlayers = maxPlayers;
-    this.startingArmiesByPlayers = startingArmiesByPlayers;
-    this.cardOccupiedTerritoryReward = cardOccupiedTerritoryReward;
-  }
-
+export type MatchConfig = {
+  name: string;
+  version: string;
+  territories: Array<[string, number, number[]]>;
+  continents: Array<[string, number]>;
+  cards: Array<[number, number]>;
+  cardTypeNames: string[];
+  minPlayers: number;
+  maxPlayers: number;
+  startingArmiesByPlayers: number[];
+  cardOccupiedTerritoryReward: number;
   /** adjacency list for undirected graph */
-  get edges() {
-    let edges = [];
-    this.territories.forEach((t, i) => {
-      t[2].forEach((j) => {
-          edges.push([i, j]);
-      });
-    });
-    return edges;
-  }
+  edges: Array<[number, number]>;
 }
 
-export default MatchConfig;
+export function parseMatchConfig(config: MatchConfig = traditionalConfig): MatchConfig {
+  // TODO: validate graph, cards, etc
+
+  config.edges = config.territories.reduce((acc, [name, continentIndex, neighborIndicies], territoryIndex) => {
+    const edges = [];
+    neighborIndicies.forEach((neighborIndex) => {
+        edges.push([territoryIndex, neighborIndex]);
+    });
+    return acc.concat(edges);
+  }, []);
+
+  return config;
+}

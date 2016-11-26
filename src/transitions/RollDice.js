@@ -1,5 +1,9 @@
+//@flow
+import type {MatchConfig} from '../MatchConfig';
+import type {MatchState} from '../MatchState';
 import {ACTIONS} from '../constants';
 import TransitionGuarded from './TransitionGuarded';
+import replaceElements from './replaceElements';
 
 /**
  * Simulate players rolling dice.
@@ -16,31 +20,35 @@ import TransitionGuarded from './TransitionGuarded';
  * territory contains a single army. When the territory contains multiple
  * armies, the defender may roll either one or two dice.
  */
-export default function(matchConfig, extendedState) {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const {territories, activeBattle} = extendedState;
 
   const guard = (action) => {
     const {attackerDice, defenderDice} = action;
-    const {attackingDiceCount, defendingTerritoryIndex} = activeBattle;
-    const maxDefenderDice = Math.min(2, territories[defendingTerritoryIndex].armies);
 
-    return Array.isArray(attackerDice)
-      && attackerDice.length === attackingDiceCount
+    return !!activeBattle
+      && Array.isArray(attackerDice)
+      && attackerDice.length === activeBattle.attackingDiceCount
       && attackerDice.every(d => { return d >= 1 && d <= 6; })
       && Array.isArray(defenderDice)
       && defenderDice.length >= 1
-      && defenderDice.length <= maxDefenderDice
+      && defenderDice.length <= Math.min(2, territories[activeBattle.defendingTerritoryIndex].armies)
       && defenderDice.every(d => { return d >= 1 && d <= 6; });
   };
 
   const reduce = (action) => {
     const {attackerDice, defenderDice} = action;
-    const {attackingTerritoryIndex, defendingTerritoryIndex} = activeBattle;
+    if (!activeBattle) {
+      return extendedState;
+    }
+
+    const attackingTerritoryIndex = activeBattle.attackingTerritoryIndex;
+    const defendingTerritoryIndex = activeBattle.defendingTerritoryIndex;
     const loses = getLoses(attackerDice, defenderDice);
 
     return {
       ...extendedState,
-      territories: Object.assign([], extendedState.territories, {
+      territories: replaceElements(extendedState.territories, {
         [attackingTerritoryIndex]: {
           owner: extendedState.territories[attackingTerritoryIndex].owner,
           armies: extendedState.territories[attackingTerritoryIndex].armies - loses.attacker
@@ -58,7 +66,7 @@ export default function(matchConfig, extendedState) {
 
 function getLoses(attackerDice, defenderDice) {
   const diceToCompare = Math.min(attackerDice.length, defenderDice.length);
-  const sortDecending = (a,b) => { return a < b; };
+  const sortDecending = (a,b) => (a < b ? 1 : -1); // TODO - test that equalities are handled properly
   const attackerDiceSorted = [...attackerDice].sort(sortDecending);
   const defenderDiceSorted = [...defenderDice].sort(sortDecending);
   const loses = {

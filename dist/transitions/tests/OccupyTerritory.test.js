@@ -12,8 +12,6 @@ var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
 
 var _MatchConfig = require('../../MatchConfig');
 
-var _MatchConfig2 = _interopRequireDefault(_MatchConfig);
-
 var _actionCreators = require('../../actionCreators');
 
 var _actionCreators2 = _interopRequireDefault(_actionCreators);
@@ -24,7 +22,7 @@ var _expect2 = _interopRequireDefault(_expect);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var matchConfig = new _MatchConfig2.default();
+var matchConfig = (0, _MatchConfig.parseMatchConfig)();
 var matchExtendedState = {
   stateKey: _constants.STATES.OCCUPYING,
   currentPlayerIndex: 0,

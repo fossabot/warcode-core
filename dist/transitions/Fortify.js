@@ -43,7 +43,7 @@ exports.default = function (matchConfig, extendedState) {
   };
 
   var reduce = function reduce(action) {
-    var _Object$assign;
+    var _replaceElements;
 
     var fromTerritoryIndex = action.fromTerritoryIndex,
         toTerritoryIndex = action.toTerritoryIndex,
@@ -51,13 +51,13 @@ exports.default = function (matchConfig, extendedState) {
 
 
     return _extends({}, extendedState, {
-      territories: Object.assign([], extendedState.territories, (_Object$assign = {}, _defineProperty(_Object$assign, fromTerritoryIndex, {
+      territories: (0, _replaceElements3.default)(extendedState.territories, (_replaceElements = {}, _defineProperty(_replaceElements, fromTerritoryIndex, {
         owner: extendedState.territories[fromTerritoryIndex].owner,
         armies: extendedState.territories[fromTerritoryIndex].armies - armies
-      }), _defineProperty(_Object$assign, toTerritoryIndex, {
+      }), _defineProperty(_replaceElements, toTerritoryIndex, {
         owner: extendedState.territories[toTerritoryIndex].owner,
         armies: extendedState.territories[toTerritoryIndex].armies + armies
-      }), _Object$assign))
+      }), _replaceElements))
     });
   };
 
@@ -69,6 +69,10 @@ var _constants = require('../constants');
 var _TransitionGuarded = require('./TransitionGuarded');
 
 var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
+
+var _replaceElements2 = require('./replaceElements');
+
+var _replaceElements3 = _interopRequireDefault(_replaceElements2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

@@ -6,31 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-/**
- * Trade three cards for armies. The award increases
- * after each trade made by any player during the match.
- *
- * | Trade | Award |                 |
- * |-------|-------|-----------------|
- * | 1     | 4     | (trade + 1) * 2 |
- * | 2     | 6     | (trade + 1) * 2 |
- * | 3     | 8     | (trade + 1) * 2 |
- * | 4     | 10    | (trade + 1) * 2 |
- * | 5     | 12    | (trade + 1) * 2 |
- * | 6     | 15    | (trade - 3) * 5 |
- * | 7     | 20    | (trade - 3) * 5 |
- * | 8     | 25    | (trade - 3) * 5 |
- * | 9     | 30    | (trade - 3) * 5 |
- *
- * An additional two armies may be awarded when one of the traded cards matches a territory the player occupies. These two armies are immediately placed on the territory itself. The award only applies to a single card.
- *
- * The three cards must meet one of the following
- * * types match: cards[i].type === cards[j].type AND cards[j].type == cards[k].type
- * * types are unique: cards[i].type != cards[j].type AND cards[i].type != cards[k].type AND cards[j].type != cards[k].type
- * * one is wild: cards[i].type == WILD OR cards[j].type == WILD OR cards[k].type == WILD
- */
-
-
 exports.default = function (matchConfig, extendedState) {
   var cards = matchConfig.cards,
       cardOccupiedTerritoryReward = matchConfig.cardOccupiedTerritoryReward,
@@ -68,7 +43,7 @@ exports.default = function (matchConfig, extendedState) {
   };
 
   var reduce = function reduce(action) {
-    var _Object$assign2;
+    var _replaceElements2;
 
     var i = action.i,
         j = action.j,
@@ -76,20 +51,30 @@ exports.default = function (matchConfig, extendedState) {
 
     var count = tradeCount + 1;
     var tradeAward = count <= 5 ? (count + 1) * 2 : (count - 3) * 5;
-    var firstTerritoryAward = 0;
-    if (cards[i].territoryID && territories[cards[i].territoryID].owner === currentPlayerIndex) {
-      firstTerritoryAward = extendedState.territories[cards[i].territoryID].armies + cardOccupiedTerritoryReward;
-    }
+
+    var territoryUpdate = function () {
+      if (cards[i][1] === undefined || cards[i][1] < 0) {
+        return {};
+      }
+
+      var firstCardTerritoryIndex = cards[i][1];
+      if (territories[firstCardTerritoryIndex].owner !== currentPlayerIndex) {
+        return {};
+      }
+
+      return _defineProperty({}, firstCardTerritoryIndex, {
+        owner: extendedState.territories[firstCardTerritoryIndex].owner,
+        armies: extendedState.territories[firstCardTerritoryIndex].armies + cardOccupiedTerritoryReward
+      });
+    }();
 
     return _extends({}, extendedState, {
       tradeCount: count,
-      players: Object.assign([], extendedState.players, _defineProperty({}, currentPlayerIndex, {
+      players: (0, _replaceElements4.default)(extendedState.players, _defineProperty({}, currentPlayerIndex, {
         undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies + tradeAward
       })),
-      cardOwner: Object.assign([], extendedState.cardOwner, (_Object$assign2 = {}, _defineProperty(_Object$assign2, i, null), _defineProperty(_Object$assign2, j, null), _defineProperty(_Object$assign2, k, null), _Object$assign2)),
-      territories: Object.assign([], extendedState.territories, _defineProperty({}, firstTerritory, {
-        armies: extendedState.territories[firstTerritory].armies + firstTerritoryAward
-      }))
+      cardOwner: (0, _replaceElements4.default)(extendedState.cardOwner, (_replaceElements2 = {}, _defineProperty(_replaceElements2, i, null), _defineProperty(_replaceElements2, j, null), _defineProperty(_replaceElements2, k, null), _replaceElements2)),
+      territories: (0, _replaceElements4.default)(extendedState.territories, territoryUpdate)
     });
   };
 
@@ -102,6 +87,34 @@ var _TransitionGuarded = require('./TransitionGuarded');
 
 var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
 
+var _replaceElements3 = require('./replaceElements');
+
+var _replaceElements4 = _interopRequireDefault(_replaceElements3);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/**
+ * Trade three cards for armies. The award increases
+ * after each trade made by any player during the match.
+ *
+ * | Trade | Award |                 |
+ * |-------|-------|-----------------|
+ * | 1     | 4     | (trade + 1) * 2 |
+ * | 2     | 6     | (trade + 1) * 2 |
+ * | 3     | 8     | (trade + 1) * 2 |
+ * | 4     | 10    | (trade + 1) * 2 |
+ * | 5     | 12    | (trade + 1) * 2 |
+ * | 6     | 15    | (trade - 3) * 5 |
+ * | 7     | 20    | (trade - 3) * 5 |
+ * | 8     | 25    | (trade - 3) * 5 |
+ * | 9     | 30    | (trade - 3) * 5 |
+ *
+ * An additional two armies may be awarded when one of the traded cards matches a territory the player occupies. These two armies are immediately placed on the territory itself. The award only applies to a single card.
+ *
+ * The three cards must meet one of the following
+ * * types match: cards[i].type === cards[j].type AND cards[j].type == cards[k].type
+ * * types are unique: cards[i].type != cards[j].type AND cards[i].type != cards[k].type AND cards[j].type != cards[k].type
+ * * one is wild: cards[i].type == WILD OR cards[j].type == WILD OR cards[k].type == WILD
+ */

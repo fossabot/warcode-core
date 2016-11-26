@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -18,7 +18,7 @@ var Transition = function () {
   }
 
   _createClass(Transition, [{
-    key: "guard",
+    key: 'guard',
 
 
     /** @returns true, false, or undefined when there is no guard */
@@ -26,14 +26,14 @@ var Transition = function () {
       return this._guard(action);
     }
   }, {
-    key: "reduce",
+    key: 'reduce',
     value: function reduce(action) {
       if (typeof this._reduce === 'function') {
         return this._reduce(action);
       }
     }
   }, {
-    key: "action",
+    key: 'action',
     get: function get() {
       return undefined;
     }
@@ -42,4 +42,4 @@ var Transition = function () {
   return Transition;
 }();
 
-exports.default = Transition;
+exports.Transition = Transition;

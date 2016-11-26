@@ -31,36 +31,37 @@ exports.default = function (matchConfig, extendedState) {
   var guard = function guard(action) {
     var attackerDice = action.attackerDice,
         defenderDice = action.defenderDice;
-    var attackingDiceCount = activeBattle.attackingDiceCount,
-        defendingTerritoryIndex = activeBattle.defendingTerritoryIndex;
 
-    var maxDefenderDice = Math.min(2, territories[defendingTerritoryIndex].armies);
 
-    return Array.isArray(attackerDice) && attackerDice.length === attackingDiceCount && attackerDice.every(function (d) {
+    return !!activeBattle && Array.isArray(attackerDice) && attackerDice.length === activeBattle.attackingDiceCount && attackerDice.every(function (d) {
       return d >= 1 && d <= 6;
-    }) && Array.isArray(defenderDice) && defenderDice.length >= 1 && defenderDice.length <= maxDefenderDice && defenderDice.every(function (d) {
+    }) && Array.isArray(defenderDice) && defenderDice.length >= 1 && defenderDice.length <= Math.min(2, territories[activeBattle.defendingTerritoryIndex].armies) && defenderDice.every(function (d) {
       return d >= 1 && d <= 6;
     });
   };
 
   var reduce = function reduce(action) {
-    var _Object$assign;
+    var _replaceElements;
 
     var attackerDice = action.attackerDice,
         defenderDice = action.defenderDice;
-    var attackingTerritoryIndex = activeBattle.attackingTerritoryIndex,
-        defendingTerritoryIndex = activeBattle.defendingTerritoryIndex;
 
+    if (!activeBattle) {
+      return extendedState;
+    }
+
+    var attackingTerritoryIndex = activeBattle.attackingTerritoryIndex;
+    var defendingTerritoryIndex = activeBattle.defendingTerritoryIndex;
     var loses = getLoses(attackerDice, defenderDice);
 
     return _extends({}, extendedState, {
-      territories: Object.assign([], extendedState.territories, (_Object$assign = {}, _defineProperty(_Object$assign, attackingTerritoryIndex, {
+      territories: (0, _replaceElements3.default)(extendedState.territories, (_replaceElements = {}, _defineProperty(_replaceElements, attackingTerritoryIndex, {
         owner: extendedState.territories[attackingTerritoryIndex].owner,
         armies: extendedState.territories[attackingTerritoryIndex].armies - loses.attacker
-      }), _defineProperty(_Object$assign, defendingTerritoryIndex, {
+      }), _defineProperty(_replaceElements, defendingTerritoryIndex, {
         owner: extendedState.territories[defendingTerritoryIndex].owner,
         armies: extendedState.territories[defendingTerritoryIndex].armies - loses.defender
-      }), _Object$assign))
+      }), _replaceElements))
     });
   };
 
@@ -73,6 +74,10 @@ var _TransitionGuarded = require('./TransitionGuarded');
 
 var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
 
+var _replaceElements2 = require('./replaceElements');
+
+var _replaceElements3 = _interopRequireDefault(_replaceElements2);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -82,8 +87,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 function getLoses(attackerDice, defenderDice) {
   var diceToCompare = Math.min(attackerDice.length, defenderDice.length);
   var sortDecending = function sortDecending(a, b) {
-    return a < b;
-  };
+    return a < b ? 1 : -1;
+  }; // TODO - test that equalities are handled properly
   var attackerDiceSorted = [].concat(_toConsumableArray(attackerDice)).sort(sortDecending);
   var defenderDiceSorted = [].concat(_toConsumableArray(defenderDice)).sort(sortDecending);
   var loses = {

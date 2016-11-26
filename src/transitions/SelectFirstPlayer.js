@@ -1,3 +1,6 @@
+//@flow
+import type {MatchConfig} from '../MatchConfig';
+import type {MatchState} from '../MatchState';
 import {ACTIONS} from '../constants';
 import TransitionGuarded from './TransitionGuarded';
 
@@ -5,7 +8,7 @@ import TransitionGuarded from './TransitionGuarded';
  * Select player to take first move, similarly to each player rolling
  * a die to determine the first player at the beginning the game.
  */
-export default function(matchConfig, extendedState) {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const {players} = extendedState;
 
   const guard = (action) => {

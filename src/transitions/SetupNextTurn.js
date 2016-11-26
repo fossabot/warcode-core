@@ -1,5 +1,9 @@
+//@flow
+import type {MatchConfig} from '../MatchConfig';
+import type {MatchState} from '../MatchState';
 import nextPlayerIndex from './nextPlayerIndex';
-import Transition from './Transition';
+import {Transition} from './Transition';
+import replaceElements from './replaceElements';
 
 /**
  * At the beginning of your turn, you are awarded armies based on occupied
@@ -22,7 +26,7 @@ import Transition from './Transition';
  * | South America  | 2     |
  *
  */
-export default function(matchConfig, extendedState): Transition {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): Transition {
   const guard = () => {return undefined;};
 
   const reduce = (action) => {
@@ -32,7 +36,7 @@ export default function(matchConfig, extendedState): Transition {
     return {
       ...extendedState,
       currentPlayerIndex: nextPlayer,
-      players: Object.assign([], extendedState.players, { [nextPlayer]: {
+      players: replaceElements(extendedState.players, { [nextPlayer]: {
         undeployedArmies: countUndeployedArmies(matchConfig, extendedState, nextPlayer)
       }}),
       capturedTerritories: 0
@@ -60,7 +64,7 @@ function calcContinentAward(extendedState, matchConfig, playerIndex) {
   const isContinentOwned = Array(matchConfig.continents.length).fill(true);
 
   let continentIndex;
-  for (let i = 0; i < matchConfig.territories; i++) {
+  for (let i = 0; i < matchConfig.territories.length; i++) {
     if (extendedState.territories[i].owner !== playerIndex) {
       continentIndex = matchConfig.territories[i][1];
       isContinentOwned[continentIndex] = false;
@@ -68,7 +72,7 @@ function calcContinentAward(extendedState, matchConfig, playerIndex) {
   }
 
   let reward = 0;
-  for (let i = 0; i < matchConfig.continents; i++) {
+  for (let i = 0; i < matchConfig.continents.length; i++) {
     if (isContinentOwned[i]) {
       reward += matchConfig.continents[i][1];
     }

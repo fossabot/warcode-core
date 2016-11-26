@@ -1,6 +1,6 @@
 import {ACTIONS, STATES, PSEUDOSTATES} from './constants';
 import nextPlayerIndex from './transitions/nextPlayerIndex';
-import Transition from './transitions/Transition';
+import {Transition} from './transitions/Transition';
 import StartMatch from './transitions/StartMatch';
 import SelectFirstPlayer from './transitions/SelectFirstPlayer';
 import OccupyTerritory from './transitions/OccupyTerritory';
@@ -200,27 +200,3 @@ StateMachine.getEdges = function() {
 };
 
 export default StateMachine;
-
-/**
- * @typedef {Object} MatchConfig
- * @property {number} minPlayers - Maximum number of players
- * @property {number} maxPlayers - Minimum number of players
- *
- * @typedef {MatchState} MatchConfig
- * @property {number} currentPlayerIndex - index of current player; undefined until selected
- * @property {Territory[]} territories
- * @property {Card[]} cards
- * @property {Player[]} players
- * @property {number} tradeCount - number of times any player has traded a card during this match
- * @property {number} capturedTerritories - number of territories the current player has conquered this turn
- *
- * @typedef {Object} Territory
- * @property {number} owner - index of player occupying this territory; undfined when unoccupied
- * @property {number} armies - count of armies occupying territory
- *
- * @typedef {Object} Card
- * @property {number} owner - index of player holding this card
- *
- * @typedef {Object} Player
- * @property {number} undeployedArmies - number of armies the player has yet to deploy
- */

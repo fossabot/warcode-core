@@ -1,9 +1,11 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = nextPlayerIndex;
+
+
 // MUST BE RUN AT END OF TURN, USING EXTENDED STATE TO BE RETURNED BY REDUCER
 function nextPlayerIndex(_ref) {
   var players = _ref.players,
@@ -19,6 +21,7 @@ function nextPlayerIndex(_ref) {
 
   return activePlayers[0];
 }
+
 
 function activePlayerIndicies(_ref2) {
   var players = _ref2.players,

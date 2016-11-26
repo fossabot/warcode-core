@@ -1,3 +1,6 @@
+//@flow
+import type {MatchConfig} from '../MatchConfig';
+import type {MatchState} from '../MatchState';
 import {ACTIONS} from '../constants';
 import TransitionGuarded from './TransitionGuarded';
 
@@ -26,7 +29,7 @@ import TransitionGuarded from './TransitionGuarded';
  * // newMatchState === { stateID: STATES.SELECTING_FIRST_PLAYER, ... }
  *
  */
-export default function(matchConfig, extendedState)  {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const {minPlayers, maxPlayers, territories, cards, startingArmiesByPlayers} = matchConfig;
 
   const guard = (action) => {
@@ -47,9 +50,10 @@ export default function(matchConfig, extendedState)  {
       players: Array(playerCount).fill({
         undeployedArmies: startingArmiesByPlayers[playerCount]
       }),
-      currentPlayerIndex: undefined,
+      currentPlayerIndex: -1,
       tradeCount: 0,
-      capturedTerritories: 0
+      capturedTerritories: 0,
+      activeBattle: undefined
     };
   };
 

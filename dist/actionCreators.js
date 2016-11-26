@@ -9,8 +9,11 @@ var _constants = require('./constants');
 /**
  * Start the match.
  *
- * @param playerCount {number} - Number of players. The match settings determine the minimum and maximum number of players.
- * @return {{ type: string; playerCount; }}
+ * @param playerCount - Number of players. The match settings determine the minimum and maximum number of players.
+ * @example
+ * let state = stateMachine.reduce();
+ * let action = actionCreators.startMatch(3);
+ * state = stateMachine.reduce(state, action);
  */
 function startMatch(playerCount) {
   return {
@@ -23,9 +26,15 @@ function startMatch(playerCount) {
  * Select player to take first move, similarly to each player rolling a die
  * to begin the game.
  *
- * @param firstPlayerIndex {number} - Index of the first player.
- * @return {{ type: string; firstPlayerIndex; }}
+ * @param firstPlayerIndex - Index of the first player.
+ * @example
+ * let state = stateMachine.reduce();
+ * let action = actionCreators.startMatch(3);
+ * state = stateMachine.reduce(state, action);
+ * action = actionCreators.selectFirstPlayer(0);
+ * state = stateMachine.reduce(state, action);
  */
+
 function selectFirstPlayer(firstPlayerIndex) {
   return {
     type: _constants.ACTIONS.SELECT_FIRST_PLAYER,
@@ -36,7 +45,7 @@ function selectFirstPlayer(firstPlayerIndex) {
 /**
  * Select territory to occupy.
  *
- * @param territoryIndex {number} - Index of territory to occupy. It must be unoccupied.
+ * @param territoryIndex - Index of territory to occupy. It must be unoccupied.
  * @return {{ type: string; territoryIndex; }}
  */
 function occupyTerritory(territoryIndex) {
@@ -49,7 +58,7 @@ function occupyTerritory(territoryIndex) {
 /**
  * Select a territory you own to place an additional army.
  *
- * @param territoryIndex {number} - Index of territory to place an additional army. You must occupy it.
+ * @param territoryIndex - Index of territory to place an additional army. You must occupy it.
  * @return {{ type: string; territoryIndex; } }
  */
 function placeAdditionalArmy(territoryIndex) {
@@ -62,9 +71,9 @@ function placeAdditionalArmy(territoryIndex) {
 /**
  * Select three cards to trade for armies.
  *
- * @param i {number}  - Index of first card to trade. This card will receive a territory bonus.
- * @param j {number}  - Index of card to trade
- * @param k {number}  - Index of card to trade
+ * @param i - Index of first card to trade. This card will receive a territory bonus.
+ * @param j - Index of card to trade
+ * @param k - Index of card to trade
  */
 function tradeCards(i, j, k) {
   return {
@@ -87,8 +96,8 @@ function endTrade() {
 
 /**
  * Place some undeployed armies on an occupied territory to start the turn
- * @param territoryIndex {number}  - index of territory to place new armies
- * @param armies {number}  - number of armies to place
+ * @param territoryIndex - index of territory to place new armies
+ * @param armies - number of armies to place
  */
 function placeNewArmies(territoryIndex, armies) {
   return {
@@ -100,9 +109,9 @@ function placeNewArmies(territoryIndex, armies) {
 
 /**
  * Select a territory to attack, neighboring defending territory, and dice to roll
- * @param attackingTerritoryIndex {number}  - index of attacking territory
- * @param defendingTerritoryIndex {number}  - index of defending territory
- * @param attackingDiceCount {number} - number of dice to be rolled by attacker
+ * @param attackingTerritoryIndex - index of attacking territory
+ * @param defendingTerritoryIndex - index of defending territory
+ * @param attackingDiceCount - number of dice to be rolled by attacker
  */
 function battle(attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount) {
   return {
@@ -115,8 +124,8 @@ function battle(attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceC
 
 /**
  * Simulate attacker and defender rolling dice.
- * @param attackerDice {Array.number} - dice rolled by attacker
- * @param defenderDice {Array.number} - dice rolled by defender
+ * @param attackerDice - dice rolled by attacker
+ * @param defenderDice - dice rolled by defender
  */
 function rollDice(attackerDice, defenderDice) {
   return {
@@ -170,7 +179,7 @@ function endTurn() {
 /**
  * Select "random" card for player to draw from the deck.
  *
- * @param cardIndex {number} - Index of the card to assign. Card owner must be currently undefined.
+ * @param cardIndex - Index of the card to assign. Card owner must be currently undefined.
  */
 function drawRandomCard(cardIndex) {
   return {

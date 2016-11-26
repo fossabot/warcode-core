@@ -5,14 +5,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports.default = function (matchConfig, extendedState) {
-  var cards = extendedState.cards,
+  var cardOwner = extendedState.cardOwner,
       currentPlayerIndex = extendedState.currentPlayerIndex;
 
 
   var guard = function guard() {
-    var cardsHeldByPlayer = cards.filter(function (c) {
-      return c.owner === currentPlayerIndex;
-    }).size();
+    var cardsHeldByPlayer = cardOwner.filter(function (c) {
+      return c === currentPlayerIndex;
+    }).length;
     return cardsHeldByPlayer < 5;
   };
 

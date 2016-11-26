@@ -12,8 +12,6 @@ var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
 
 var _MatchConfig = require('../../MatchConfig');
 
-var _MatchConfig2 = _interopRequireDefault(_MatchConfig);
-
 var _actionCreators = require('../../actionCreators');
 
 var _actionCreators2 = _interopRequireDefault(_actionCreators);
@@ -24,7 +22,7 @@ var _expect2 = _interopRequireDefault(_expect);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var matchConfig = new _MatchConfig2.default();
+var matchConfig = (0, _MatchConfig.parseMatchConfig)();
 var matchExtendedState = {
   stateKey: _constants.STATES.INITIALIZING
 };
@@ -59,7 +57,7 @@ test('reduce creates valid initial state', function () {
   (0, _expect2.default)(n.players.length).toBe(playerCount);
   (0, _expect2.default)(n.players[0].undeployedArmies).toBe(matchConfig.startingArmiesByPlayers[playerCount]);
 
-  (0, _expect2.default)(n.currentPlayerIndex).toNotExist();
+  (0, _expect2.default)(n.currentPlayerIndex).toBe(-1);
   (0, _expect2.default)(n.tradeCount).toBe(0);
   (0, _expect2.default)(n.capturedTerritories).toBe(0);
 });

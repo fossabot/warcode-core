@@ -38,11 +38,11 @@ exports.default = function (matchConfig, extendedState) {
 
 
     return _extends({}, extendedState, {
-      territories: Object.assign([], extendedState.territories, _defineProperty({}, territoryIndex, {
+      territories: (0, _replaceElements4.default)(extendedState.territories, _defineProperty({}, territoryIndex, {
         owner: currentPlayerIndex,
         armies: 1
       })),
-      players: Object.assign([], extendedState.players, _defineProperty({}, currentPlayerIndex, {
+      players: (0, _replaceElements4.default)(extendedState.players, _defineProperty({}, currentPlayerIndex, {
         undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies - 1
       }))
     });
@@ -56,6 +56,10 @@ var _constants = require('../constants');
 var _TransitionGuarded = require('./TransitionGuarded');
 
 var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
+
+var _replaceElements3 = require('./replaceElements');
+
+var _replaceElements4 = _interopRequireDefault(_replaceElements3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

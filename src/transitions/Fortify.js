@@ -1,5 +1,9 @@
+//@flow
+import type {MatchConfig} from '../MatchConfig';
+import type {MatchState} from '../MatchState';
 import {ACTIONS} from '../constants';
 import TransitionGuarded from './TransitionGuarded';
+import replaceElements from './replaceElements';
 
 /**
  * During fortification, you may move armies between two of your adjacent
@@ -13,7 +17,7 @@ import TransitionGuarded from './TransitionGuarded';
  *
  *  You may end your turn, skipping fortification.
  */
-export default function(matchConfig, extendedState) {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const {edges} = matchConfig;
   const {territories, currentPlayerIndex} = extendedState;
 
@@ -35,10 +39,10 @@ export default function(matchConfig, extendedState) {
 
   const reduce = (action) => {
     const {fromTerritoryIndex, toTerritoryIndex, armies} = action;
-    
+
     return {
       ...extendedState,
-      territories: Object.assign([], extendedState.territories, {
+      territories: replaceElements(extendedState.territories, {
         [fromTerritoryIndex]: {
           owner: extendedState.territories[fromTerritoryIndex].owner,
           armies: extendedState.territories[fromTerritoryIndex].armies - armies

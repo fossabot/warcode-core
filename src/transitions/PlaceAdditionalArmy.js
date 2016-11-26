@@ -1,5 +1,9 @@
+//@flow
+import type {MatchConfig} from '../MatchConfig';
+import type {MatchState} from '../MatchState';
 import {ACTIONS} from '../constants';
 import TransitionGuarded from './TransitionGuarded';
+import replaceElements from './replaceElements';
 
 /**
  * After players claim all territories, players take turns placing one
@@ -10,7 +14,7 @@ import TransitionGuarded from './TransitionGuarded';
  * * The territory armies are incremented
  *
  */
-export default function(matchConfig, extendedState) {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const {territories, currentPlayerIndex} = extendedState;
 
   const guard = (action) => {
@@ -27,11 +31,11 @@ export default function(matchConfig, extendedState) {
 
     return {
       ...extendedState,
-      territories: Object.assign([], extendedState.territories, { [territoryIndex]: {
+      territories: replaceElements(extendedState.territories, { [territoryIndex]: {
         owner: currentPlayerIndex,
         armies: extendedState.territories[territoryIndex].armies + 1
       }}),
-      players: Object.assign([], extendedState.players, { [currentPlayerIndex]: {
+      players: replaceElements(extendedState.players, { [currentPlayerIndex]: {
         undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies - 1
       }})
     };

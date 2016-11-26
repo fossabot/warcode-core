@@ -1,11 +1,11 @@
 import {ACTIONS, STATES, PSEUDOSTATES} from '../../constants';
 import PlaceNewArmies from '../PlaceNewArmies';
 import TransitionGuarded from '../TransitionGuarded';
-import MatchConfig from '../../MatchConfig';
+import {parseMatchConfig} from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 import expect from 'expect';
 
-const matchConfig = new MatchConfig();
+const matchConfig = parseMatchConfig();
 const matchExtendedState = {
   stateKey: STATES.PLACING_NEW_ARMIES,
   currentPlayerIndex: 0,

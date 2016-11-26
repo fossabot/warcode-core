@@ -1,3 +1,6 @@
+//@flow
+import type {MatchConfig} from '../MatchConfig';
+import type {MatchState} from '../MatchState';
 import {ACTIONS} from '../constants';
 import TransitionGuarded from './TransitionGuarded';
 
@@ -14,7 +17,7 @@ import TransitionGuarded from './TransitionGuarded';
  * For example, if you are attacking from a territory with three armies, you
  * may only roll two dice.
  */
-export default function(matchConfig, extendedState) {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const {edges} = matchConfig;
   const {territories, currentPlayerIndex} = extendedState;
 

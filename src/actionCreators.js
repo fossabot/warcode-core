@@ -1,12 +1,16 @@
+// @flow
 import { ACTIONS } from './constants';
 
 /**
  * Start the match.
  *
- * @param playerCount {number} - Number of players. The match settings determine the minimum and maximum number of players.
- * @return {{ type: string; playerCount; }}
+ * @param playerCount - Number of players. The match settings determine the minimum and maximum number of players.
+ * @example
+ * let state = stateMachine.reduce();
+ * let action = actionCreators.startMatch(3);
+ * state = stateMachine.reduce(state, action);
  */
-function startMatch(playerCount) {
+function startMatch(playerCount: number): {type: string, playerCount: number} {
   return {
     type: ACTIONS.START_MATCH,
     playerCount
@@ -17,10 +21,15 @@ function startMatch(playerCount) {
  * Select player to take first move, similarly to each player rolling a die
  * to begin the game.
  *
- * @param firstPlayerIndex {number} - Index of the first player.
- * @return {{ type: string; firstPlayerIndex; }}
+ * @param firstPlayerIndex - Index of the first player.
+ * @example
+ * let state = stateMachine.reduce();
+ * let action = actionCreators.startMatch(3);
+ * state = stateMachine.reduce(state, action);
+ * action = actionCreators.selectFirstPlayer(0);
+ * state = stateMachine.reduce(state, action);
  */
-function selectFirstPlayer(firstPlayerIndex) {
+function selectFirstPlayer(firstPlayerIndex: number): {type: string, firstPlayerIndex: number} {
   return {
     type: ACTIONS.SELECT_FIRST_PLAYER,
     firstPlayerIndex
@@ -30,10 +39,10 @@ function selectFirstPlayer(firstPlayerIndex) {
 /**
  * Select territory to occupy.
  *
- * @param territoryIndex {number} - Index of territory to occupy. It must be unoccupied.
+ * @param territoryIndex - Index of territory to occupy. It must be unoccupied.
  * @return {{ type: string; territoryIndex; }}
  */
-function occupyTerritory(territoryIndex) {
+function occupyTerritory(territoryIndex: number): {type: string, territoryIndex: number} {
   return {
     type: ACTIONS.OCCUPY_TERRITORY,
     territoryIndex
@@ -43,10 +52,10 @@ function occupyTerritory(territoryIndex) {
 /**
  * Select a territory you own to place an additional army.
  *
- * @param territoryIndex {number} - Index of territory to place an additional army. You must occupy it.
+ * @param territoryIndex - Index of territory to place an additional army. You must occupy it.
  * @return {{ type: string; territoryIndex; } }
  */
-function placeAdditionalArmy(territoryIndex) {
+function placeAdditionalArmy(territoryIndex: number): {type: string, territoryIndex: number} {
   return {
     type: ACTIONS.PLACE_ADDITIONAL_ARMY,
     territoryIndex
@@ -56,11 +65,11 @@ function placeAdditionalArmy(territoryIndex) {
 /**
  * Select three cards to trade for armies.
  *
- * @param i {number}  - Index of first card to trade. This card will receive a territory bonus.
- * @param j {number}  - Index of card to trade
- * @param k {number}  - Index of card to trade
+ * @param i - Index of first card to trade. This card will receive a territory bonus.
+ * @param j - Index of card to trade
+ * @param k - Index of card to trade
  */
-function tradeCards(i, j, k) {
+function tradeCards(i: number, j: number, k: number): {type: string, i: number, j: number, k: number} {
    return {
      type: ACTIONS.TRADE_CARDS,
      i,
@@ -73,7 +82,7 @@ function tradeCards(i, j, k) {
  * End trading and begin the attacking phase of the turn.
  * You must continue trading when you hold five or six cards.
  */
-function endTrade() {
+function endTrade(): {type: string} {
   return {
     type: ACTIONS.END_TRADE
   };
@@ -81,10 +90,10 @@ function endTrade() {
 
 /**
  * Place some undeployed armies on an occupied territory to start the turn
- * @param territoryIndex {number}  - index of territory to place new armies
- * @param armies {number}  - number of armies to place
+ * @param territoryIndex - index of territory to place new armies
+ * @param armies - number of armies to place
  */
-function placeNewArmies(territoryIndex, armies) {
+function placeNewArmies(territoryIndex: number, armies: number): {type: string, territoryIndex: number, armies: number} {
   return {
     type: ACTIONS.PLACE_NEW_ARMIES,
     territoryIndex,
@@ -94,11 +103,11 @@ function placeNewArmies(territoryIndex, armies) {
 
 /**
  * Select a territory to attack, neighboring defending territory, and dice to roll
- * @param attackingTerritoryIndex {number}  - index of attacking territory
- * @param defendingTerritoryIndex {number}  - index of defending territory
- * @param attackingDiceCount {number} - number of dice to be rolled by attacker
+ * @param attackingTerritoryIndex - index of attacking territory
+ * @param defendingTerritoryIndex - index of defending territory
+ * @param attackingDiceCount - number of dice to be rolled by attacker
  */
-function battle(attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount) {
+function battle(attackingTerritoryIndex: number, defendingTerritoryIndex: number, attackingDiceCount: number): {type: string, attackingTerritoryIndex: number, defendingTerritoryIndex: number, attackingDiceCount: number} {
   return {
     type: ACTIONS.BATTLE,
     attackingTerritoryIndex,
@@ -109,10 +118,10 @@ function battle(attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceC
 
 /**
  * Simulate attacker and defender rolling dice.
- * @param attackerDice {Array.number} - dice rolled by attacker
- * @param defenderDice {Array.number} - dice rolled by defender
+ * @param attackerDice - dice rolled by attacker
+ * @param defenderDice - dice rolled by defender
  */
-function rollDice(attackerDice, defenderDice) {
+function rollDice(attackerDice: number[], defenderDice: number[]): {type: string, attackerDice: number[], defenderDice: number[]} {
   return {
     type: ACTIONS.ROLL_DICE,
     attackerDice,
@@ -121,7 +130,7 @@ function rollDice(attackerDice, defenderDice) {
 }
 
 /** End attack and begin fortifying */
-function endAttack() {
+function endAttack(): {type: string} {
   return {
     type: ACTIONS.END_ATTACK
   };
@@ -131,7 +140,7 @@ function endAttack() {
  * Capture the defeated territory by moving armies into it
  * @param armies {number} - number of armies to move
  */
-function capture(armies) {
+function capture(armies: number): {type: string, armies: number} {
   return {
     type: ACTIONS.CAPTURE,
     armies
@@ -145,7 +154,7 @@ function capture(armies) {
  * @param toTerritoryIndex - Index of territory to move armies to. Must be owned by you and adjacent to fromTerritoryIndex.
  * @param armies - Number of armies to move. You must leave one army behind, so the number may between one and the number of the armies on fromTerritoryIndex.
  */
-function fortify(fromTerritoryIndex, toTerritoryIndex, armies) {
+function fortify(fromTerritoryIndex: number, toTerritoryIndex: number, armies: number): {type: string, fromTerritoryIndex: number, toTerritoryIndex: number, armies: number} {
   return {
     type: ACTIONS.FORTIFY,
     fromTerritoryIndex,
@@ -155,7 +164,7 @@ function fortify(fromTerritoryIndex, toTerritoryIndex, armies) {
 }
 
 /** End turn without fortifying. */
-function endTurn() {
+function endTurn(): {type: string} {
   return {
     type: ACTIONS.END_TURN
   };
@@ -164,9 +173,9 @@ function endTurn() {
 /**
  * Select "random" card for player to draw from the deck.
  *
- * @param cardIndex {number} - Index of the card to assign. Card owner must be currently undefined.
+ * @param cardIndex - Index of the card to assign. Card owner must be currently undefined.
  */
-function drawRandomCard(cardIndex) {
+function drawRandomCard(cardIndex: number): {type: string, cardIndex: number} {
   return {
     type: ACTIONS.DRAW_RANDOM_CARD,
     cardIndex

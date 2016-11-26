@@ -40,14 +40,14 @@ exports.default = function (matchConfig, extendedState) {
 
     return _extends({}, extendedState, {
       currentPlayerIndex: nextPlayer,
-      players: Object.assign([], extendedState.players, _defineProperty({}, nextPlayer, {
+      players: (0, _replaceElements3.default)(extendedState.players, _defineProperty({}, nextPlayer, {
         undeployedArmies: countUndeployedArmies(matchConfig, extendedState, nextPlayer)
       })),
       capturedTerritories: 0
     });
   };
 
-  return new _Transition2.default(guard, reduce);
+  return new _Transition.Transition(guard, reduce);
 };
 
 var _nextPlayerIndex = require('./nextPlayerIndex');
@@ -56,7 +56,9 @@ var _nextPlayerIndex2 = _interopRequireDefault(_nextPlayerIndex);
 
 var _Transition = require('./Transition');
 
-var _Transition2 = _interopRequireDefault(_Transition);
+var _replaceElements2 = require('./replaceElements');
+
+var _replaceElements3 = _interopRequireDefault(_replaceElements2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -80,7 +82,7 @@ function calcContinentAward(extendedState, matchConfig, playerIndex) {
   var isContinentOwned = Array(matchConfig.continents.length).fill(true);
 
   var continentIndex = void 0;
-  for (var i = 0; i < matchConfig.territories; i++) {
+  for (var i = 0; i < matchConfig.territories.length; i++) {
     if (extendedState.territories[i].owner !== playerIndex) {
       continentIndex = matchConfig.territories[i][1];
       isContinentOwned[continentIndex] = false;
@@ -88,7 +90,7 @@ function calcContinentAward(extendedState, matchConfig, playerIndex) {
   }
 
   var reward = 0;
-  for (var _i = 0; _i < matchConfig.continents; _i++) {
+  for (var _i = 0; _i < matchConfig.continents.length; _i++) {
     if (isContinentOwned[_i]) {
       reward += matchConfig.continents[_i][1];
     }

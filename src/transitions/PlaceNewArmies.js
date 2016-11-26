@@ -1,11 +1,15 @@
+//@flow
+import type {MatchConfig} from '../MatchConfig';
+import type {MatchState} from '../MatchState';
 import {ACTIONS} from '../constants';
 import TransitionGuarded from './TransitionGuarded';
+import replaceElements from './replaceElements';
 
 /**
  * You must place all new armies earned during the beginning of the turn
  * and from trading cards.and
  */
-export default function(matchConfig, extendedState) {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const {territories, players, currentPlayerIndex} = extendedState;
 
   const guard = (action) => {
@@ -23,11 +27,11 @@ export default function(matchConfig, extendedState) {
 
     return {
       ...extendedState,
-      territories: Object.assign([], extendedState.territories, { [territoryIndex]: {
+      territories: replaceElements(extendedState.territories, { [territoryIndex]: {
         owner: currentPlayerIndex,
         armies: extendedState.territories[territoryIndex].armies + armies
       }}),
-      players: Object.assign([], extendedState.players, { [currentPlayerIndex]: {
+      players: replaceElements(extendedState.players, { [currentPlayerIndex]: {
         undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies - armies
       }})
     }

@@ -30,9 +30,10 @@ exports.default = function (matchConfig, extendedState) {
       players: Array(playerCount).fill({
         undeployedArmies: startingArmiesByPlayers[playerCount]
       }),
-      currentPlayerIndex: undefined,
+      currentPlayerIndex: -1,
       tradeCount: 0,
-      capturedTerritories: 0
+      capturedTerritories: 0,
+      activeBattle: undefined
     };
   };
 

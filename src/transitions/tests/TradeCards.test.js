@@ -1,12 +1,12 @@
 import {ACTIONS, STATES, PSEUDOSTATES} from '../../constants';
 import TradeCards from '../TradeCards';
 import TransitionGuarded from '../TransitionGuarded';
-import MatchConfig from '../../MatchConfig';
+import {parseMatchConfig} from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 import testConfig from './config.json';
 import expect from 'expect';
 
-const matchConfig = new MatchConfig(testConfig);
+const matchConfig = parseMatchConfig(testConfig);
 const currentPlayerIndex = 0;
 const matchExtendedState = {
   stateKey: STATES.BATTLING,

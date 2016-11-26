@@ -12,7 +12,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 exports.default = function (matchConfig, extendedState) {
-  var cards = extendedState.cards,
+  var cardOwner = extendedState.cardOwner,
       currentPlayerIndex = extendedState.currentPlayerIndex;
 
 
@@ -20,7 +20,7 @@ exports.default = function (matchConfig, extendedState) {
     var cardIndex = action.cardIndex;
 
 
-    return Number.isInteger(cardIndex) && cardIndex >= 0 && cardIndex < cards.length && cards[cardIndex].owner === undefined;
+    return Number.isInteger(cardIndex) && cardIndex >= 0 && cardIndex < cardOwner.length && cardOwner[cardIndex] === undefined;
   };
 
   var reduce = function reduce(action) {
@@ -28,9 +28,7 @@ exports.default = function (matchConfig, extendedState) {
 
 
     return _extends({}, extendedState, {
-      cards: Object.assign([], extendedState.territories, _defineProperty({}, cardIndex, {
-        owner: currentPlayerIndex
-      })),
+      cardOwner: (0, _replaceElements3.default)(extendedState.cardOwner, _defineProperty({}, cardIndex, currentPlayerIndex)),
       capturedTerritories: undefined
     });
   };
@@ -43,6 +41,10 @@ var _constants = require('../constants');
 var _TransitionGuarded = require('./TransitionGuarded');
 
 var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
+
+var _replaceElements2 = require('./replaceElements');
+
+var _replaceElements3 = _interopRequireDefault(_replaceElements2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

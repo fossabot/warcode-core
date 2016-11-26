@@ -16,8 +16,6 @@ var _nextPlayerIndex2 = _interopRequireDefault(_nextPlayerIndex);
 
 var _Transition = require('./transitions/Transition');
 
-var _Transition2 = _interopRequireDefault(_Transition);
-
 var _StartMatch = require('./transitions/StartMatch');
 
 var _StartMatch2 = _interopRequireDefault(_StartMatch);
@@ -144,13 +142,13 @@ function StateMachine(matchConfig) {
 
 
     var simpleGuard = function simpleGuard(guard) {
-      return new _Transition2.default(guard, function () {
+      return new _Transition.Transition(guard, function () {
         return extendedState;
       });
     };
 
     var elseTransition = function elseTransition() {
-      return new _Transition2.default(function () {
+      return new _Transition.Transition(function () {
         return undefined;
       }, function () {
         return extendedState;
@@ -158,7 +156,7 @@ function StateMachine(matchConfig) {
     };
 
     var elseTransitionWithReducer = function elseTransitionWithReducer(reducer) {
-      return new _Transition2.default(function () {
+      return new _Transition.Transition(function () {
         return undefined;
       }, reducer);
     };
@@ -274,27 +272,3 @@ StateMachine.getEdges = function () {
 };
 
 exports.default = StateMachine;
-
-/**
- * @typedef {Object} MatchConfig
- * @property {number} minPlayers - Maximum number of players
- * @property {number} maxPlayers - Minimum number of players
- *
- * @typedef {MatchState} MatchConfig
- * @property {number} currentPlayerIndex - index of current player; undefined until selected
- * @property {Territory[]} territories
- * @property {Card[]} cards
- * @property {Player[]} players
- * @property {number} tradeCount - number of times any player has traded a card during this match
- * @property {number} capturedTerritories - number of territories the current player has conquered this turn
- *
- * @typedef {Object} Territory
- * @property {number} owner - index of player occupying this territory; undfined when unoccupied
- * @property {number} armies - count of armies occupying territory
- *
- * @typedef {Object} Card
- * @property {number} owner - index of player holding this card
- *
- * @typedef {Object} Player
- * @property {number} undeployedArmies - number of armies the player has yet to deploy
- */

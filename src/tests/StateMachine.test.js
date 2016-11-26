@@ -2,7 +2,7 @@ import {STATES, PSEUDOSTATES} from '../constants';
 import actionCreators from '../actionCreators';
 import StateMachine from '../StateMachine';
 import testConfig from './config.json';
-import MatchConfig from '../MatchConfig';
+import {parseMatchConfig} from '../MatchConfig';
 import expect from 'expect';
 
 const transitions = StateMachine.getEdges();
@@ -66,7 +66,7 @@ test('single final state', () => {
 });
 
 test('test transitions through initial games setup moves', () => {
-  const matchConfig = new MatchConfig(testConfig);
+  const matchConfig = parseMatchConfig(testConfig);
   const stateMachine = new StateMachine(matchConfig);
   let state;
 
@@ -112,7 +112,7 @@ test('test transitions through initial games setup moves', () => {
 });
 
 test('reducer ignores invalid actions', () => {
-  const matchConfig = new MatchConfig(testConfig);
+  const matchConfig = parseMatchConfig(testConfig);
   const stateMachine = new StateMachine(matchConfig);
   let state;
 

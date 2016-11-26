@@ -1,11 +1,11 @@
-import Viz from 'viz';
+import Viz from 'viz.js';
 import documentation from 'documentation';
 import fs from 'fs';
 import {STATES, PSEUDOSTATES} from '../src/constants';
 import StateMachine from '../src/StateMachine';
 
 (function documentActionCreators() {
-  const docs = documentation.buildSync(['./src/actionCreators'], {});
+  const docs = documentation.buildSync(['./src/actionCreators.js'], {});
 
   documentation.formats.md(docs, {}, function(err, res) {
     if (err) {
@@ -64,6 +64,7 @@ The transitions with labels are documented below.
   let docs = documentation.buildSync(filenames, options);
   docs = docs.map((d) => {
     d.params = undefined;
+    d.returns = undefined;
     return d;
   });
 

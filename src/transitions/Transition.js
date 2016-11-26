@@ -1,26 +1,35 @@
-import type { MatchState, Territory } from "../MatchState.js";
+//@flow
+import type {MatchState} from '../MatchState';
 
 /** Transition with guard or reduce, leaving a pseudostate */
 class Transition {
-  constructor(guard: GuardType, reduce: ReduceType) {
+  _guard: Guard;
+  _reduce: Reduce;
+
+  constructor(guard: Guard, reduce: Reduce) {
     this._guard = guard;
     this._reduce = reduce;
   }
 
-  get action(): string {
+  get action(): ?string {
     return undefined;
   }
 
   /** @returns true, false, or undefined when there is no guard */
-  guard(action): ?boolean {
+  guard(action: actionInterface): ?boolean {
     return this._guard(action);
   }
 
-  reduce(action) {
+  reduce(action: actionInterface): ?MatchState {
     if (typeof this._reduce === 'function') {
       return this._reduce(action);
     }
   }
 }
 
-export default Transition;
+interface actionInterface {
+  type: string
+}
+export type Guard = (action: Object) => ?boolean;
+export type Reduce = (action: Object) => ?MatchState;
+export {Transition};

@@ -1,11 +1,11 @@
 import {ACTIONS, STATES, PSEUDOSTATES} from '../../constants';
 import StartMatch from '../StartMatch';
 import TransitionGuarded from '../TransitionGuarded';
-import MatchConfig from '../../MatchConfig';
+import {parseMatchConfig} from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 import expect from 'expect';
 
-const matchConfig = new MatchConfig();
+const matchConfig = parseMatchConfig();
 const matchExtendedState = {
   stateKey: STATES.INITIALIZING
 };
@@ -40,7 +40,7 @@ test('reduce creates valid initial state', () => {
   expect(n.players.length).toBe(playerCount);
   expect(n.players[0].undeployedArmies).toBe(matchConfig.startingArmiesByPlayers[playerCount]);
 
-  expect(n.currentPlayerIndex).toNotExist();
+  expect(n.currentPlayerIndex).toBe(-1);
   expect(n.tradeCount).toBe(0);
   expect(n.capturedTerritories).toBe(0);
 });

@@ -18,8 +18,6 @@ var _config2 = _interopRequireDefault(_config);
 
 var _MatchConfig = require('../MatchConfig');
 
-var _MatchConfig2 = _interopRequireDefault(_MatchConfig);
-
 var _expect = require('expect');
 
 var _expect2 = _interopRequireDefault(_expect);
@@ -115,7 +113,7 @@ test('single final state', function () {
 });
 
 test('test transitions through initial games setup moves', function () {
-  var matchConfig = new _MatchConfig2.default(_config2.default);
+  var matchConfig = (0, _MatchConfig.parseMatchConfig)(_config2.default);
   var stateMachine = new _StateMachine2.default(matchConfig);
   var state = void 0;
 
@@ -161,7 +159,7 @@ test('test transitions through initial games setup moves', function () {
 });
 
 test('reducer ignores invalid actions', function () {
-  var matchConfig = new _MatchConfig2.default(_config2.default);
+  var matchConfig = (0, _MatchConfig.parseMatchConfig)(_config2.default);
   var stateMachine = new _StateMachine2.default(matchConfig);
   var state = void 0;
 
