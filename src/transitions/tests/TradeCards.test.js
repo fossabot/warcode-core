@@ -45,6 +45,18 @@ test('guard checks capture parameters', () => {
   });
 });
 
+test('reduce updates state', () => {
+  const transition: TransitionGuarded = new TradeCards(matchConfig, matchExtendedState);
+  const cardIndex = 1;
+  const action = actionCreators.tradeCards(0, 1, 2);
+  const n = transition.reduce(action);
+
+  expect(n.cardOwner[0]).toBe(null);
+  expect(n.cardOwner[1]).toBe(null);
+  expect(n.cardOwner[2]).toBe(null);
+  expect(n.cardOwner[3]).toBe(matchExtendedState.currentPlayerIndex);
+});
+
 // test('reduce updates state', () => {
 //   const transition: TransitionGuarded = new Fortify(matchConfig, matchExtendedState);
 //   const armiesToMove = 3;
