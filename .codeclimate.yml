@@ -1,12 +1,11 @@
 engines:
   duplication:
     enabled: true
+    exclude_fingerprints:
+    - 50e962421b67f542c5db54e9cd31327e
     config:
       languages:
-      - ruby
       - javascript
-      - python
-      - php
   eslint:
     enabled: true
   fixme:
