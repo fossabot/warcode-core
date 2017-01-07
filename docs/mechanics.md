@@ -6,7 +6,7 @@ The following diagram illustrates the states and transitions
 as a state machine.
 
 ![State Machine]
-(<https://matthewspivey.github.io/warcode-core/docs/state-machine.svg>)
+(<https://raw.githubusercontent.com/matthewspivey/warcode-core/master/docs/state-machine.svg>)
 
 This diagram contains several elements.
 
