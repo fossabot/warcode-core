@@ -48,8 +48,7 @@ This package uses a state machine to structure.
 The following diagram illustrates the states and transitions
 as a state machine.
 
-![State Machine]
-(https://raw.githubusercontent.com/matthewspivey/warcode-core/master/docs/state-machine.svg)
+![State Machine](https://rawgit.com/matthewspivey/warcode-core/master/docs/state-machine.svg)
 
 This diagram contains several elements.
 * _Boxes_ are states where the match is waiting on a player interaction, such as rolling the dice.
