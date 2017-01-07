@@ -1,5 +1,6 @@
 **/node_modules/
 /.c9/
+coverage/
 .DS_Store
 npm-debug.log
 yarn-error.log

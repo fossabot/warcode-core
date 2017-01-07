@@ -43,6 +43,7 @@
     "webpack": "^1.13.3"
   },
   "jest": {
+    "collectCoverage": true,
     "testPathIgnorePatterns": [
       "<rootDir>/dist/",
       "<rootDir>/.c9/"
