@@ -53,7 +53,7 @@ test('pseudostates have single outbound else, without a guard or action', () => 
   expect(containsDuplicateElse).toBe(false);
 });
 
-test('single initial state', () => {
+test('single initial state for state machine', () => {
   const stateHasInbound = new Set(transitions.map(([from, to]) => { return to; }));
   const difference = new Set([...foundStateKeys].filter(x => !stateHasInbound.has(x)));
   expect(difference.size).toBe(1);

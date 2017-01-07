@@ -1,5 +1,8 @@
 # warcode-core
 
+[![Build Status](https://travis-ci.org/matthewspivey/warcode-core.svg?branch=master)](https://travis-ci.org/matthewspivey/warcode-core)
+[![Code Climate](https://codeclimate.com/github/matthewspivey/warcode-core/badges/gpa.svg)](https://codeclimate.com/github/matthewspivey/warcode-core)
+
 Game state manager for WarCode. You can use it to easily build standalone
 browser games, bots, history analyzers, and multiplayer game services.
 To accomplish this, it
