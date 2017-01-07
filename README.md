@@ -23,5 +23,4 @@ game state from player actions.
 
 ## Learn more
 * [Gameplay](./docs/mechanics.md) - gameplay diagram and documentation
-* [Example AI Bot](./examples/bot/index.js) - example bot that makes random moves
 * [Documentation for action creators](./docs/action-creators.md) - API docs for action creators
