@@ -12,7 +12,7 @@ export type MatchConfig = {
   maxPlayers: number;
   startingArmiesByPlayers: number[];
   cardOccupiedTerritoryReward: number;
-  /** adjacency list for undirected graph */
+  // adjacency list for undirected graph
   edges: Array<[number, number]>;
 }
 
