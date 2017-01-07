@@ -1,0 +1,9 @@
+nguage: node_js
+node_js:
+  - "node"
+  - "4"
+script:
+  - npm run build
+  - npm run eslint
+  - npm run flow
+  - npm run test
