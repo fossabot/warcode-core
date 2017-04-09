@@ -8,20 +8,13 @@ import replaceElements from './replaceElements';
 const getLoses = (attackerDice, defenderDice) => {
   const diceToCompare = Math.min(attackerDice.length, defenderDice.length);
   const sortDecending = (a, b) => (a < b ? 1 : -1);
-  const attackerDiceSorted = [...attackerDice].sort(sortDecending);
-  const defenderDiceSorted = [...defenderDice].sort(sortDecending);
-  const loses = {
-    defender: 0,
-    attacker: 0,
+  const attackerDiceSorted = attackerDice.sort(sortDecending).slice(0, diceToCompare);
+  const defenderDiceSorted = defenderDice.sort(sortDecending).slice(0, diceToCompare);
+  const defenderLoses = defenderDiceSorted.filter((d, i) => attackerDiceSorted[i] > d).length;
+  return {
+    defender: defenderLoses,
+    attacker: diceToCompare - defenderLoses,
   };
-  for (let i = 0; i < diceToCompare; i += 1) {
-    if (attackerDiceSorted[i] > defenderDiceSorted[i]) {
-      loses.defender += 1;
-    } else {
-      loses.attacker += 1;
-    }
-  }
-  return loses;
 };
 
 /**

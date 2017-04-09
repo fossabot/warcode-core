@@ -11,17 +11,16 @@ function calcTerrtitoryAward(extendedState, matchConfig, playerIndex) {
 }
 
 function calcContinentAward(extendedState, matchConfig, playerIndex) {
-  const isContinentOwned = Array(matchConfig.continents.length).fill(true);
-  const territoriesNotOwned = matchConfig.territories.filter(t => t.owner !== playerIndex);
+  // find indexes of all continents where the player does not occupy
+  // one or more territories
+  const continentsWithTerritoryNotOwnedByCurrentPlayer = new Set(matchConfig.territories
+    .filter((t, index) => extendedState.territories[index].owner !== playerIndex)
+    .map(([, continentIndex]) => continentIndex));
 
-  territoriesNotOwned.forEach(([, continentIndex]) => {
-    isContinentOwned[continentIndex] = false;
-  });
-
-  // return total reward for all continents
+  // total reward for each continent where the player owns all of the territories
   return matchConfig.continents
-    .filter((continent, index) => isContinentOwned[index])
-    .reduce((reward, continent) => reward + continent[1], 0);
+    .filter((continent, index) => !continentsWithTerritoryNotOwnedByCurrentPlayer.has(index))
+    .reduce((reward, [, continentAward]) => reward + continentAward, 0);
 }
 
 function countUndeployedArmies(matchConfig, extendedState, playerIndex) {
