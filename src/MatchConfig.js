@@ -18,14 +18,10 @@ export type MatchConfig = {
 
 export function parseMatchConfig(config: MatchConfig = traditionalConfig): MatchConfig {
   // TODO: validate graph, cards, etc
+  const reduce = (acc, [name, continentIndex, neighborIndicies], territoryIndex) =>
+    acc.concat(neighborIndicies.map(neighborIndex => [territoryIndex, neighborIndex]));
 
-  config.edges = config.territories.reduce((acc, [name, continentIndex, neighborIndicies], territoryIndex) => {
-    const edges = [];
-    neighborIndicies.forEach((neighborIndex) => {
-      edges.push([territoryIndex, neighborIndex]);
-    });
-    return acc.concat(edges);
-  }, []);
-
-  return config;
+  return Object.assign({}, config, {
+    edges: config.territories.reduce(reduce, []),
+  });
 }
