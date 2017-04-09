@@ -1,6 +1,6 @@
 // @flow
 import type { MatchConfig } from './MatchConfig';
-import { parseMatchConfig } from './MatchConfig';
+import parseMatchConfig from './MatchConfig';
 import StateMachine from './StateMachine';
 import actionCreators from './actionCreators';
 

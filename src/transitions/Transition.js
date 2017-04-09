@@ -31,6 +31,7 @@ class Transition {
 interface actionInterface {
   type: string
 }
+
 export type Guard = (action: Object) => ?boolean;
 export type Reduce = (action: Object) => ?MatchState;
-export { Transition };
+export default Transition;

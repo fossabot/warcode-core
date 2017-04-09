@@ -2,7 +2,7 @@
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
 import nextPlayerIndex from './nextPlayerIndex';
-import { Transition } from './Transition';
+import Transition from './Transition';
 import replaceElements from './replaceElements';
 
 function calcTerrtitoryAward(extendedState, matchConfig, playerIndex) {

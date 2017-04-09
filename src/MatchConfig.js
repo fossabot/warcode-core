@@ -16,7 +16,7 @@ export type MatchConfig = {
   edges: Array<[number, number]>;
 }
 
-export function parseMatchConfig(config: MatchConfig = traditionalConfig): MatchConfig {
+export default (config: MatchConfig = traditionalConfig): MatchConfig => {
   // TODO: validate graph, cards, etc
   const reduce = (acc, [name, continentIndex, neighborIndicies], territoryIndex) =>
     acc.concat(neighborIndicies.map(neighborIndex => [territoryIndex, neighborIndex]));
@@ -24,4 +24,4 @@ export function parseMatchConfig(config: MatchConfig = traditionalConfig): Match
   return Object.assign({}, config, {
     edges: config.territories.reduce(reduce, []),
   });
-}
+};

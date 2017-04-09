@@ -2,7 +2,7 @@ import expect from 'expect';
 import { STATES } from '../../constants';
 import PlaceAdditionalArmy from '../PlaceAdditionalArmy';
 import TransitionGuarded from '../TransitionGuarded';
-import { parseMatchConfig } from '../../MatchConfig';
+import parseMatchConfig from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 
 const matchConfig = parseMatchConfig();

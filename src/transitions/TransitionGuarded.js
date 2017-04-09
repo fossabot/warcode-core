@@ -1,5 +1,5 @@
 // @flow
-import { Transition } from './Transition';
+import Transition from './Transition';
 import type { Guard, Reduce } from './Transition';
 
 /** Transition out of a state triggered by player interaction */

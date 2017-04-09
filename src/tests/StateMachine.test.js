@@ -3,7 +3,7 @@ import { STATES, PSEUDOSTATES } from '../constants';
 import actionCreators from '../actionCreators';
 import StateMachine from '../StateMachine';
 import testConfig from './config.json';
-import { parseMatchConfig } from '../MatchConfig';
+import parseMatchConfig from '../MatchConfig';
 
 const matchConfig = parseMatchConfig(testConfig);
 const stateMachine = new StateMachine(matchConfig);

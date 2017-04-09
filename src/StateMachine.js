@@ -1,6 +1,6 @@
 import { STATES, PSEUDOSTATES } from './constants';
 import nextPlayerIndex from './transitions/nextPlayerIndex';
-import { Transition } from './transitions/Transition';
+import Transition from './transitions/Transition';
 import StartMatch from './transitions/StartMatch';
 import SelectFirstPlayer from './transitions/SelectFirstPlayer';
 import OccupyTerritory from './transitions/OccupyTerritory';
