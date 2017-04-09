@@ -20,12 +20,15 @@
   "rules": {
     "class-methods-use-this": ["error", { "exceptMethods": ["action"] }],
     "max-len": "warn",
+    "no-throw-literal": "warn",
     "no-underscore-dangle": [ "error", { "allowAfterThis": true } ],
     "prefer-default-export": 0,
     "import/prefer-default-export": "warn",
     "fp/no-class": "warn",
+    "fp/no-mutation": "warn",
+    "fp/no-mutating-methods": "warn",
     "fp/no-nil": 0,
-    "fp/no-this": 0,
+    "fp/no-this": "warn",
     "fp/no-throw": 0,
     "fp/no-unused-expression": 0
   }
