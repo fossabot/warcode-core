@@ -1,8 +1,15 @@
 {
-  "presets": ["es2015", "stage-2"],
+  "presets": [
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 versions"],
+        "node": true
+      }
+    }],
+    "flow"
+  ],
   "plugins": [
-    "transform-es2015-destructuring",
-    "syntax-flow",
+    ["transform-object-rest-spread", { "useBuiltIns": true }],
     "transform-flow-strip-types"
-  ]
+  ],
 }
