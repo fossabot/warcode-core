@@ -19,7 +19,7 @@
   ],
   "rules": {
     "class-methods-use-this": ["error", { "exceptMethods": ["action"] }],
-    "max-len": "warn",
+    "max-len": ["error", { "code": 120 }],
     "no-throw-literal": "warn",
     "no-underscore-dangle": [ "error", { "allowAfterThis": true } ],
     "fp/no-class": "warn",
