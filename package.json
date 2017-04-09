@@ -37,6 +37,7 @@
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-config-airbnb-base": "^11.1.3",
+    "eslint-plugin-flowtype": "^2.30.4",
     "eslint-plugin-fp": "^2.3.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jest": "^19.0.1",
@@ -52,8 +53,7 @@
   "jest": {
     "collectCoverage": true,
     "testPathIgnorePatterns": [
-      "<rootDir>/dist/",
-      "<rootDir>/.c9/"
+      "<rootDir>/dist/"
     ],
     "transform": {
       ".*": "<rootDir>/node_modules/babel-jest"

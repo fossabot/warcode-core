@@ -97,7 +97,7 @@ function StateMachine(matchConfig) {
       [STATES.FORTIFYING, PSEUDOSTATES.HAS_EARNED_CARD, EndTurn(matchConfig, extendedState)],
       [PSEUDOSTATES.HAS_EARNED_CARD, STATES.DRAWING_RANDOM_CARD, simpleGuard(hasPlayerEarnedCard)],
       [PSEUDOSTATES.HAS_EARNED_CARD, PSEUDOSTATES.SETUP_NEXT_TURN, elseTransition()],
-      [STATES.DRAWING_RANDOM_CARD, PSEUDOSTATES.SETUP_NEXT_TURN, DrawRandomCard(matchConfig, extendedState)]
+      [STATES.DRAWING_RANDOM_CARD, PSEUDOSTATES.SETUP_NEXT_TURN, DrawRandomCard(matchConfig, extendedState)],
     ];
   };
 

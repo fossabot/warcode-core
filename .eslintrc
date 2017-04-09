@@ -2,38 +2,31 @@
   "env": {
     "es6": true,
     "node": true,
-    "jest": true
+    "jest": true,
+    "browser": true
   },
   "parser": "babel-eslint",
   "extends": [
     "airbnb",
+    "plugin:flowtype/recommended",
+    "plugin:fp/recommended",
     "plugin:jest/recommended"
   ],
   "plugins": [
-    "jest",
-    "fp"
+    "flowtype",
+    "fp",
+    "jest"
   ],
   "rules": {
-    "no-underscore-dangle": [ "error", { "allowAfterThis": true } ],
-    "no-var": "error",
-    "prefer-default-export": 0,
     "class-methods-use-this": ["error", { "exceptMethods": ["action"] }],
-    "fp/no-arguments": "error",
+    "max-len": "warn",
+    "no-underscore-dangle": [ "error", { "allowAfterThis": true } ],
+    "prefer-default-export": 0,
+    "import/prefer-default-export": "warn",
     "fp/no-class": "warn",
-    "fp/no-delete": "error",
-    "fp/no-events": "error",
-    "fp/no-get-set": "error",
-    "fp/no-let": "error",
-    "fp/no-loops": "error",
-    "fp/no-mutating-assign": "error",
-    "fp/no-mutating-methods": "error",
-    "fp/no-mutation": "error",
-    "fp/no-nil": "warn",
-    "fp/no-proxy": "error",
-    "fp/no-rest-parameters": "error",
-    "fp/no-this": "warn",
+    "fp/no-nil": 0,
+    "fp/no-this": 0,
     "fp/no-throw": 0,
-    "fp/no-unused-expression": 0,
-    "fp/no-valueof-field": "error"
+    "fp/no-unused-expression": 0
   }
 }
