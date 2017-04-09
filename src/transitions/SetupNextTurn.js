@@ -1,9 +1,35 @@
-//@flow
-import type {MatchConfig} from '../MatchConfig';
-import type {MatchState} from '../MatchState';
+// @flow
+import type { MatchConfig } from '../MatchConfig';
+import type { MatchState } from '../MatchState';
 import nextPlayerIndex from './nextPlayerIndex';
-import {Transition} from './Transition';
+import { Transition } from './Transition';
 import replaceElements from './replaceElements';
+
+function calcTerrtitoryAward(extendedState, matchConfig, playerIndex) {
+  const territoryOwnedCount = extendedState.territories.filter(t => t.owner === playerIndex).length;
+  return Math.max(3, Math.floor(territoryOwnedCount / 3));
+}
+
+function calcContinentAward(extendedState, matchConfig, playerIndex) {
+  const isContinentOwned = Array(matchConfig.continents.length).fill(true);
+  const territoriesNotOwned = matchConfig.territories.filter(t => t.owner !== playerIndex);
+
+  territoriesNotOwned.forEach(([, continentIndex]) => {
+    isContinentOwned[continentIndex] = false;
+  });
+
+  // return total reward for all continents
+  return matchConfig.continents
+    .filter((continent, index) => isContinentOwned[index])
+    .reduce((reward, continent) => reward + continent[1], 0);
+}
+
+function countUndeployedArmies(matchConfig, extendedState, playerIndex) {
+  const currentArmies = extendedState.players[playerIndex].undeployedArmies;
+  const territoryAward = calcTerrtitoryAward(extendedState, matchConfig, playerIndex);
+  const continentAward = calcContinentAward(extendedState, matchConfig, playerIndex);
+  return currentArmies + territoryAward + continentAward;
+}
 
 /**
  * At the beginning of your turn, you are awarded armies based on occupied
@@ -26,10 +52,10 @@ import replaceElements from './replaceElements';
  * | South America  | 2     |
  *
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): Transition {
-  const guard = () => {return undefined;};
+export default function (matchConfig: MatchConfig, extendedState: MatchState): Transition {
+  const guard = () => undefined;
 
-  const reduce = (action) => {
+  const reduce = () => {
     // SETUP TURN
     const nextPlayer = nextPlayerIndex(extendedState);
 
@@ -37,45 +63,11 @@ export default function(matchConfig: MatchConfig, extendedState: MatchState): Tr
       ...extendedState,
       currentPlayerIndex: nextPlayer,
       players: replaceElements(extendedState.players, { [nextPlayer]: {
-        undeployedArmies: countUndeployedArmies(matchConfig, extendedState, nextPlayer)
-      }}),
-      capturedTerritories: 0
+        undeployedArmies: countUndeployedArmies(matchConfig, extendedState, nextPlayer),
+      } }),
+      capturedTerritories: 0,
     };
   };
 
   return new Transition(guard, reduce);
-}
-
-function countUndeployedArmies(matchConfig, extendedState, playerIndex) {
-  const currentArmies = extendedState.players[playerIndex].undeployedArmies;
-  const territoryAward = calcTerrtitoryAward(extendedState, matchConfig, playerIndex);
-  const continentAward = calcContinentAward(extendedState, matchConfig, playerIndex);
-  return currentArmies + territoryAward + continentAward;
-}
-
-function calcTerrtitoryAward(extendedState, matchConfig, playerIndex) {
-  const territoryOwnedCount = extendedState.territories.filter(t => {
-    return t.owner === playerIndex;
-  }).length;
-  return Math.max(3, Math.floor(territoryOwnedCount / 3));
-}
-
-function calcContinentAward(extendedState, matchConfig, playerIndex) {
-  const isContinentOwned = Array(matchConfig.continents.length).fill(true);
-
-  let continentIndex;
-  for (let i = 0; i < matchConfig.territories.length; i++) {
-    if (extendedState.territories[i].owner !== playerIndex) {
-      continentIndex = matchConfig.territories[i][1];
-      isContinentOwned[continentIndex] = false;
-    }
-  }
-
-  let reward = 0;
-  for (let i = 0; i < matchConfig.continents.length; i++) {
-    if (isContinentOwned[i]) {
-      reward += matchConfig.continents[i][1];
-    }
-  }
-  return reward;
 }

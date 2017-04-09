@@ -1,7 +1,7 @@
-//@flow
-import type {MatchConfig} from '../MatchConfig';
-import type {MatchState} from '../MatchState';
-import {ACTIONS} from '../constants';
+// @flow
+import type { MatchConfig } from '../MatchConfig';
+import type { MatchState } from '../MatchState';
+import { ACTIONS } from '../constants';
 import TransitionGuarded from './TransitionGuarded';
 import replaceElements from './replaceElements';
 
@@ -14,11 +14,11 @@ import replaceElements from './replaceElements';
  * * The territory armies are incremented
  *
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
-  const {territories, currentPlayerIndex} = extendedState;
+export default function (matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
+  const { territories, currentPlayerIndex } = extendedState;
 
   const guard = (action) => {
-    const {territoryIndex} = action;
+    const { territoryIndex } = action;
     return Number.isInteger(territoryIndex)
       && territoryIndex >= 0
       && territoryIndex < territories.length
@@ -27,17 +27,17 @@ export default function(matchConfig: MatchConfig, extendedState: MatchState): Tr
   };
 
   const reduce = (action) => {
-    const {territoryIndex} = action;
+    const { territoryIndex } = action;
 
     return {
       ...extendedState,
       territories: replaceElements(extendedState.territories, { [territoryIndex]: {
         owner: currentPlayerIndex,
-        armies: extendedState.territories[territoryIndex].armies + 1
-      }}),
+        armies: extendedState.territories[territoryIndex].armies + 1,
+      } }),
       players: replaceElements(extendedState.players, { [currentPlayerIndex]: {
-        undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies - 1
-      }})
+        undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies - 1,
+      } }),
     };
   };
 

@@ -1,6 +1,39 @@
 {
+  "env": {
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
   "parser": "babel-eslint",
+  "extends": [
+    "airbnb",
+    "plugin:jest/recommended"
+  ],
+  "plugins": [
+    "jest",
+    "fp"
+  ],
   "rules": {
-    "strict": 0
+    "no-underscore-dangle": [ "error", { "allowAfterThis": true } ],
+    "no-var": "error",
+    "prefer-default-export": 0,
+    "class-methods-use-this": ["error", { "exceptMethods": ["action"] }],
+    "fp/no-arguments": "error",
+    "fp/no-class": "warn",
+    "fp/no-delete": "error",
+    "fp/no-events": "error",
+    "fp/no-get-set": "error",
+    "fp/no-let": "error",
+    "fp/no-loops": "error",
+    "fp/no-mutating-assign": "error",
+    "fp/no-mutating-methods": "error",
+    "fp/no-mutation": "error",
+    "fp/no-nil": "warn",
+    "fp/no-proxy": "error",
+    "fp/no-rest-parameters": "error",
+    "fp/no-this": "warn",
+    "fp/no-throw": 0,
+    "fp/no-unused-expression": 0,
+    "fp/no-valueof-field": "error"
   }
 }

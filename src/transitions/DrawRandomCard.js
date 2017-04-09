@@ -1,18 +1,18 @@
-//@flow
-import type {MatchConfig} from '../MatchConfig';
-import type {MatchState} from '../MatchState';
-import {ACTIONS} from '../constants';
+// @flow
+import type { MatchConfig } from '../MatchConfig';
+import type { MatchState } from '../MatchState';
+import { ACTIONS } from '../constants';
 import TransitionGuarded from './TransitionGuarded';
 import replaceElements from './replaceElements';
 
 /**
  * Simulate player drawing a random card from the deck.
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
-  const {cardOwner, currentPlayerIndex} = extendedState;
+export default function (matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
+  const { cardOwner, currentPlayerIndex } = extendedState;
 
   const guard = (action) => {
-    const {cardIndex} = action;
+    const { cardIndex } = action;
 
     return Number.isInteger(cardIndex)
       && cardIndex >= 0
@@ -21,14 +21,14 @@ export default function(matchConfig: MatchConfig, extendedState: MatchState): Tr
   };
 
   const reduce = (action) => {
-    const {cardIndex} = action;
+    const { cardIndex } = action;
 
     return {
       ...extendedState,
       cardOwner: replaceElements(extendedState.cardOwner, {
-        [cardIndex]: currentPlayerIndex
+        [cardIndex]: currentPlayerIndex,
       }),
-      capturedTerritories: undefined
+      capturedTerritories: undefined,
     };
   };
 

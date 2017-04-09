@@ -1,7 +1,7 @@
-//@flow
-import type {MatchConfig} from '../MatchConfig';
-import type {MatchState} from '../MatchState';
-import {ACTIONS} from '../constants';
+// @flow
+import type { MatchConfig } from '../MatchConfig';
+import type { MatchState } from '../MatchState';
+import { ACTIONS } from '../constants';
 import TransitionGuarded from './TransitionGuarded';
 import replaceElements from './replaceElements';
 
@@ -17,12 +17,12 @@ import replaceElements from './replaceElements';
  *
  *  You may end your turn, skipping fortification.
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
-  const {edges} = matchConfig;
-  const {territories, currentPlayerIndex} = extendedState;
+export default function (matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
+  const { edges } = matchConfig;
+  const { territories, currentPlayerIndex } = extendedState;
 
   const guard = (action) => {
-    const {fromTerritoryIndex, toTerritoryIndex, armies} = action;
+    const { fromTerritoryIndex, toTerritoryIndex, armies } = action;
     return Number.isInteger(fromTerritoryIndex)
       && fromTerritoryIndex >= 0
       && fromTerritoryIndex < territories.length
@@ -38,20 +38,20 @@ export default function(matchConfig: MatchConfig, extendedState: MatchState): Tr
   };
 
   const reduce = (action) => {
-    const {fromTerritoryIndex, toTerritoryIndex, armies} = action;
+    const { fromTerritoryIndex, toTerritoryIndex, armies } = action;
 
     return {
       ...extendedState,
       territories: replaceElements(extendedState.territories, {
         [fromTerritoryIndex]: {
           owner: extendedState.territories[fromTerritoryIndex].owner,
-          armies: extendedState.territories[fromTerritoryIndex].armies - armies
+          armies: extendedState.territories[fromTerritoryIndex].armies - armies,
         },
         [toTerritoryIndex]: {
           owner: extendedState.territories[toTerritoryIndex].owner,
-          armies: extendedState.territories[toTerritoryIndex].armies + armies
-        }
-      })
+          armies: extendedState.territories[toTerritoryIndex].armies + armies,
+        },
+      }),
     };
   };
 

@@ -1,4 +1,4 @@
-//@flow
+// @flow
 import traditionalConfig from '../data/traditional.json';
 
 export type MatchConfig = {
@@ -22,7 +22,7 @@ export function parseMatchConfig(config: MatchConfig = traditionalConfig): Match
   config.edges = config.territories.reduce((acc, [name, continentIndex, neighborIndicies], territoryIndex) => {
     const edges = [];
     neighborIndicies.forEach((neighborIndex) => {
-        edges.push([territoryIndex, neighborIndex]);
+      edges.push([territoryIndex, neighborIndex]);
     });
     return acc.concat(edges);
   }, []);

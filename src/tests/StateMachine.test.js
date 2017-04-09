@@ -1,127 +1,83 @@
-import {STATES, PSEUDOSTATES} from '../constants';
+import expect from 'expect';
+import { STATES, PSEUDOSTATES } from '../constants';
 import actionCreators from '../actionCreators';
 import StateMachine from '../StateMachine';
 import testConfig from './config.json';
-import {parseMatchConfig} from '../MatchConfig';
-import expect from 'expect';
+import { parseMatchConfig } from '../MatchConfig';
 
-const transitions = StateMachine.getEdges();
-const foundStateKeys = (function() {
-  const keys = new Set();
-  transitions.forEach(([from, to, label]) => {
-    keys.add(from);
-    keys.add(to);
-  });
-  return keys;
-}());
-const isPseudoState = function (stateValue) {
-  const pseudostates = new Set();
-  for (const k in PSEUDOSTATES) {
-    pseudostates.add(PSEUDOSTATES[k]);
-  }
-  return () => {
-    pseudostates.has(stateValue);
-  };
-};
+const matchConfig = parseMatchConfig(testConfig);
+const stateMachine = new StateMachine(matchConfig);
+const transitions = stateMachine.getTransitions(stateMachine.reduce());
+const setOfAllStateKeys = new Set([
+  ...transitions.map(([from]) => from),
+  ...transitions.map(([, to]) => to),
+]);
+const isPseudoState = stateValue => Object.values(PSEUDOSTATES).includes(stateValue);
 
 test('transition states are valid and cover all states', () => {
   const expectedStateKeys = new Set([...STATES, ...PSEUDOSTATES]);
-  expect(foundStateKeys).toMatch(expectedStateKeys);
+  expect(setOfAllStateKeys).toMatch(expectedStateKeys);
 });
 
-// test('states have outbound transition(s) with action', () => {
-//   for (const from in STATES) {
-//     const transition = transitions[STATES[from]];
-//     for (const to in transition) {
-//       expect(transition[to].action).toExist(`${STATES[from]} outbound transitions must have an action defined`);
-//     }
-//   }
-// });
-
 test('pseudostates have single outbound else, without a guard or action', () => {
-  const elseCount = {};
-  transitions.forEach(([from, to , t]) => {
-    if (isPseudoState(from) && t.guard === undefined && t.action === undefined) {
-      elseCount[to] = elseCount[to] ? elseCount[to]++ : 1;
-    }
-  });
+  const elseTransitionDesitinations = transitions
+    .filter(([from, , t]) => isPseudoState(from) && t.guard === undefined && t.action === undefined)
+    .map(([, to]) => to);
 
-  const containsDuplicateElse = !!Object.keys(elseCount).find(k => {
-    return elseCount[k] > 1;
-  });
-
-  expect(containsDuplicateElse).toBe(false);
+  expect(elseTransitionDesitinations.length).toEqual(new Set(elseTransitionDesitinations).size);
 });
 
 test('single initial state for state machine', () => {
-  const stateHasInbound = new Set(transitions.map(([from, to]) => { return to; }));
-  const difference = new Set([...foundStateKeys].filter(x => !stateHasInbound.has(x)));
+  const stateHasInbound = new Set(transitions.map(([, to]) => to));
+  const difference = new Set([...setOfAllStateKeys].filter(x => !stateHasInbound.has(x)));
   expect(difference.size).toBe(1);
 });
 
 test('single final state', () => {
-  const stateHasOutbound = new Set(transitions.map(([from, to]) => { return from; }));
-  const difference = new Set([...foundStateKeys].filter(x => !stateHasOutbound.has(x)));
+  const stateHasOutbound = new Set(transitions.map(([from]) => from));
+  const difference = new Set([...setOfAllStateKeys].filter(x => !stateHasOutbound.has(x)));
   expect(difference.size).toBe(1);
 });
 
 test('test transitions through initial games setup moves', () => {
-  const matchConfig = parseMatchConfig(testConfig);
-  const stateMachine = new StateMachine(matchConfig);
-  let state;
+  const actionsAndExpectations = [
+    [actionCreators.startMatch(2), STATES.SELECTING_FIRST_PLAYER],
+    [actionCreators.selectFirstPlayer(0), STATES.OCCUPYING, 0],
+    [actionCreators.occupyTerritory(0), STATES.OCCUPYING],
+    [actionCreators.occupyTerritory(1), STATES.OCCUPYING],
+    [actionCreators.occupyTerritory(2), STATES.OCCUPYING],
+    [actionCreators.occupyTerritory(3), STATES.PLACING_ADDITIONAL_ARMY],
+    [actionCreators.placeAdditionalArmy(0), STATES.PLACING_ADDITIONAL_ARMY],
+    [actionCreators.placeAdditionalArmy(1), STATES.PLACING_ADDITIONAL_ARMY],
+    [actionCreators.placeAdditionalArmy(2), STATES.PLACING_ADDITIONAL_ARMY],
+    [actionCreators.placeAdditionalArmy(3), STATES.PLACING_NEW_ARMIES],
+    [actionCreators.placeNewArmies(0, 3), STATES.BATTLING],
+    [actionCreators.endAttack(), STATES.FORTIFYING],
+    [actionCreators.endTurn(), STATES.PLACING_NEW_ARMIES],
+    // TODO - battle
+    // TODO - roll dice
+    // TODO - foritify
+  ];
 
-  state = stateMachine.reduce();
-  expect(state.stateKey).toEqual(STATES.INITIALIZING);
-
-  state = stateMachine.reduce(state, actionCreators.startMatch(2));
-  expect(state.stateKey).toEqual(STATES.SELECTING_FIRST_PLAYER);
-
-  state = stateMachine.reduce(state, actionCreators.selectFirstPlayer(0));
-  expect(state.currentPlayerIndex).toEqual(0);
-  expect(state.stateKey).toEqual(STATES.OCCUPYING);
-
-  state = stateMachine.reduce(state, actionCreators.occupyTerritory(0));
-  expect(state.stateKey).toEqual(STATES.OCCUPYING);
-  state = stateMachine.reduce(state, actionCreators.occupyTerritory(1));
-  expect(state.stateKey).toEqual(STATES.OCCUPYING);
-  state = stateMachine.reduce(state, actionCreators.occupyTerritory(2));
-  expect(state.stateKey).toEqual(STATES.OCCUPYING);
-  state = stateMachine.reduce(state, actionCreators.occupyTerritory(3));
-  expect(state.stateKey).toEqual(STATES.PLACING_ADDITIONAL_ARMY);
-
-  state = stateMachine.reduce(state, actionCreators.placeAdditionalArmy(0));
-  expect(state.stateKey).toEqual(STATES.PLACING_ADDITIONAL_ARMY);
-  state = stateMachine.reduce(state, actionCreators.placeAdditionalArmy(1));
-  expect(state.stateKey).toEqual(STATES.PLACING_ADDITIONAL_ARMY);
-  state = stateMachine.reduce(state, actionCreators.placeAdditionalArmy(2));
-  expect(state.stateKey).toEqual(STATES.PLACING_ADDITIONAL_ARMY);
-  state = stateMachine.reduce(state, actionCreators.placeAdditionalArmy(3));
-  expect(state.stateKey).toEqual(STATES.PLACING_NEW_ARMIES);
-
-  let undeployedArmies = state.players[state.currentPlayerIndex].undeployedArmies;
-  state = stateMachine.reduce(state, actionCreators.placeNewArmies(0, undeployedArmies));
-  expect(state.stateKey).toEqual(STATES.BATTLING);
-  state = stateMachine.reduce(state, actionCreators.endAttack());
-  expect(state.stateKey).toEqual(STATES.FORTIFYING);
-  state = stateMachine.reduce(state, actionCreators.endTurn());
-  expect(state.stateKey).toEqual(STATES.PLACING_NEW_ARMIES);
-
-  // todo - battle
-  // todo - roll dice
-  // todo - foritify
+  actionsAndExpectations.reduce((state, [action, expectedStateKey, currentPlayerIndex]) => {
+    const nextState = stateMachine.reduce(state, action);
+    expect(nextState.stateKey).toEqual(expectedStateKey);
+    if (Number.isInteger(currentPlayerIndex)) {
+      expect(nextState.currentPlayerIndex).toEqual(currentPlayerIndex);
+    }
+    return nextState;
+  }, stateMachine.reduce());
 });
 
 test('reducer ignores invalid actions', () => {
-  const matchConfig = parseMatchConfig(testConfig);
-  const stateMachine = new StateMachine(matchConfig);
-  let state;
+  const actionsAndExpectations = [
+    [actionCreators.startMatch(matchConfig.minPlayers - 1), STATES.INITIALIZING],
+    [actionCreators.startMatch(matchConfig.maxPlayers + 1), STATES.INITIALIZING],
+  ];
 
-  state = stateMachine.reduce();
-  expect(state.stateKey).toEqual(STATES.INITIALIZING);
-
-  state = stateMachine.reduce(state, actionCreators.startMatch(matchConfig.minPlayers - 1));
-  expect(state.stateKey).toEqual(STATES.INITIALIZING);
-
-  state = stateMachine.reduce(state, actionCreators.startMatch(matchConfig.maxPlayers + 1));
-  expect(state.stateKey).toEqual(STATES.INITIALIZING);
+  actionsAndExpectations.reduce((state, [action, expectedStateKey]) => {
+    const nextState = stateMachine.reduce(state, action);
+    expect(nextState.stateKey).toEqual(expectedStateKey);
+    return nextState;
+  }, stateMachine.reduce());
 });

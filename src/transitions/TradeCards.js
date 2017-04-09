@@ -1,7 +1,7 @@
-//@flow
-import type {MatchConfig} from '../MatchConfig';
-import type {MatchState} from '../MatchState';
-import {ACTIONS} from '../constants';
+// @flow
+import type { MatchConfig } from '../MatchConfig';
+import type { MatchState } from '../MatchState';
+import { ACTIONS } from '../constants';
 import TransitionGuarded from './TransitionGuarded';
 import replaceElements from './replaceElements';
 
@@ -21,22 +21,23 @@ import replaceElements from './replaceElements';
  * | 8     | 25    | (trade - 3) * 5 |
  * | 9     | 30    | (trade - 3) * 5 |
  *
- * An additional two armies may be awarded when one of the traded cards matches a territory the player occupies. These two armies are immediately placed on the territory itself. The award only applies to a single card.
+ * An additional two armies may be awarded when one of the traded cards matches
+ * a territory the player occupies. These two armies are immediately placed on
+ * the territory itself. The award only applies to a single card.
  *
  * The three cards must meet one of the following
  * * types match: cards[i].type === cards[j].type AND cards[j].type == cards[k].type
- * * types are unique: cards[i].type != cards[j].type AND cards[i].type != cards[k].type AND cards[j].type != cards[k].type
+ * * types are unique: cards[i].type != cards[j].type AND
+ *   cards[i].type != cards[k].type AND cards[j].type != cards[k].type
  * * one is wild: cards[i].type == WILD OR cards[j].type == WILD OR cards[k].type == WILD
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
-  const {cards, cardOccupiedTerritoryReward, cardTypeNames} = matchConfig;
-  const {cardOwner, territories, currentPlayerIndex, tradeCount} = extendedState;
+export default function (matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
+  const { cards, cardOccupiedTerritoryReward } = matchConfig;
+  const { cardOwner, territories, currentPlayerIndex, tradeCount } = extendedState;
 
   const guard = (action) => {
-    const isValidIndices = (x) => {
-      return x >= 0 && x < cards.length;
-    }
-    const {i, j, k} = action;
+    const isValidIndices = x => x >= 0 && x < cards.length;
+    const { i, j, k } = action;
     const areValidIndices = isValidIndices(i) && isValidIndices(j) && isValidIndices(k);
     const areUniqueCards = i !== j && j !== k && i !== k;
     const isOwner = cardOwner[i] === currentPlayerIndex &&
@@ -45,9 +46,7 @@ export default function(matchConfig: MatchConfig, extendedState: MatchState): Tr
     if (!areValidIndices || !areUniqueCards || !isOwner) {
       return false;
     }
-    const isWild = (index) => {
-      return cards[index][1] === null;
-    };
+    const isWild = index => cards[index][1] === null;
     const containsWildCard = isWild(i) || isWild(j) || isWild(k);
     const a = cards[i][0];
     const b = cards[j][0];
@@ -58,7 +57,7 @@ export default function(matchConfig: MatchConfig, extendedState: MatchState): Tr
   };
 
   const reduce = (action) => {
-    const {i, j, k} = action;
+    const { i, j, k } = action;
     const count = tradeCount + 1;
     const tradeAward = (count <= 5) ? (count + 1) * 2 : (count - 3) * 5;
 
@@ -72,11 +71,12 @@ export default function(matchConfig: MatchConfig, extendedState: MatchState): Tr
         return {};
       }
 
+      const card = extendedState.territories[firstCardTerritoryIndex];
       return {
         [firstCardTerritoryIndex]: {
-          owner: extendedState.territories[firstCardTerritoryIndex].owner,
-          armies: extendedState.territories[firstCardTerritoryIndex].armies + cardOccupiedTerritoryReward
-        }
+          owner: card.owner,
+          armies: card.armies + cardOccupiedTerritoryReward,
+        },
       };
     })();
 
@@ -85,17 +85,17 @@ export default function(matchConfig: MatchConfig, extendedState: MatchState): Tr
       tradeCount: count,
       players: replaceElements(extendedState.players, {
         [currentPlayerIndex]: {
-          undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies + tradeAward
-        }
+          undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies + tradeAward,
+        },
       }),
       cardOwner: replaceElements(extendedState.cardOwner, {
         [i]: null,
         [j]: null,
-        [k]: null
+        [k]: null,
       }),
-      territories: replaceElements(extendedState.territories, territoryUpdate)
+      territories: replaceElements(extendedState.territories, territoryUpdate),
     };
-  }
+  };
 
   return new TransitionGuarded(ACTIONS.TRADE_CARDS, guard, reduce);
 }

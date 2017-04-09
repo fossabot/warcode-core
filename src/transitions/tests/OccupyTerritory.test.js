@@ -1,9 +1,9 @@
-import {ACTIONS, STATES, PSEUDOSTATES} from '../../constants';
+import expect from 'expect';
+import { STATES } from '../../constants';
 import OccupyTerritory from '../OccupyTerritory';
 import TransitionGuarded from '../TransitionGuarded';
-import {parseMatchConfig} from '../../MatchConfig';
+import { parseMatchConfig } from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
-import expect from 'expect';
 
 const matchConfig = parseMatchConfig();
 const matchExtendedState = {
@@ -11,19 +11,19 @@ const matchExtendedState = {
   currentPlayerIndex: 0,
   territories: [{
     owner: undefined,
-    armies: 0
+    armies: 0,
   }, {
     owner: 0,
-    armies: 1
+    armies: 1,
   }, {
     owner: 1,
-    armies: 1
+    armies: 1,
   }],
   players: [{
-    undeployedArmies: 1
+    undeployedArmies: 1,
   }, {
-    undeployedArmies: 0
-  }]
+    undeployedArmies: 0,
+  }],
 };
 
 test('guard validates territory index', () => {
@@ -54,7 +54,7 @@ test('reduce updates player and territory', () => {
   expect(n.territories[territoryIndex].armies)
     .toBe(1);
   expect(n.players[matchExtendedState.currentPlayerIndex].undeployedArmies)
-    .toBe(matchExtendedState.players[matchExtendedState.currentPlayerIndex].undeployedArmies-1);
+    .toBe(matchExtendedState.players[matchExtendedState.currentPlayerIndex].undeployedArmies - 1);
   expect(n.players[1].undeployedArmies)
     .toBe(matchExtendedState.players[1].undeployedArmies);
 });

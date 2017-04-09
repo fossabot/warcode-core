@@ -1,7 +1,7 @@
-//@flow
-import type {MatchConfig} from '../MatchConfig';
-import type {MatchState} from '../MatchState';
-import {ACTIONS} from '../constants';
+// @flow
+import type { MatchConfig } from '../MatchConfig';
+import type { MatchState } from '../MatchState';
+import { ACTIONS } from '../constants';
 import TransitionGuarded from './TransitionGuarded';
 
 /**
@@ -17,12 +17,12 @@ import TransitionGuarded from './TransitionGuarded';
  * For example, if you are attacking from a territory with three armies, you
  * may only roll two dice.
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
-  const {edges} = matchConfig;
-  const {territories, currentPlayerIndex} = extendedState;
+export default function (matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
+  const { edges } = matchConfig;
+  const { territories, currentPlayerIndex } = extendedState;
 
   const guard = (action) => {
-    const {attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount} = action;
+    const { attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount } = action;
     return Number.isInteger(attackingTerritoryIndex)
       && attackingTerritoryIndex >= 0
       && attackingTerritoryIndex < territories.length
@@ -38,14 +38,14 @@ export default function(matchConfig: MatchConfig, extendedState: MatchState): Tr
   };
 
   const reduce = (action) => {
-    const {attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount} = action;
+    const { attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount } = action;
     return {
       ...extendedState,
       activeBattle: {
         attackingTerritoryIndex,
         defendingTerritoryIndex,
-        attackingDiceCount
-      }
+        attackingDiceCount,
+      },
     };
   };
 

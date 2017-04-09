@@ -1,7 +1,7 @@
-//@flow
-import type {MatchConfig} from '../MatchConfig';
-import type {MatchState} from '../MatchState';
-import {ACTIONS} from '../constants';
+// @flow
+import type { MatchConfig } from '../MatchConfig';
+import type { MatchState } from '../MatchState';
+import { ACTIONS } from '../constants';
 import TransitionGuarded from './TransitionGuarded';
 import replaceElements from './replaceElements';
 
@@ -10,11 +10,11 @@ import replaceElements from './replaceElements';
  * moving armies from the attacking territory. The number of armies moved must
  * be at least the same number of dice rolled in the decisive battle.
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
-  const {territories, activeBattle, currentPlayerIndex} = extendedState;
+export default function (matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
+  const { territories, activeBattle, currentPlayerIndex } = extendedState;
 
   const guard = (action) => {
-    const {armies} = action;
+    const { armies } = action;
     return !!activeBattle
       && Number.isInteger(armies)
       && armies >= activeBattle.attackingDiceCount
@@ -22,26 +22,26 @@ export default function(matchConfig: MatchConfig, extendedState: MatchState): Tr
   };
 
   const reduce = (action) => {
-    const {armies} = action;
+    const { armies } = action;
     if (!activeBattle) {
       return extendedState;
     }
-    const {attackingTerritoryIndex, defendingTerritoryIndex} = activeBattle;
+    const { attackingTerritoryIndex, defendingTerritoryIndex } = activeBattle;
 
     return {
       ...extendedState,
       territories: replaceElements(extendedState.territories, {
         [attackingTerritoryIndex]: {
           owner: extendedState.territories[attackingTerritoryIndex].owner,
-          armies: extendedState.territories[attackingTerritoryIndex].armies - armies
+          armies: extendedState.territories[attackingTerritoryIndex].armies - armies,
         },
         [defendingTerritoryIndex]: {
           owner: currentPlayerIndex,
-          armies: armies
-        }
+          armies,
+        },
       }),
       capturedTerritories: extendedState.capturedTerritories + 1,
-      activeBattle: undefined
+      activeBattle: undefined,
     };
   };
 

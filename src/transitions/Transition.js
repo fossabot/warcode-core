@@ -1,5 +1,5 @@
-//@flow
-import type {MatchState} from '../MatchState';
+// @flow
+import type { MatchState } from '../MatchState';
 
 /** Transition with guard or reduce, leaving a pseudostate */
 class Transition {
@@ -24,6 +24,7 @@ class Transition {
     if (typeof this._reduce === 'function') {
       return this._reduce(action);
     }
+    return undefined;
   }
 }
 
@@ -32,4 +33,4 @@ interface actionInterface {
 }
 export type Guard = (action: Object) => ?boolean;
 export type Reduce = (action: Object) => ?MatchState;
-export {Transition};
+export { Transition };

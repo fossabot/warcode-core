@@ -1,18 +1,18 @@
-import {ACTIONS, STATES, PSEUDOSTATES} from '../../constants';
+import expect from 'expect';
+import { STATES } from '../../constants';
 import SelectFirstPlayer from '../SelectFirstPlayer';
 import TransitionGuarded from '../TransitionGuarded';
-import {parseMatchConfig} from '../../MatchConfig';
+import { parseMatchConfig } from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
-import expect from 'expect';
 
 const matchConfig = parseMatchConfig();
 const matchExtendedState = {
   stateKey: STATES.SELECT_FIRST_PLAYER,
   players: [{
-    undeployedArmies: 1
+    undeployedArmies: 1,
   }, {
-    undeployedArmies: 0
-  }]
+    undeployedArmies: 0,
+  }],
 };
 
 test('guard validates first player index', () => {

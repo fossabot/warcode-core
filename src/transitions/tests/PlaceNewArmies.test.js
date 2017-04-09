@@ -1,9 +1,9 @@
-import {ACTIONS, STATES, PSEUDOSTATES} from '../../constants';
+import expect from 'expect';
+import { STATES } from '../../constants';
 import PlaceNewArmies from '../PlaceNewArmies';
 import TransitionGuarded from '../TransitionGuarded';
-import {parseMatchConfig} from '../../MatchConfig';
+import { parseMatchConfig } from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
-import expect from 'expect';
 
 const matchConfig = parseMatchConfig();
 const matchExtendedState = {
@@ -11,19 +11,19 @@ const matchExtendedState = {
   currentPlayerIndex: 0,
   territories: [{
     owner: 1,
-    armies: 1
+    armies: 1,
   }, {
     owner: 0,
-    armies: 1
+    armies: 1,
   }, {
     owner: 1,
-    armies: 1
+    armies: 1,
   }],
   players: [{
-    undeployedArmies: 3
+    undeployedArmies: 3,
   }, {
-    undeployedArmies: 0
-  }]
+    undeployedArmies: 0,
+  }],
 };
 
 test('guard checks player and territory', () => {
@@ -47,11 +47,12 @@ test('reduce updates player and territory', () => {
   const transition: TransitionGuarded = new PlaceNewArmies(matchConfig, matchExtendedState);
   const action = actionCreators.placeNewArmies(territoryIndex, armies);
   const n = transition.reduce(action);
+  const currentPlayerIndex = matchExtendedState.currentPlayerIndex;
 
   expect(n.territories[territoryIndex].armies)
     .toBe(matchExtendedState.territories[territoryIndex].armies + armies);
-  expect(n.players[matchExtendedState.currentPlayerIndex].undeployedArmies)
-    .toBe(matchExtendedState.players[matchExtendedState.currentPlayerIndex].undeployedArmies - armies);
+  expect(n.players[currentPlayerIndex].undeployedArmies)
+    .toBe(matchExtendedState.players[currentPlayerIndex].undeployedArmies - armies);
   expect(n.players[1].undeployedArmies)
     .toBe(matchExtendedState.players[1].undeployedArmies);
 });

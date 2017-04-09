@@ -1,7 +1,6 @@
-//@flow
-import type {MatchConfig} from '../MatchConfig';
-import type {MatchState} from '../MatchState';
-import {ACTIONS} from '../constants';
+// @flow
+import type { MatchConfig } from '../MatchConfig';
+import { ACTIONS } from '../constants';
 import TransitionGuarded from './TransitionGuarded';
 
 /**
@@ -29,31 +28,31 @@ import TransitionGuarded from './TransitionGuarded';
  * // newMatchState === { stateID: STATES.SELECTING_FIRST_PLAYER, ... }
  *
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
-  const {minPlayers, maxPlayers, territories, cards, startingArmiesByPlayers} = matchConfig;
+export default function (matchConfig: MatchConfig): TransitionGuarded {
+  const { minPlayers, maxPlayers, territories, cards, startingArmiesByPlayers } = matchConfig;
 
   const guard = (action) => {
-    const {playerCount} = action;
+    const { playerCount } = action;
     return Number.isInteger(playerCount)
       && playerCount >= minPlayers
       && playerCount <= maxPlayers;
   };
 
   const reduce = (action) => {
-    const {playerCount} = action;
+    const { playerCount } = action;
     return {
       territories: Array(territories.length).fill({
         owner: undefined,
-        armies: 0
+        armies: 0,
       }),
       cardOwner: Array(cards.length).fill(undefined),
       players: Array(playerCount).fill({
-        undeployedArmies: startingArmiesByPlayers[playerCount]
+        undeployedArmies: startingArmiesByPlayers[playerCount],
       }),
       currentPlayerIndex: -1,
       tradeCount: 0,
       capturedTerritories: 0,
-      activeBattle: undefined
+      activeBattle: undefined,
     };
   };
 

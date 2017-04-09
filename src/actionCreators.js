@@ -4,7 +4,8 @@ import { ACTIONS } from './constants';
 /**
  * Start the match.
  *
- * @param playerCount - Number of players. The match settings determine the minimum and maximum number of players.
+ * @param playerCount - Number of players. The match settings determine
+ *   the minimum and maximum number of players.
  * @example
  * let state = stateMachine.reduce();
  * let action = actionCreators.startMatch(3);
@@ -13,7 +14,7 @@ import { ACTIONS } from './constants';
 function startMatch(playerCount: number): {type: string, playerCount: number} {
   return {
     type: ACTIONS.START_MATCH,
-    playerCount
+    playerCount,
   };
 }
 
@@ -32,7 +33,7 @@ function startMatch(playerCount: number): {type: string, playerCount: number} {
 function selectFirstPlayer(firstPlayerIndex: number): {type: string, firstPlayerIndex: number} {
   return {
     type: ACTIONS.SELECT_FIRST_PLAYER,
-    firstPlayerIndex
+    firstPlayerIndex,
   };
 }
 
@@ -45,7 +46,7 @@ function selectFirstPlayer(firstPlayerIndex: number): {type: string, firstPlayer
 function occupyTerritory(territoryIndex: number): {type: string, territoryIndex: number} {
   return {
     type: ACTIONS.OCCUPY_TERRITORY,
-    territoryIndex
+    territoryIndex,
   };
 }
 
@@ -58,7 +59,7 @@ function occupyTerritory(territoryIndex: number): {type: string, territoryIndex:
 function placeAdditionalArmy(territoryIndex: number): {type: string, territoryIndex: number} {
   return {
     type: ACTIONS.PLACE_ADDITIONAL_ARMY,
-    territoryIndex
+    territoryIndex,
   };
 }
 
@@ -69,13 +70,17 @@ function placeAdditionalArmy(territoryIndex: number): {type: string, territoryIn
  * @param j - Index of card to trade
  * @param k - Index of card to trade
  */
-function tradeCards(i: number, j: number, k: number): {type: string, i: number, j: number, k: number} {
-   return {
-     type: ACTIONS.TRADE_CARDS,
-     i,
-     j,
-     k
-   };
+function tradeCards(i: number, j: number, k: number): {
+  type: string,
+  i: number,
+  j: number,
+  k: number } {
+  return {
+    type: ACTIONS.TRADE_CARDS,
+    i,
+    j,
+    k,
+  };
 }
 
 /**
@@ -84,7 +89,7 @@ function tradeCards(i: number, j: number, k: number): {type: string, i: number, 
  */
 function endTrade(): {type: string} {
   return {
-    type: ACTIONS.END_TRADE
+    type: ACTIONS.END_TRADE,
   };
 }
 
@@ -93,11 +98,14 @@ function endTrade(): {type: string} {
  * @param territoryIndex - index of territory to place new armies
  * @param armies - number of armies to place
  */
-function placeNewArmies(territoryIndex: number, armies: number): {type: string, territoryIndex: number, armies: number} {
+function placeNewArmies(territoryIndex: number, armies: number): {
+  type: string,
+  territoryIndex: number,
+  armies: number } {
   return {
     type: ACTIONS.PLACE_NEW_ARMIES,
     territoryIndex,
-    armies
+    armies,
   };
 }
 
@@ -107,12 +115,16 @@ function placeNewArmies(territoryIndex: number, armies: number): {type: string, 
  * @param defendingTerritoryIndex - index of defending territory
  * @param attackingDiceCount - number of dice to be rolled by attacker
  */
-function battle(attackingTerritoryIndex: number, defendingTerritoryIndex: number, attackingDiceCount: number): {type: string, attackingTerritoryIndex: number, defendingTerritoryIndex: number, attackingDiceCount: number} {
+function battle(attackingTerritoryIndex: number, defendingTerritoryIndex: number, attackingDiceCount: number): {
+  type: string,
+  attackingTerritoryIndex: number,
+  defendingTerritoryIndex: number,
+  attackingDiceCount: number } {
   return {
     type: ACTIONS.BATTLE,
     attackingTerritoryIndex,
     defendingTerritoryIndex,
-    attackingDiceCount
+    attackingDiceCount,
   };
 }
 
@@ -121,18 +133,21 @@ function battle(attackingTerritoryIndex: number, defendingTerritoryIndex: number
  * @param attackerDice - dice rolled by attacker
  * @param defenderDice - dice rolled by defender
  */
-function rollDice(attackerDice: number[], defenderDice: number[]): {type: string, attackerDice: number[], defenderDice: number[]} {
+function rollDice(attackerDice: number[], defenderDice: number[]): {
+  type: string,
+  attackerDice: number[],
+  defenderDice: number[] } {
   return {
     type: ACTIONS.ROLL_DICE,
     attackerDice,
-    defenderDice
+    defenderDice,
   };
 }
 
 /** End attack and begin fortifying */
-function endAttack(): {type: string} {
+function endAttack(): { type: string } {
   return {
-    type: ACTIONS.END_ATTACK
+    type: ACTIONS.END_ATTACK,
   };
 }
 
@@ -143,30 +158,37 @@ function endAttack(): {type: string} {
 function capture(armies: number): {type: string, armies: number} {
   return {
     type: ACTIONS.CAPTURE,
-    armies
+    armies,
   };
 }
 
 /**
  * Move armies between two of your adjacent territories before ending your turn.
  *
- * @param fromTerritoryIndex - Index of territory to move armies from. Must be owned by you, have more than one army, and be adjacent to toTerritoryIndex.
- * @param toTerritoryIndex - Index of territory to move armies to. Must be owned by you and adjacent to fromTerritoryIndex.
- * @param armies - Number of armies to move. You must leave one army behind, so the number may between one and the number of the armies on fromTerritoryIndex.
+ * @param fromTerritoryIndex - Index of territory to move armies from. Must
+ *   be owned by you, have more than one army, and be adjacent to toTerritoryIndex.
+ * @param toTerritoryIndex - Index of territory to move armies to. Must be
+ *   owned by you and adjacent to fromTerritoryIndex.
+ * @param armies - Number of armies to move. You must leave one army behind,
+ *   so the number may between one and the number of the armies on fromTerritoryIndex.
  */
-function fortify(fromTerritoryIndex: number, toTerritoryIndex: number, armies: number): {type: string, fromTerritoryIndex: number, toTerritoryIndex: number, armies: number} {
+function fortify(fromTerritoryIndex: number, toTerritoryIndex: number, armies: number): {
+  type: string,
+  fromTerritoryIndex: number,
+  toTerritoryIndex: number,
+  armies: number } {
   return {
     type: ACTIONS.FORTIFY,
     fromTerritoryIndex,
     toTerritoryIndex,
-    armies
-  }
+    armies,
+  };
 }
 
 /** End turn without fortifying. */
 function endTurn(): {type: string} {
   return {
-    type: ACTIONS.END_TURN
+    type: ACTIONS.END_TURN,
   };
 }
 
@@ -178,9 +200,9 @@ function endTurn(): {type: string} {
 function drawRandomCard(cardIndex: number): {type: string, cardIndex: number} {
   return {
     type: ACTIONS.DRAW_RANDOM_CARD,
-    cardIndex
-  }
-};
+    cardIndex,
+  };
+}
 
 export default {
   startMatch,
@@ -196,5 +218,5 @@ export default {
   capture,
   fortify,
   endTurn,
-  drawRandomCard
-}
+  drawRandomCard,
+};

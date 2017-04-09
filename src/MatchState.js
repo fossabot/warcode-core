@@ -1,4 +1,4 @@
-//@flow
+// @flow
 export type MatchState = {
   territories: Array<{
     owner: number,

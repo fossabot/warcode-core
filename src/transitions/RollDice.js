@@ -1,9 +1,28 @@
-//@flow
-import type {MatchConfig} from '../MatchConfig';
-import type {MatchState} from '../MatchState';
-import {ACTIONS} from '../constants';
+// @flow
+import type { MatchConfig } from '../MatchConfig';
+import type { MatchState } from '../MatchState';
+import { ACTIONS } from '../constants';
 import TransitionGuarded from './TransitionGuarded';
 import replaceElements from './replaceElements';
+
+const getLoses = (attackerDice, defenderDice) => {
+  const diceToCompare = Math.min(attackerDice.length, defenderDice.length);
+  const sortDecending = (a, b) => (a < b ? 1 : -1);
+  const attackerDiceSorted = [...attackerDice].sort(sortDecending);
+  const defenderDiceSorted = [...defenderDice].sort(sortDecending);
+  const loses = {
+    defender: 0,
+    attacker: 0,
+  };
+  for (let i = 0; i < diceToCompare; i += 1) {
+    if (attackerDiceSorted[i] > defenderDiceSorted[i]) {
+      loses.defender += 1;
+    } else {
+      loses.attacker += 1;
+    }
+  }
+  return loses;
+};
 
 /**
  * Simulate players rolling dice.
@@ -20,24 +39,25 @@ import replaceElements from './replaceElements';
  * territory contains a single army. When the territory contains multiple
  * armies, the defender may roll either one or two dice.
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
-  const {territories, activeBattle} = extendedState;
+export default function (matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
+  const { territories, activeBattle } = extendedState;
 
   const guard = (action) => {
-    const {attackerDice, defenderDice} = action;
+    const { attackerDice, defenderDice } = action;
+    const armiesOnDefender = territories[activeBattle.defendingTerritoryIndex].armies;
 
     return !!activeBattle
       && Array.isArray(attackerDice)
       && attackerDice.length === activeBattle.attackingDiceCount
-      && attackerDice.every(d => { return d >= 1 && d <= 6; })
+      && attackerDice.every(d => d >= 1 && d <= 6)
       && Array.isArray(defenderDice)
       && defenderDice.length >= 1
-      && defenderDice.length <= Math.min(2, territories[activeBattle.defendingTerritoryIndex].armies)
-      && defenderDice.every(d => { return d >= 1 && d <= 6; });
+      && defenderDice.length <= Math.min(2, armiesOnDefender)
+      && defenderDice.every(d => d >= 1 && d <= 6);
   };
 
   const reduce = (action) => {
-    const {attackerDice, defenderDice} = action;
+    const { attackerDice, defenderDice } = action;
     if (!activeBattle) {
       return extendedState;
     }
@@ -51,34 +71,15 @@ export default function(matchConfig: MatchConfig, extendedState: MatchState): Tr
       territories: replaceElements(extendedState.territories, {
         [attackingTerritoryIndex]: {
           owner: extendedState.territories[attackingTerritoryIndex].owner,
-          armies: extendedState.territories[attackingTerritoryIndex].armies - loses.attacker
+          armies: extendedState.territories[attackingTerritoryIndex].armies - loses.attacker,
         },
         [defendingTerritoryIndex]: {
           owner: extendedState.territories[defendingTerritoryIndex].owner,
-          armies: extendedState.territories[defendingTerritoryIndex].armies - loses.defender
-        }
-      })
+          armies: extendedState.territories[defendingTerritoryIndex].armies - loses.defender,
+        },
+      }),
     };
   };
 
   return new TransitionGuarded(ACTIONS.ROLL_DICE, guard, reduce);
 }
-
-function getLoses(attackerDice, defenderDice) {
-  const diceToCompare = Math.min(attackerDice.length, defenderDice.length);
-  const sortDecending = (a,b) => (a < b ? 1 : -1);
-  const attackerDiceSorted = [...attackerDice].sort(sortDecending);
-  const defenderDiceSorted = [...defenderDice].sort(sortDecending);
-  const loses = {
-    defender: 0,
-    attacker: 0
-  };
-  for (let i = 0; i < diceToCompare; i++) {
-    if (attackerDiceSorted[i] > defenderDiceSorted[i]) {
-      loses.defender++;
-    } else {
-      loses.attacker++;
-    }
-  }
-  return loses;
-};

@@ -1,32 +1,32 @@
-import {ACTIONS, STATES, PSEUDOSTATES} from '../../constants';
+import expect from 'expect';
+import { STATES } from '../../constants';
 import DrawRandomCard from '../DrawRandomCard';
 import TransitionGuarded from '../TransitionGuarded';
-import {parseMatchConfig} from '../../MatchConfig';
+import { parseMatchConfig } from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 import testConfig from './config.json';
-import expect from 'expect';
 
 const matchConfig = parseMatchConfig(testConfig);
 const currentPlayerIndex = 0;
 const matchExtendedState = {
   stateKey: STATES.BATTLING,
-  currentPlayerIndex: currentPlayerIndex,
+  currentPlayerIndex,
   territories: [{
     owner: 1,
-    armies: 3
+    armies: 3,
   }, {
     owner: 0,
-    armies: 6
+    armies: 6,
   }, {
     owner: 0,
-    armies: 3
+    armies: 3,
   }],
   players: [{
-    undeployedArmies: 0
+    undeployedArmies: 0,
   }, {
-    undeployedArmies: 0
+    undeployedArmies: 0,
   }],
-  cardOwner: Array(6).fill(undefined)
+  cardOwner: Array(6).fill(undefined),
 };
 
 test('guard checks capture parameters', () => {
@@ -39,7 +39,7 @@ test('guard checks capture parameters', () => {
     [actionCreators.drawRandomCard(3), true],
     [actionCreators.drawRandomCard(4), true],
     [actionCreators.drawRandomCard(5), true],
-    [actionCreators.drawRandomCard(6), false]
+    [actionCreators.drawRandomCard(6), false],
   ];
   actions.forEach(([action, expected]) => {
     expect(transition.guard(action)).toEqual(expected);

@@ -13,7 +13,7 @@ export const ACTIONS = Object.freeze({
   CAPTURE: 'Capture',
   FORTIFY: 'Fortify',
   END_TURN: 'EndTurn',
-  DRAW_RANDOM_CARD: 'DrawRandomCard'
+  DRAW_RANDOM_CARD: 'DrawRandomCard',
 });
 
 // State constants
@@ -28,7 +28,7 @@ export const STATES = Object.freeze({
   ROLLING_DICE: 'RollingDice',
   FORTIFYING: 'Fortifying',
   DRAWING_RANDOM_CARD: 'DrawingRandomCard',
-  CAPTURING: 'Capturing'
+  CAPTURING: 'Capturing',
 });
 
 // Pseudostate constants, which may be hidden by this module
@@ -41,5 +41,5 @@ export const PSEUDOSTATES = Object.freeze({
   HAS_DEFEATED_TERRITORY: 'HasDefeatedTerritory',
   HAS_DEFEATED_OPPONENT: 'HasDefeatedOpponent',
   HAS_EARNED_CARD: 'HasEarnedCard',
-  GAME_OVER: 'GameOver'
+  GAME_OVER: 'GameOver',
 });

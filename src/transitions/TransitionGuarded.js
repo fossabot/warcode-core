@@ -1,6 +1,6 @@
-//@flow
-import {Transition} from './Transition';
-import type {Guard, Reduce} from './Transition';
+// @flow
+import { Transition } from './Transition';
+import type { Guard, Reduce } from './Transition';
 
 /** Transition out of a state triggered by player interaction */
 class TransitionGuarded extends Transition {

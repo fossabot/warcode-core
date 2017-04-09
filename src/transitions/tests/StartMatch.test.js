@@ -1,13 +1,13 @@
-import {ACTIONS, STATES, PSEUDOSTATES} from '../../constants';
+import expect from 'expect';
+import { STATES } from '../../constants';
 import StartMatch from '../StartMatch';
 import TransitionGuarded from '../TransitionGuarded';
-import {parseMatchConfig} from '../../MatchConfig';
+import { parseMatchConfig } from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
-import expect from 'expect';
 
 const matchConfig = parseMatchConfig();
 const matchExtendedState = {
-  stateKey: STATES.INITIALIZING
+  stateKey: STATES.INITIALIZING,
 };
 
 test('guard validates player count', () => {

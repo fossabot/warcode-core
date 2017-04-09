@@ -1,10 +1,10 @@
-import {ACTIONS, STATES, PSEUDOSTATES} from '../../constants';
+import expect from 'expect';
+import { STATES } from '../../constants';
 import Capture from '../Capture';
 import TransitionGuarded from '../TransitionGuarded';
-import {parseMatchConfig} from '../../MatchConfig';
+import { parseMatchConfig } from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 import testConfig from './config.json';
-import expect from 'expect';
 
 const matchConfig = parseMatchConfig(testConfig);
 const matchExtendedState = {
@@ -12,24 +12,24 @@ const matchExtendedState = {
   currentPlayerIndex: 0,
   territories: [{
     owner: 1,
-    armies: 3
+    armies: 3,
   }, {
     owner: 0,
-    armies: 6
+    armies: 6,
   }, {
     owner: 1,
-    armies: 3
+    armies: 3,
   }],
   players: [{
-    undeployedArmies: 0
+    undeployedArmies: 0,
   }, {
-    undeployedArmies: 0
+    undeployedArmies: 0,
   }],
   activeBattle: {
     attackingTerritoryIndex: 1,
     defendingTerritoryIndex: 0,
-    attackingDiceCount: 3
-  }
+    attackingDiceCount: 3,
+  },
 };
 
 test('guard checks capture parameters', () => {
@@ -41,7 +41,7 @@ test('guard checks capture parameters', () => {
     [actionCreators.capture(3), true],
     [actionCreators.capture(4), true],
     [actionCreators.capture(5), true],
-    [actionCreators.capture(6), false]
+    [actionCreators.capture(6), false],
   ];
   actions.forEach(([action, expected]) => {
     expect(transition.guard(action)).toEqual(expected);
@@ -49,13 +49,14 @@ test('guard checks capture parameters', () => {
 });
 
 test('reduce updates state', () => {
-  const {attackingTerritoryIndex, defendingTerritoryIndex} = matchExtendedState.activeBattle;
+  const { attackingTerritoryIndex, defendingTerritoryIndex } = matchExtendedState.activeBattle;
   const transition: TransitionGuarded = new Capture(matchConfig, matchExtendedState);
   const armiesToMove = 3;
   const action = actionCreators.capture(armiesToMove);
   const n = transition.reduce(action);
+  const attackingArmies = matchExtendedState.territories[attackingTerritoryIndex].armies;
 
   expect(n.activeBattle).toNotExist();
-  expect(n.territories[attackingTerritoryIndex].armies).toBe(matchExtendedState.territories[attackingTerritoryIndex].armies - armiesToMove);
+  expect(n.territories[attackingTerritoryIndex].armies).toBe(attackingArmies - armiesToMove);
   expect(n.territories[defendingTerritoryIndex].armies).toBe(armiesToMove);
 });

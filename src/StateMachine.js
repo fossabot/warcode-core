@@ -1,6 +1,6 @@
-import {ACTIONS, STATES, PSEUDOSTATES} from './constants';
+import { STATES, PSEUDOSTATES } from './constants';
 import nextPlayerIndex from './transitions/nextPlayerIndex';
-import {Transition} from './transitions/Transition';
+import { Transition } from './transitions/Transition';
 import StartMatch from './transitions/StartMatch';
 import SelectFirstPlayer from './transitions/SelectFirstPlayer';
 import OccupyTerritory from './transitions/OccupyTerritory';
@@ -18,95 +18,51 @@ import EndTurn from './transitions/EndTurn';
 import DrawRandomCard from './transitions/DrawRandomCard';
 
 function StateMachine(matchConfig) {
-  // @return {{nextStateKey: string, reduce: Function}} transition object, may to pseudostate
-  const getTransition = function(extendedState, action) {
-    const allTransitions = getTransitions(extendedState);
+  const getTransitions = (extendedState) => {
+    const {
+      territories,
+      cardOwner,
+      players,
+      currentPlayerIndex,
+      capturedTerritories } = extendedState;
 
-    const fromCurrentState = allTransitions.filter(([from]) => {
-      return from === extendedState.stateKey;
+    const simpleGuard = (guard: ?boolean) =>
+      new Transition(guard, () => extendedState);
+
+    const elseTransition = () =>
+      new Transition(() => undefined, () => extendedState);
+
+    const elseTransitionWithReducer = reducer =>
+      new Transition(() => undefined, reducer);
+
+    const reduceNextPlayer = () => ({
+      ...extendedState,
+      currentPlayerIndex: nextPlayerIndex(extendedState),
     });
 
-    const guardSatisfied = [];
-    const guardUnsatisfied = [];
-    const elses = [];
+    const IsUnoccupiedTerritory = () =>
+      new Transition(() => territories.some(t => t.armies === 0), () => extendedState);
 
-    fromCurrentState.forEach(([from, to, t]) => {
-      if (!t || typeof t.guard !== 'function' || typeof t.reduce !== 'function') {
-        console.error(from, to, t);
-      }
-      const evaluated = t.guard(action);
-      const result = {
-        nextStateKey: to,
-        reduce: (action) => t.reduce.apply(t, [action]) // bind method to object
-      };
+    const areAllArmiesDeployed = () =>
+      players.every(p => p.undeployedArmies === 0);
 
-      if (evaluated === true) {
-        guardSatisfied.push(result);
-      } else if (evaluated === undefined) {
-        elses.push(result);
-      } else {
-        guardUnsatisfied.push(result);
-      }
-    });
+    const DoesCurrentPlayerHaveUndeployedArmies = () =>
+      new Transition(() => players[currentPlayerIndex].undeployedArmies >= 1, () => extendedState);
 
-    // quit when there path is indeterminant, meaning there are multiple transitions
-    if (guardSatisfied.length > 1 && elses.length > 1) {
-      throw { message: 'nondeterministic state' };
-    }
+    const doesCurrentPlayerHaveNoCards = () =>
+      cardOwner.every(o => o !== currentPlayerIndex);
 
-    // stop when blocked
-    if (guardSatisfied.length === 0 && elses.length === 0) {
-      return;
-    }
+    const isGameOver = () =>
+      territories.every(t => t.owner === currentPlayerIndex);
 
-    return (guardSatisfied.length === 1) ? guardSatisfied[0] : elses[0];
-  };
+    const isTerritoryDefeated = () =>
+      territories[extendedState.activeBattle.defendingTerritoryIndex].armies === 0;
 
-  const getTransitions = function(extendedState) {
-    const {territories, cardOwner, players, currentPlayerIndex, capturedTerritories} = extendedState;
+    const hasPlayerEarnedCard = () =>
+      capturedTerritories > 0 && cardOwner.some(owner => owner !== undefined);
 
-    const simpleGuard = function(guard: ?boolean) {
-      return new Transition(guard, () => { return extendedState; });
-    };
-
-    const elseTransition = function() {
-      return new Transition(() => { return undefined; }, () => { return extendedState; });
-    };
-
-    const elseTransitionWithReducer = function(reducer) {
-      return new Transition(() => { return undefined; }, reducer);
-    };
-
-    const reduceNextPlayer = function() {
-      return {
-        ...extendedState,
-        currentPlayerIndex: nextPlayerIndex(extendedState)
-      };
-    };
-
-    const isUnoccupiedTerritory = function() {
-      return territories.some((t) => { return t.armies === 0; });
-    };
-    const areAllArmiesDeployed = function() {
-      return players.every((p) => { return p.undeployedArmies === 0; });
-    };
-    const doesCurrentPlayerHaveUndeployedArmies = function() {
-      return players[currentPlayerIndex].undeployedArmies >= 1;
-    };
-    const doesCurrentPlayerHaveNoCards = function() {
-      return cardOwner.every(o => { return o !== currentPlayerIndex; });
-    };
-    const isGameOver = function() {
-      return territories.every(t => { return t.owner === currentPlayerIndex; });
-    };
-    const isTerritoryDefeated = function() {
-      return territories[extendedState.activeBattle.defendingTerritoryIndex].armies === 0;
-    };
-    const hasPlayerEarnedCard = function() {
-      return capturedTerritories > 0 && cardOwner.some(owner => owner !== undefined);
-    };
-    const hasTooManyCardsFromDefeat = function() {
-      const cardsHeld = territories.filter(c => { return c.owner === currentPlayerIndex; });
+    const hasTooManyCardsFromDefeat = () => {
+      const cardsHeld = territories.filter(c => c.owner === currentPlayerIndex);
       return !isGameOver() && cardsHeld > 5;
     };
 
@@ -114,7 +70,7 @@ function StateMachine(matchConfig) {
     return [
       [STATES.INITIALIZING, STATES.SELECTING_FIRST_PLAYER, StartMatch(matchConfig, extendedState)],
       [STATES.SELECTING_FIRST_PLAYER, PSEUDOSTATES.INITIAL_CHOICE, SelectFirstPlayer(matchConfig, extendedState)],
-      [PSEUDOSTATES.INITIAL_CHOICE, STATES.OCCUPYING, simpleGuard(isUnoccupiedTerritory)],
+      [PSEUDOSTATES.INITIAL_CHOICE, STATES.OCCUPYING, IsUnoccupiedTerritory()],
       [PSEUDOSTATES.INITIAL_CHOICE, STATES.PLACING_ADDITIONAL_ARMY, elseTransition()],
       [STATES.OCCUPYING, PSEUDOSTATES.HAS_PLACED_ARMIES, OccupyTerritory(matchConfig, extendedState)],
       [STATES.PLACING_ADDITIONAL_ARMY, PSEUDOSTATES.HAS_PLACED_ARMIES, PlaceAdditionalArmy(matchConfig, extendedState)],
@@ -126,7 +82,7 @@ function StateMachine(matchConfig) {
       [STATES.TRADING_CARDS, PSEUDOSTATES.HAS_CARDS, TradeCards(matchConfig, extendedState)],
       [STATES.TRADING_CARDS, STATES.PLACING_NEW_ARMIES, EndTrade(matchConfig, extendedState)],
       [STATES.PLACING_NEW_ARMIES, PSEUDOSTATES.HAS_UNDEPLOYED_ARMIES, PlaceNewArmies(matchConfig, extendedState)],
-      [PSEUDOSTATES.HAS_UNDEPLOYED_ARMIES, STATES.PLACING_NEW_ARMIES, simpleGuard(doesCurrentPlayerHaveUndeployedArmies)],
+      [PSEUDOSTATES.HAS_UNDEPLOYED_ARMIES, STATES.PLACING_NEW_ARMIES, DoesCurrentPlayerHaveUndeployedArmies()],
       [PSEUDOSTATES.HAS_UNDEPLOYED_ARMIES, STATES.BATTLING, elseTransition()],
       [STATES.BATTLING, STATES.FORTIFYING, EndAttack(matchConfig, extendedState)],
       [STATES.BATTLING, STATES.ROLLING_DICE, Battle(matchConfig, extendedState)],
@@ -145,29 +101,87 @@ function StateMachine(matchConfig) {
     ];
   };
 
-  // Similar to Redux reduce and a transition in UML State Machine in response to an event.
-  const reduce = function(extendedState = { stateKey: STATES.INITIALIZING }, action = {}) {
-    const MAX_TRANSITIONS = 10;
+  // @return {{nextStateKey: string, reduce: Function}} transition object, may to pseudostate
+  const getTransition = (extendedState, action) => {
+    const allTransitions = getTransitions(extendedState);
 
-    let newState = Object.assign({}, extendedState);
+    const fromCurrentState = allTransitions.filter(([from]) => from === extendedState.stateKey);
 
-    for (let i = 0; i < MAX_TRANSITIONS; i++) {
-      //assertStateInvariants(newState);
-
-      const transition = getTransition(newState, action);
-
-      // apply new action to compute the updated state
-      if (transition) {
-        if (typeof transition.reduce === 'function') {
-          newState = transition.reduce(action);
-        }
-        newState.stateKey = transition.nextStateKey;
-      } else {
-        // stop when appropriate
-        return newState;
+    // throw exception for invalid states
+    fromCurrentState.forEach(([,, t]) => {
+      if (!t || typeof t.guard !== 'function' || typeof t.reduce !== 'function') {
+        // TODO log error
+        throw { message: 'invalid state state' };
       }
+    });
+
+    // get transitions that could be followed from the current state
+    const guardSatisfied = fromCurrentState.filter(([,, t]) => t.guard(action) === true);
+    const elses = fromCurrentState.filter(([,, t]) => t.guard(action) === undefined);
+
+    // quit when there path is indeterminant, meaning there are multiple transitions
+    if (guardSatisfied.length > 1 && elses.length > 1) {
+      // TODO log error
+      throw { message: 'nondeterministic state' };
     }
-    throw { message: `stuck in loop leaving ${extendedState.stateKey}` };
+
+    // stop when blocked by transition guards
+    if (guardSatisfied.length === 0 && elses.length === 0) {
+      return undefined;
+    }
+
+    const [, to, t] = (guardSatisfied.length === 1) ? guardSatisfied[0] : elses[0];
+
+    return {
+      nextStateKey: to,
+      reduce: () => t.reduce.apply(t, [action]), // bind transition action method
+    };
+  };
+
+  // Similar to Redux reduce and a transition in UML State Machine in response to an event.
+  // const reduce = (extendedState = { stateKey: STATES.INITIALIZING }, action = {}) => {
+  //   const MAX_TRANSITIONS = 10;
+  //
+  //   let newState = Object.assign({}, extendedState);
+  //
+  //   for (let i = 0; i < MAX_TRANSITIONS; i += 1) {
+  //     // assertStateInvariants(newState);
+  //
+  //     const transition = getTransition(newState, action);
+  //     if (!transition) {
+  //       return newState;
+  //     }
+  //
+  //     // apply new action to compute the updated state
+  //     if (typeof transition.reduce === 'function') {
+  //       newState = transition.reduce(action);
+  //     }
+  //     newState.stateKey = transition.nextStateKey;
+  //   }
+  //   // TODO - log error
+  //   throw { message: `stuck in loop leaving ${extendedState.stateKey}` };
+  // };
+
+  const reduce = (extendedState = { stateKey: STATES.INITIALIZING }, action = {}, ttl = 10) => {
+    if (ttl < 1) {
+      // TODO - log error
+      throw { message: `state machine entered a loop ${extendedState.stateKey}` };
+    }
+
+    const transition = getTransition(extendedState, action);
+
+    // quit when reached final state / transition for the given action
+    if (!transition) {
+      return extendedState;
+    }
+
+    // return next state to transition to
+    const nextState = Object.assign(
+      {},
+      typeof transition.reduce === 'function' ? transition.reduce(action) : extendedState,
+      { stateKey: transition.nextStateKey });
+
+    return reduce(nextState, action, ttl - 1);
   };
 
   /**
@@ -178,19 +192,19 @@ function StateMachine(matchConfig) {
    *
    * @returns {boolean} true if action is valid and has an effect on the state
    */
-  const isActionValid = function(matchState, action) {
-    const newState = reduce(matchState, action);
-    return !Object.is(matchState, newState);
-  };
+  const isActionValid = (matchState, action) =>
+    !Object.is(matchState, reduce(matchState, action));
 
   return {
     getTransitions,
     isActionValid,
-    reduce
+    reduce(extendedState, action) {
+      return reduce(extendedState, action);
+    },
   };
 }
 
-StateMachine.getEdges = function() {
+StateMachine.getEdges = () => {
   const stateMachine = new StateMachine({});
   const transitions = stateMachine.getTransitions({}, {});
   return transitions.map(([from, to, transition]) => {
