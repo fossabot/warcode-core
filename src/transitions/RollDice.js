@@ -5,7 +5,7 @@ import { ACTIONS } from '../constants';
 import TransitionGuarded from './TransitionGuarded';
 import replaceElements from './replaceElements';
 
-const getLoses = (attackerDice, defenderDice) => {
+const getLoses = (attackerDice: number[], defenderDice: number[]) => {
   const diceToCompare = Math.min(attackerDice.length, defenderDice.length);
   const sortDecending = (a, b) => (a < b ? 1 : -1);
   const attackerDiceSorted = attackerDice.sort(sortDecending).slice(0, diceToCompare);
@@ -37,15 +37,13 @@ export default function (matchConfig: MatchConfig, extendedState: MatchState): T
 
   const guard = (action) => {
     const { attackerDice, defenderDice } = action;
-    const armiesOnDefender = territories[activeBattle.defendingTerritoryIndex].armies;
-
     return !!activeBattle
       && Array.isArray(attackerDice)
       && attackerDice.length === activeBattle.attackingDiceCount
       && attackerDice.every(d => d >= 1 && d <= 6)
       && Array.isArray(defenderDice)
       && defenderDice.length >= 1
-      && defenderDice.length <= Math.min(2, armiesOnDefender)
+      && defenderDice.length <= Math.min(2, territories[activeBattle.defendingTerritoryIndex].armies)
       && defenderDice.every(d => d >= 1 && d <= 6);
   };
 
