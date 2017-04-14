@@ -12,7 +12,8 @@ const setOfAllStateKeys = new Set([
   ...transitions.map(([from]) => from),
   ...transitions.map(([, to]) => to),
 ]);
-const isPseudoState = stateValue => Object.values(PSEUDOSTATES).includes(stateValue);
+const PSEUDOSTATES_VALUES = Object.keys(PSEUDOSTATES).map(key => PSEUDOSTATES[key]);
+const isPseudoState = stateValue => PSEUDOSTATES_VALUES.includes(stateValue);
 
 test('transition states are valid and cover all states', () => {
   const expectedStateKeys = new Set([...STATES, ...PSEUDOSTATES]);
