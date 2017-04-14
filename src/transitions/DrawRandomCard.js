@@ -8,19 +8,21 @@ import replaceElements from './replaceElements';
 /**
  * Simulate player drawing a random card from the deck.
  */
-export default function (matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const { cardOwner, currentPlayerIndex } = extendedState;
 
-  const guard = (action) => {
+  const guard = action => {
     const { cardIndex } = action;
 
-    return Number.isInteger(cardIndex)
-      && cardIndex >= 0
-      && cardIndex < cardOwner.length
-      && cardOwner[cardIndex] === undefined;
+    return (
+      Number.isInteger(cardIndex) &&
+      cardIndex >= 0 &&
+      cardIndex < cardOwner.length &&
+      cardOwner[cardIndex] === undefined
+    );
   };
 
-  const reduce = (action) => {
+  const reduce = action => {
     const { cardIndex } = action;
 
     return {

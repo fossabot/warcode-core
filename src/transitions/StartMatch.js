@@ -28,17 +28,15 @@ import TransitionGuarded from './TransitionGuarded';
  * // newMatchState === { stateID: STATES.SELECTING_FIRST_PLAYER, ... }
  *
  */
-export default function (matchConfig: MatchConfig): TransitionGuarded {
+export default function(matchConfig: MatchConfig): TransitionGuarded {
   const { minPlayers, maxPlayers, territories, cards, startingArmiesByPlayers } = matchConfig;
 
-  const guard = (action) => {
+  const guard = action => {
     const { playerCount } = action;
-    return Number.isInteger(playerCount)
-      && playerCount >= minPlayers
-      && playerCount <= maxPlayers;
+    return Number.isInteger(playerCount) && playerCount >= minPlayers && playerCount <= maxPlayers;
   };
 
-  const reduce = (action) => {
+  const reduce = action => {
     const { playerCount } = action;
     return {
       territories: Array(territories.length).fill({

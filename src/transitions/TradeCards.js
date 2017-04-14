@@ -31,16 +31,17 @@ import replaceElements from './replaceElements';
  *   cards[i].type != cards[k].type AND cards[j].type != cards[k].type
  * * one is wild: cards[i].type == WILD OR cards[j].type == WILD OR cards[k].type == WILD
  */
-export default function (matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const { cards, cardOccupiedTerritoryReward } = matchConfig;
   const { cardOwner, territories, currentPlayerIndex, tradeCount } = extendedState;
 
-  const guard = (action) => {
+  const guard = action => {
     const isValidIndices = x => x >= 0 && x < cards.length;
     const { i, j, k } = action;
     const areValidIndices = isValidIndices(i) && isValidIndices(j) && isValidIndices(k);
     const areUniqueCards = i !== j && j !== k && i !== k;
-    const isOwner = cardOwner[i] === currentPlayerIndex &&
+    const isOwner =
+      cardOwner[i] === currentPlayerIndex &&
       cardOwner[j] === currentPlayerIndex &&
       cardOwner[k] === currentPlayerIndex;
     if (!areValidIndices || !areUniqueCards || !isOwner) {
@@ -56,10 +57,10 @@ export default function (matchConfig: MatchConfig, extendedState: MatchState): T
     return isSameType || areDifferentTypes || containsWildCard;
   };
 
-  const reduce = (action) => {
+  const reduce = action => {
     const { i, j, k } = action;
     const count = tradeCount + 1;
-    const tradeAward = (count <= 5) ? (count + 1) * 2 : (count - 3) * 5;
+    const tradeAward = count <= 5 ? (count + 1) * 2 : (count - 3) * 5;
 
     const territoryUpdate = (() => {
       if (cards[i][1] === undefined || cards[i][1] < 0) {

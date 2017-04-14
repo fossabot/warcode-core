@@ -15,7 +15,7 @@ function activePlayerIndicies({ players, territories }) {
 
   // set players occupying territories
   if (Array.isArray(territories)) {
-    territories.forEach((territory) => {
+    territories.forEach(territory => {
       if (Number.isInteger(territory.owner)) {
         indicies.add(territory.owner);
       }

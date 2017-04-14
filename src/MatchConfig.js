@@ -2,19 +2,19 @@
 import traditionalConfig from '../data/traditional.json';
 
 export type MatchConfig = {
-  name: string;
-  version: string;
-  territories: Array<[string, number, number[]]>;
-  continents: Array<[string, number]>;
-  cards: Array<[number, number]>;
-  cardTypeNames: string[];
-  minPlayers: number;
-  maxPlayers: number;
-  startingArmiesByPlayers: number[];
-  cardOccupiedTerritoryReward: number;
+  name: string,
+  version: string,
+  territories: Array<[string, number, number[]]>,
+  continents: Array<[string, number]>,
+  cards: Array<[number, number]>,
+  cardTypeNames: string[],
+  minPlayers: number,
+  maxPlayers: number,
+  startingArmiesByPlayers: number[],
+  cardOccupiedTerritoryReward: number,
   // adjacency list for undirected graph
-  edges: Array<[number, number]>;
-}
+  edges: Array<[number, number]>,
+};
 
 export default (config: MatchConfig = traditionalConfig): MatchConfig => {
   // TODO: validate graph, cards, etc

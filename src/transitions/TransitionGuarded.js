@@ -22,6 +22,6 @@ class TransitionGuarded extends Transition {
 }
 
 interface actionInterface {
-  type: string
+  type: string,
 }
 export default TransitionGuarded;

@@ -19,30 +19,36 @@ import replaceElements from './replaceElements';
  * * Turn is passed to the next player
  *
  */
-export default function (matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const { territories, currentPlayerIndex } = extendedState;
 
-  const guard = (action) => {
+  const guard = action => {
     const { territoryIndex } = action;
-    return Number.isInteger(territoryIndex)
-      && territoryIndex >= 0
-      && territoryIndex < territories.length
-      && territories[territoryIndex].owner === undefined
-      && territories[territoryIndex].armies === 0;
+    return (
+      Number.isInteger(territoryIndex) &&
+      territoryIndex >= 0 &&
+      territoryIndex < territories.length &&
+      territories[territoryIndex].owner === undefined &&
+      territories[territoryIndex].armies === 0
+    );
   };
 
-  const reduce = (action) => {
+  const reduce = action => {
     const { territoryIndex } = action;
 
     return {
       ...extendedState,
-      territories: replaceElements(extendedState.territories, { [territoryIndex]: {
-        owner: currentPlayerIndex,
-        armies: 1,
-      } }),
-      players: replaceElements(extendedState.players, { [currentPlayerIndex]: {
-        undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies - 1,
-      } }),
+      territories: replaceElements(extendedState.territories, {
+        [territoryIndex]: {
+          owner: currentPlayerIndex,
+          armies: 1,
+        },
+      }),
+      players: replaceElements(extendedState.players, {
+        [currentPlayerIndex]: {
+          undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies - 1,
+        },
+      }),
     };
   };
 

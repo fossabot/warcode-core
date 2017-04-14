@@ -17,27 +17,29 @@ import TransitionGuarded from './TransitionGuarded';
  * For example, if you are attacking from a territory with three armies, you
  * may only roll two dice.
  */
-export default function (matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const { edges } = matchConfig;
   const { territories, currentPlayerIndex } = extendedState;
 
-  const guard = (action) => {
+  const guard = action => {
     const { attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount } = action;
-    return Number.isInteger(attackingTerritoryIndex)
-      && attackingTerritoryIndex >= 0
-      && attackingTerritoryIndex < territories.length
-      && territories[attackingTerritoryIndex].owner === currentPlayerIndex
-      && territories[attackingTerritoryIndex].armies > 1
-      && Number.isInteger(defendingTerritoryIndex)
-      && defendingTerritoryIndex >= 0
-      && defendingTerritoryIndex < territories.length
-      && territories[defendingTerritoryIndex].owner !== currentPlayerIndex
-      && edges.some(([a, d]) => a === attackingTerritoryIndex && d === defendingTerritoryIndex)
-      && attackingDiceCount >= 1
-      && attackingDiceCount <= Math.min(3, territories[attackingTerritoryIndex].armies - 1);
+    return (
+      Number.isInteger(attackingTerritoryIndex) &&
+      attackingTerritoryIndex >= 0 &&
+      attackingTerritoryIndex < territories.length &&
+      territories[attackingTerritoryIndex].owner === currentPlayerIndex &&
+      territories[attackingTerritoryIndex].armies > 1 &&
+      Number.isInteger(defendingTerritoryIndex) &&
+      defendingTerritoryIndex >= 0 &&
+      defendingTerritoryIndex < territories.length &&
+      territories[defendingTerritoryIndex].owner !== currentPlayerIndex &&
+      edges.some(([a, d]) => a === attackingTerritoryIndex && d === defendingTerritoryIndex) &&
+      attackingDiceCount >= 1 &&
+      attackingDiceCount <= Math.min(3, territories[attackingTerritoryIndex].armies - 1)
+    );
   };
 
-  const reduce = (action) => {
+  const reduce = action => {
     const { attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount } = action;
     return {
       ...extendedState,

@@ -9,25 +9,32 @@ const matchConfig = parseMatchConfig();
 const matchExtendedState = {
   stateKey: STATES.OCCUPYING,
   currentPlayerIndex: 0,
-  territories: [{
-    owner: undefined,
-    armies: 0,
-  }, {
-    owner: 0,
-    armies: 1,
-  }, {
-    owner: 1,
-    armies: 1,
-  }],
-  players: [{
-    undeployedArmies: 1,
-  }, {
-    undeployedArmies: 0,
-  }],
+  territories: [
+    {
+      owner: undefined,
+      armies: 0,
+    },
+    {
+      owner: 0,
+      armies: 1,
+    },
+    {
+      owner: 1,
+      armies: 1,
+    },
+  ],
+  players: [
+    {
+      undeployedArmies: 1,
+    },
+    {
+      undeployedArmies: 0,
+    },
+  ],
 };
 
 test('guard validates territory index', () => {
-  const tryValue = (territoryIndex) => {
+  const tryValue = territoryIndex => {
     const transition: TransitionGuarded = new OccupyTerritory(matchConfig, matchExtendedState);
     const action = actionCreators.occupyTerritory(territoryIndex);
     return transition.guard(action);
@@ -49,12 +56,10 @@ test('reduce updates player and territory', () => {
   // console.log('matchExtendedState', JSON.stringify(matchExtendedState));
   // console.log('n', JSON.stringify(n));
 
-  expect(n.territories[territoryIndex].owner)
-    .toBe(matchExtendedState.currentPlayerIndex);
-  expect(n.territories[territoryIndex].armies)
-    .toBe(1);
-  expect(n.players[matchExtendedState.currentPlayerIndex].undeployedArmies)
-    .toBe(matchExtendedState.players[matchExtendedState.currentPlayerIndex].undeployedArmies - 1);
-  expect(n.players[1].undeployedArmies)
-    .toBe(matchExtendedState.players[1].undeployedArmies);
+  expect(n.territories[territoryIndex].owner).toBe(matchExtendedState.currentPlayerIndex);
+  expect(n.territories[territoryIndex].armies).toBe(1);
+  expect(n.players[matchExtendedState.currentPlayerIndex].undeployedArmies).toBe(
+    matchExtendedState.players[matchExtendedState.currentPlayerIndex].undeployedArmies - 1
+  );
+  expect(n.players[1].undeployedArmies).toBe(matchExtendedState.players[1].undeployedArmies);
 });

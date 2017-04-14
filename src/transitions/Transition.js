@@ -29,7 +29,7 @@ class Transition {
 }
 
 interface actionInterface {
-  type: string
+  type: string,
 }
 
 export type Guard = (action: Object) => ?boolean;

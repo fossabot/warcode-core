@@ -10,18 +10,20 @@ import replaceElements from './replaceElements';
  * moving armies from the attacking territory. The number of armies moved must
  * be at least the same number of dice rolled in the decisive battle.
  */
-export default function (matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const { territories, activeBattle, currentPlayerIndex } = extendedState;
 
-  const guard = (action) => {
+  const guard = action => {
     const { armies } = action;
-    return !!activeBattle
-      && Number.isInteger(armies)
-      && armies >= activeBattle.attackingDiceCount
-      && armies < territories[activeBattle.attackingTerritoryIndex].armies;
+    return (
+      !!activeBattle &&
+      Number.isInteger(armies) &&
+      armies >= activeBattle.attackingDiceCount &&
+      armies < territories[activeBattle.attackingTerritoryIndex].armies
+    );
   };
 
-  const reduce = (action) => {
+  const reduce = action => {
     const { armies } = action;
     if (!activeBattle) {
       return extendedState;

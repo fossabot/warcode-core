@@ -17,27 +17,29 @@ import replaceElements from './replaceElements';
  *
  *  You may end your turn, skipping fortification.
  */
-export default function (matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const { edges } = matchConfig;
   const { territories, currentPlayerIndex } = extendedState;
 
-  const guard = (action) => {
+  const guard = action => {
     const { fromTerritoryIndex, toTerritoryIndex, armies } = action;
-    return Number.isInteger(fromTerritoryIndex)
-      && fromTerritoryIndex >= 0
-      && fromTerritoryIndex < territories.length
-      && territories[fromTerritoryIndex].owner === currentPlayerIndex
-      && territories[fromTerritoryIndex].armies > 1
-      && Number.isInteger(toTerritoryIndex)
-      && toTerritoryIndex >= 0
-      && toTerritoryIndex < territories.length
-      && territories[toTerritoryIndex].owner === currentPlayerIndex
-      && edges.some(([a, b]) => a === fromTerritoryIndex && b === toTerritoryIndex)
-      && armies >= 1
-      && armies < territories[fromTerritoryIndex].armies;
+    return (
+      Number.isInteger(fromTerritoryIndex) &&
+      fromTerritoryIndex >= 0 &&
+      fromTerritoryIndex < territories.length &&
+      territories[fromTerritoryIndex].owner === currentPlayerIndex &&
+      territories[fromTerritoryIndex].armies > 1 &&
+      Number.isInteger(toTerritoryIndex) &&
+      toTerritoryIndex >= 0 &&
+      toTerritoryIndex < territories.length &&
+      territories[toTerritoryIndex].owner === currentPlayerIndex &&
+      edges.some(([a, b]) => a === fromTerritoryIndex && b === toTerritoryIndex) &&
+      armies >= 1 &&
+      armies < territories[fromTerritoryIndex].armies
+    );
   };
 
-  const reduce = (action) => {
+  const reduce = action => {
     const { fromTerritoryIndex, toTerritoryIndex, armies } = action;
 
     return {

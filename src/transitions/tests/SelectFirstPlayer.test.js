@@ -8,15 +8,18 @@ import actionCreators from '../../actionCreators';
 const matchConfig = parseMatchConfig();
 const matchExtendedState = {
   stateKey: STATES.SELECT_FIRST_PLAYER,
-  players: [{
-    undeployedArmies: 1,
-  }, {
-    undeployedArmies: 0,
-  }],
+  players: [
+    {
+      undeployedArmies: 1,
+    },
+    {
+      undeployedArmies: 0,
+    },
+  ],
 };
 
 test('guard validates first player index', () => {
-  const tryValue = (firstPlayerIndex) => {
+  const tryValue = firstPlayerIndex => {
     const transition: TransitionGuarded = new SelectFirstPlayer(matchConfig, matchExtendedState);
     const action = actionCreators.selectFirstPlayer(firstPlayerIndex);
     return transition.guard(action);

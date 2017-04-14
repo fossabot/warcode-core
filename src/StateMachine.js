@@ -18,22 +18,20 @@ import EndTurn from './transitions/EndTurn';
 import DrawRandomCard from './transitions/DrawRandomCard';
 
 function StateMachine(matchConfig) {
-  const getTransitions = (extendedState) => {
+  const getTransitions = extendedState => {
     const {
       territories,
       cardOwner,
       players,
       currentPlayerIndex,
-      capturedTerritories } = extendedState;
+      capturedTerritories,
+    } = extendedState;
 
-    const simpleGuard = (guard: ?boolean) =>
-      new Transition(guard, () => extendedState);
+    const simpleGuard = (guard: ?boolean) => new Transition(guard, () => extendedState);
 
-    const elseTransition = () =>
-      new Transition(() => undefined, () => extendedState);
+    const elseTransition = () => new Transition(() => undefined, () => extendedState);
 
-    const elseTransitionWithReducer = reducer =>
-      new Transition(() => undefined, reducer);
+    const elseTransitionWithReducer = reducer => new Transition(() => undefined, reducer);
 
     const reduceNextPlayer = () => ({
       ...extendedState,
@@ -43,17 +41,14 @@ function StateMachine(matchConfig) {
     const IsUnoccupiedTerritory = () =>
       new Transition(() => territories.some(t => t.armies === 0), () => extendedState);
 
-    const areAllArmiesDeployed = () =>
-      players.every(p => p.undeployedArmies === 0);
+    const areAllArmiesDeployed = () => players.every(p => p.undeployedArmies === 0);
 
     const DoesCurrentPlayerHaveUndeployedArmies = () =>
       new Transition(() => players[currentPlayerIndex].undeployedArmies >= 1, () => extendedState);
 
-    const doesCurrentPlayerHaveNoCards = () =>
-      cardOwner.every(o => o !== currentPlayerIndex);
+    const doesCurrentPlayerHaveNoCards = () => cardOwner.every(o => o !== currentPlayerIndex);
 
-    const isGameOver = () =>
-      territories.every(t => t.owner === currentPlayerIndex);
+    const isGameOver = () => territories.every(t => t.owner === currentPlayerIndex);
 
     const isTerritoryDefeated = () =>
       territories[extendedState.activeBattle.defendingTerritoryIndex].armies === 0;
@@ -69,35 +64,83 @@ function StateMachine(matchConfig) {
     // todo - refactor third constructor/function to be consistent and short, like ", StartMatch],"
     return [
       [STATES.INITIALIZING, STATES.SELECTING_FIRST_PLAYER, StartMatch(matchConfig, extendedState)],
-      [STATES.SELECTING_FIRST_PLAYER, PSEUDOSTATES.INITIAL_CHOICE, SelectFirstPlayer(matchConfig, extendedState)],
+      [
+        STATES.SELECTING_FIRST_PLAYER,
+        PSEUDOSTATES.INITIAL_CHOICE,
+        SelectFirstPlayer(matchConfig, extendedState),
+      ],
       [PSEUDOSTATES.INITIAL_CHOICE, STATES.OCCUPYING, IsUnoccupiedTerritory()],
       [PSEUDOSTATES.INITIAL_CHOICE, STATES.PLACING_ADDITIONAL_ARMY, elseTransition()],
-      [STATES.OCCUPYING, PSEUDOSTATES.HAS_PLACED_ARMIES, OccupyTerritory(matchConfig, extendedState)],
-      [STATES.PLACING_ADDITIONAL_ARMY, PSEUDOSTATES.HAS_PLACED_ARMIES, PlaceAdditionalArmy(matchConfig, extendedState)],
-      [PSEUDOSTATES.HAS_PLACED_ARMIES, PSEUDOSTATES.INITIAL_CHOICE, elseTransitionWithReducer(reduceNextPlayer)],
-      [PSEUDOSTATES.HAS_PLACED_ARMIES, PSEUDOSTATES.SETUP_NEXT_TURN, simpleGuard(areAllArmiesDeployed)],
-      [PSEUDOSTATES.SETUP_NEXT_TURN, PSEUDOSTATES.HAS_CARDS, SetupNextTurn(matchConfig, extendedState)],
+      [
+        STATES.OCCUPYING,
+        PSEUDOSTATES.HAS_PLACED_ARMIES,
+        OccupyTerritory(matchConfig, extendedState),
+      ],
+      [
+        STATES.PLACING_ADDITIONAL_ARMY,
+        PSEUDOSTATES.HAS_PLACED_ARMIES,
+        PlaceAdditionalArmy(matchConfig, extendedState),
+      ],
+      [
+        PSEUDOSTATES.HAS_PLACED_ARMIES,
+        PSEUDOSTATES.INITIAL_CHOICE,
+        elseTransitionWithReducer(reduceNextPlayer),
+      ],
+      [
+        PSEUDOSTATES.HAS_PLACED_ARMIES,
+        PSEUDOSTATES.SETUP_NEXT_TURN,
+        simpleGuard(areAllArmiesDeployed),
+      ],
+      [
+        PSEUDOSTATES.SETUP_NEXT_TURN,
+        PSEUDOSTATES.HAS_CARDS,
+        SetupNextTurn(matchConfig, extendedState),
+      ],
       [PSEUDOSTATES.HAS_CARDS, STATES.TRADING_CARDS, elseTransition()],
-      [PSEUDOSTATES.HAS_CARDS, STATES.PLACING_NEW_ARMIES, simpleGuard(doesCurrentPlayerHaveNoCards)],
+      [
+        PSEUDOSTATES.HAS_CARDS,
+        STATES.PLACING_NEW_ARMIES,
+        simpleGuard(doesCurrentPlayerHaveNoCards),
+      ],
       [STATES.TRADING_CARDS, PSEUDOSTATES.HAS_CARDS, TradeCards(matchConfig, extendedState)],
       [STATES.TRADING_CARDS, STATES.PLACING_NEW_ARMIES, EndTrade(matchConfig, extendedState)],
-      [STATES.PLACING_NEW_ARMIES, PSEUDOSTATES.HAS_UNDEPLOYED_ARMIES, PlaceNewArmies(matchConfig, extendedState)],
-      [PSEUDOSTATES.HAS_UNDEPLOYED_ARMIES, STATES.PLACING_NEW_ARMIES, DoesCurrentPlayerHaveUndeployedArmies()],
+      [
+        STATES.PLACING_NEW_ARMIES,
+        PSEUDOSTATES.HAS_UNDEPLOYED_ARMIES,
+        PlaceNewArmies(matchConfig, extendedState),
+      ],
+      [
+        PSEUDOSTATES.HAS_UNDEPLOYED_ARMIES,
+        STATES.PLACING_NEW_ARMIES,
+        DoesCurrentPlayerHaveUndeployedArmies(),
+      ],
       [PSEUDOSTATES.HAS_UNDEPLOYED_ARMIES, STATES.BATTLING, elseTransition()],
       [STATES.BATTLING, STATES.FORTIFYING, EndAttack(matchConfig, extendedState)],
       [STATES.BATTLING, STATES.ROLLING_DICE, Battle(matchConfig, extendedState)],
-      [STATES.ROLLING_DICE, PSEUDOSTATES.HAS_DEFEATED_TERRITORY, RollDice(matchConfig, extendedState)],
+      [
+        STATES.ROLLING_DICE,
+        PSEUDOSTATES.HAS_DEFEATED_TERRITORY,
+        RollDice(matchConfig, extendedState),
+      ],
       [PSEUDOSTATES.HAS_DEFEATED_TERRITORY, STATES.BATTLING, elseTransition()],
       [PSEUDOSTATES.HAS_DEFEATED_TERRITORY, STATES.CAPTURING, simpleGuard(isTerritoryDefeated)],
       [STATES.CAPTURING, PSEUDOSTATES.HAS_DEFEATED_OPPONENT, Capture(matchConfig, extendedState)],
-      [PSEUDOSTATES.HAS_DEFEATED_OPPONENT, STATES.TRADING_CARDS, simpleGuard(hasTooManyCardsFromDefeat)],
+      [
+        PSEUDOSTATES.HAS_DEFEATED_OPPONENT,
+        STATES.TRADING_CARDS,
+        simpleGuard(hasTooManyCardsFromDefeat),
+      ],
       [PSEUDOSTATES.HAS_DEFEATED_OPPONENT, PSEUDOSTATES.GAME_OVER, simpleGuard(isGameOver)],
       [PSEUDOSTATES.HAS_DEFEATED_OPPONENT, STATES.BATTLING, elseTransition()],
       [STATES.FORTIFYING, PSEUDOSTATES.HAS_EARNED_CARD, Fortify(matchConfig, extendedState)],
       [STATES.FORTIFYING, PSEUDOSTATES.HAS_EARNED_CARD, EndTurn(matchConfig, extendedState)],
       [PSEUDOSTATES.HAS_EARNED_CARD, STATES.DRAWING_RANDOM_CARD, simpleGuard(hasPlayerEarnedCard)],
       [PSEUDOSTATES.HAS_EARNED_CARD, PSEUDOSTATES.SETUP_NEXT_TURN, elseTransition()],
-      [STATES.DRAWING_RANDOM_CARD, PSEUDOSTATES.SETUP_NEXT_TURN, DrawRandomCard(matchConfig, extendedState)],
+      [
+        STATES.DRAWING_RANDOM_CARD,
+        PSEUDOSTATES.SETUP_NEXT_TURN,
+        DrawRandomCard(matchConfig, extendedState),
+      ],
     ];
   };
 
@@ -108,7 +151,7 @@ function StateMachine(matchConfig) {
     const fromCurrentState = allTransitions.filter(([from]) => from === extendedState.stateKey);
 
     // throw exception for invalid states
-    fromCurrentState.forEach(([,, t]) => {
+    fromCurrentState.forEach(([, , t]) => {
       if (!t || typeof t.guard !== 'function' || typeof t.reduce !== 'function') {
         // TODO log error
         throw { message: 'invalid state state' };
@@ -116,8 +159,8 @@ function StateMachine(matchConfig) {
     });
 
     // get transitions that could be followed from the current state
-    const guardSatisfied = fromCurrentState.filter(([,, t]) => t.guard(action) === true);
-    const elses = fromCurrentState.filter(([,, t]) => t.guard(action) === undefined);
+    const guardSatisfied = fromCurrentState.filter(([, , t]) => t.guard(action) === true);
+    const elses = fromCurrentState.filter(([, , t]) => t.guard(action) === undefined);
 
     // quit when there path is indeterminant, meaning there are multiple transitions
     if (guardSatisfied.length > 1 && elses.length > 1) {
@@ -130,7 +173,7 @@ function StateMachine(matchConfig) {
       return undefined;
     }
 
-    const [, to, t] = (guardSatisfied.length === 1) ? guardSatisfied[0] : elses[0];
+    const [, to, t] = guardSatisfied.length === 1 ? guardSatisfied[0] : elses[0];
 
     return {
       nextStateKey: to,
@@ -179,7 +222,8 @@ function StateMachine(matchConfig) {
     const nextState = Object.assign(
       {},
       typeof transition.reduce === 'function' ? transition.reduce(action) : extendedState,
-      { stateKey: transition.nextStateKey });
+      { stateKey: transition.nextStateKey }
+    );
 
     return reduce(nextState, action, ttl - 1);
   };
@@ -192,8 +236,7 @@ function StateMachine(matchConfig) {
    *
    * @returns {boolean} true if action is valid and has an effect on the state
    */
-  const isActionValid = (matchState, action) =>
-    !Object.is(matchState, reduce(matchState, action));
+  const isActionValid = (matchState, action) => !Object.is(matchState, reduce(matchState, action));
 
   return {
     getTransitions,
@@ -208,7 +251,7 @@ StateMachine.getEdges = () => {
   const stateMachine = new StateMachine({});
   const transitions = stateMachine.getTransitions({}, {});
   return transitions.map(([from, to, transition]) => {
-    const label = (transition.action) ? transition.action : '';
+    const label = transition.action ? transition.action : '';
     return [from, to, label];
   });
 };

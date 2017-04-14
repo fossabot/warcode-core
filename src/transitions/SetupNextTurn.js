@@ -13,9 +13,11 @@ function calcTerrtitoryAward(extendedState, matchConfig, playerIndex) {
 function calcContinentAward(extendedState, matchConfig, playerIndex) {
   // find indexes of all continents where the player does not occupy
   // one or more territories
-  const continentsWithTerritoryNotOwnedByCurrentPlayer = new Set(matchConfig.territories
-    .filter((t, index) => extendedState.territories[index].owner !== playerIndex)
-    .map(([, continentIndex]) => continentIndex));
+  const continentsWithTerritoryNotOwnedByCurrentPlayer = new Set(
+    matchConfig.territories
+      .filter((t, index) => extendedState.territories[index].owner !== playerIndex)
+      .map(([, continentIndex]) => continentIndex)
+  );
 
   // total reward for each continent where the player owns all of the territories
   return matchConfig.continents
@@ -51,7 +53,7 @@ function countUndeployedArmies(matchConfig, extendedState, playerIndex) {
  * | South America  | 2     |
  *
  */
-export default function (matchConfig: MatchConfig, extendedState: MatchState): Transition {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): Transition {
   const guard = () => undefined;
 
   const reduce = () => {
@@ -61,9 +63,11 @@ export default function (matchConfig: MatchConfig, extendedState: MatchState): T
     return {
       ...extendedState,
       currentPlayerIndex: nextPlayer,
-      players: replaceElements(extendedState.players, { [nextPlayer]: {
-        undeployedArmies: countUndeployedArmies(matchConfig, extendedState, nextPlayer),
-      } }),
+      players: replaceElements(extendedState.players, {
+        [nextPlayer]: {
+          undeployedArmies: countUndeployedArmies(matchConfig, extendedState, nextPlayer),
+        },
+      }),
       capturedTerritories: 0,
     };
   };

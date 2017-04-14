@@ -2,11 +2,11 @@
 export type MatchState = {
   territories: Array<{
     owner: number,
-    armies: number
+    armies: number,
   }>,
   cardOwner: number[],
   players: Array<{
-    undeployedArmies: number
+    undeployedArmies: number,
   }>,
   currentPlayerIndex: ?number,
   tradeCount: number,
@@ -14,7 +14,7 @@ export type MatchState = {
   activeBattle: ?{
     attackingTerritoryIndex: number,
     defendingTerritoryIndex: number,
-    attackingDiceCount: number
+    attackingDiceCount: number,
   },
-  currentPlayerIndex: number
+  currentPlayerIndex: number,
 };

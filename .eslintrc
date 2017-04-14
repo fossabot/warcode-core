@@ -10,7 +10,8 @@
     "airbnb",
     "plugin:flowtype/recommended",
     "plugin:fp/recommended",
-    "plugin:jest/recommended"
+    "plugin:jest/recommended",
+    "prettier"
   ],
   "plugins": [
     "flowtype",

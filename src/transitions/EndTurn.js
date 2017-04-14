@@ -7,7 +7,7 @@ import TransitionGuarded from './TransitionGuarded';
 /**
  * You end the turn, ending fortification.
  */
-export default function (matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const guard = () => true;
 
   const reduce = () => extendedState;

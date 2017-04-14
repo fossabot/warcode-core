@@ -11,21 +11,28 @@ const currentPlayerIndex = 0;
 const matchExtendedState = {
   stateKey: STATES.BATTLING,
   currentPlayerIndex,
-  territories: [{
-    owner: 1,
-    armies: 3,
-  }, {
-    owner: 0,
-    armies: 6,
-  }, {
-    owner: 0,
-    armies: 3,
-  }],
-  players: [{
-    undeployedArmies: 0,
-  }, {
-    undeployedArmies: 0,
-  }],
+  territories: [
+    {
+      owner: 1,
+      armies: 3,
+    },
+    {
+      owner: 0,
+      armies: 6,
+    },
+    {
+      owner: 0,
+      armies: 3,
+    },
+  ],
+  players: [
+    {
+      undeployedArmies: 0,
+    },
+    {
+      undeployedArmies: 0,
+    },
+  ],
   cardOwner: Array(5).fill(currentPlayerIndex),
 };
 

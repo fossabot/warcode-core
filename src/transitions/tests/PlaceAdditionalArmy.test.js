@@ -9,25 +9,32 @@ const matchConfig = parseMatchConfig();
 const matchExtendedState = {
   stateKey: STATES.PLACING_ADDITIONAL_ARMY,
   currentPlayerIndex: 0,
-  territories: [{
-    owner: undefined,
-    armies: 0,
-  }, {
-    owner: 0,
-    armies: 1,
-  }, {
-    owner: 1,
-    armies: 1,
-  }],
-  players: [{
-    undeployedArmies: 1,
-  }, {
-    undeployedArmies: 0,
-  }],
+  territories: [
+    {
+      owner: undefined,
+      armies: 0,
+    },
+    {
+      owner: 0,
+      armies: 1,
+    },
+    {
+      owner: 1,
+      armies: 1,
+    },
+  ],
+  players: [
+    {
+      undeployedArmies: 1,
+    },
+    {
+      undeployedArmies: 0,
+    },
+  ],
 };
 
 test('guard validates player and territory', () => {
-  const tryValue = (territoryIndex) => {
+  const tryValue = territoryIndex => {
     const transition: TransitionGuarded = new PlaceAdditionalArmy(matchConfig, matchExtendedState);
     const action = actionCreators.placeAdditionalArmy(territoryIndex);
     return transition.guard(action);
@@ -47,10 +54,11 @@ test('reduce updates player and territory', () => {
   const action = actionCreators.placeAdditionalArmy(territoryIndex);
   const n = transition.reduce(action);
 
-  expect(n.territories[territoryIndex].armies)
-    .toBe(matchExtendedState.territories[territoryIndex].armies + 1);
-  expect(n.players[matchExtendedState.currentPlayerIndex].undeployedArmies)
-    .toBe(matchExtendedState.players[matchExtendedState.currentPlayerIndex].undeployedArmies - 1);
-  expect(n.players[1].undeployedArmies)
-    .toBe(matchExtendedState.players[1].undeployedArmies);
+  expect(n.territories[territoryIndex].armies).toBe(
+    matchExtendedState.territories[territoryIndex].armies + 1
+  );
+  expect(n.players[matchExtendedState.currentPlayerIndex].undeployedArmies).toBe(
+    matchExtendedState.players[matchExtendedState.currentPlayerIndex].undeployedArmies - 1
+  );
+  expect(n.players[1].undeployedArmies).toBe(matchExtendedState.players[1].undeployedArmies);
 });
