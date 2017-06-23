@@ -31,6 +31,7 @@ var Transition = function () {
       if (typeof this._reduce === 'function') {
         return this._reduce(action);
       }
+      return undefined;
     }
   }, {
     key: 'action',
@@ -42,4 +43,4 @@ var Transition = function () {
   return Transition;
 }();
 
-exports.Transition = Transition;
+exports.default = Transition;

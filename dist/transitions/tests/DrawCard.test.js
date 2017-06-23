@@ -8,9 +8,9 @@ var _expect2 = _interopRequireDefault(_expect);
 
 var _constants = require('../../constants');
 
-var _Capture = require('../Capture');
+var _DrawRandomCard = require('../DrawRandomCard');
 
-var _Capture2 = _interopRequireDefault(_Capture);
+var _DrawRandomCard2 = _interopRequireDefault(_DrawRandomCard);
 
 var _TransitionGuarded = require('../TransitionGuarded');
 
@@ -31,9 +31,10 @@ var _config2 = _interopRequireDefault(_config);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var matchConfig = (0, _MatchConfig2.default)(_config2.default);
+var currentPlayerIndex = 0;
 var matchExtendedState = {
   stateKey: _constants.STATES.BATTLING,
-  currentPlayerIndex: 0,
+  currentPlayerIndex: currentPlayerIndex,
   territories: [{
     owner: 1,
     armies: 3
@@ -41,7 +42,7 @@ var matchExtendedState = {
     owner: 0,
     armies: 6
   }, {
-    owner: 1,
+    owner: 0,
     armies: 3
   }],
   players: [{
@@ -49,16 +50,12 @@ var matchExtendedState = {
   }, {
     undeployedArmies: 0
   }],
-  activeBattle: {
-    attackingTerritoryIndex: 1,
-    defendingTerritoryIndex: 0,
-    attackingDiceCount: 3
-  }
+  cardOwner: Array(6).fill(undefined)
 };
 
 test('guard checks capture parameters', function () {
-  var transition = new _Capture2.default(matchConfig, matchExtendedState);
-  var actions = [[_actionCreators2.default.capture(0), false], [_actionCreators2.default.capture(1), false], [_actionCreators2.default.capture(2), false], [_actionCreators2.default.capture(3), true], [_actionCreators2.default.capture(4), true], [_actionCreators2.default.capture(5), true], [_actionCreators2.default.capture(6), false]];
+  var transition = new _DrawRandomCard2.default(matchConfig, matchExtendedState);
+  var actions = [[_actionCreators2.default.drawRandomCard(-1), false], [_actionCreators2.default.drawRandomCard(0), true], [_actionCreators2.default.drawRandomCard(1), true], [_actionCreators2.default.drawRandomCard(2), true], [_actionCreators2.default.drawRandomCard(3), true], [_actionCreators2.default.drawRandomCard(4), true], [_actionCreators2.default.drawRandomCard(5), true], [_actionCreators2.default.drawRandomCard(6), false]];
   actions.forEach(function (_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
         action = _ref2[0],
@@ -69,17 +66,11 @@ test('guard checks capture parameters', function () {
 });
 
 test('reduce updates state', function () {
-  var _matchExtendedState$a = matchExtendedState.activeBattle,
-      attackingTerritoryIndex = _matchExtendedState$a.attackingTerritoryIndex,
-      defendingTerritoryIndex = _matchExtendedState$a.defendingTerritoryIndex;
-
-  var transition = new _Capture2.default(matchConfig, matchExtendedState);
-  var armiesToMove = 3;
-  var action = _actionCreators2.default.capture(armiesToMove);
+  var transition = new _DrawRandomCard2.default(matchConfig, matchExtendedState);
+  var cardIndex = 1;
+  var action = _actionCreators2.default.drawRandomCard(cardIndex);
   var n = transition.reduce(action);
-  var attackingArmies = matchExtendedState.territories[attackingTerritoryIndex].armies;
 
-  (0, _expect2.default)(n.activeBattle).toNotExist();
-  (0, _expect2.default)(n.territories[attackingTerritoryIndex].armies).toBe(attackingArmies - armiesToMove);
-  (0, _expect2.default)(n.territories[defendingTerritoryIndex].armies).toBe(armiesToMove);
+  (0, _expect2.default)(n.cardOwner[cardIndex]).toBe(matchExtendedState.currentPlayerIndex);
+  (0, _expect2.default)(n.cardOwner[0]).toBe(undefined);
 });

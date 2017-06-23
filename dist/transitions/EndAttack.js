@@ -5,11 +5,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports.default = function (matchConfig, extendedState) {
-  var guard = function guard(action) {
+  var guard = function guard() {
     return true;
   };
 
-  var reduce = function reduce(action) {
+  var reduce = function reduce() {
     return extendedState;
   };
 

@@ -16,7 +16,7 @@ exports.default = function (matchConfig, extendedState) {
     return cardsHeldByPlayer < 5;
   };
 
-  var reduce = function reduce(action) {
+  var reduce = function reduce() {
     return extendedState;
   };
 

@@ -4,12 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 exports.default = function (matchConfig, extendedState) {
   var cards = matchConfig.cards,
-      cardOccupiedTerritoryReward = matchConfig.cardOccupiedTerritoryReward,
-      cardTypeNames = matchConfig.cardTypeNames;
+      cardOccupiedTerritoryReward = matchConfig.cardOccupiedTerritoryReward;
   var cardOwner = extendedState.cardOwner,
       territories = extendedState.territories,
       currentPlayerIndex = extendedState.currentPlayerIndex,
@@ -62,13 +59,14 @@ exports.default = function (matchConfig, extendedState) {
         return {};
       }
 
+      var card = extendedState.territories[firstCardTerritoryIndex];
       return _defineProperty({}, firstCardTerritoryIndex, {
-        owner: extendedState.territories[firstCardTerritoryIndex].owner,
-        armies: extendedState.territories[firstCardTerritoryIndex].armies + cardOccupiedTerritoryReward
+        owner: card.owner,
+        armies: card.armies + cardOccupiedTerritoryReward
       });
     }();
 
-    return _extends({}, extendedState, {
+    return Object.assign({}, extendedState, {
       tradeCount: count,
       players: (0, _replaceElements4.default)(extendedState.players, _defineProperty({}, currentPlayerIndex, {
         undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies + tradeAward
@@ -111,10 +109,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
  * | 8     | 25    | (trade - 3) * 5 |
  * | 9     | 30    | (trade - 3) * 5 |
  *
- * An additional two armies may be awarded when one of the traded cards matches a territory the player occupies. These two armies are immediately placed on the territory itself. The award only applies to a single card.
+ * An additional two armies may be awarded when one of the traded cards matches
+ * a territory the player occupies. These two armies are immediately placed on
+ * the territory itself. The award only applies to a single card.
  *
  * The three cards must meet one of the following
  * * types match: cards[i].type === cards[j].type AND cards[j].type == cards[k].type
- * * types are unique: cards[i].type != cards[j].type AND cards[i].type != cards[k].type AND cards[j].type != cards[k].type
+ * * types are unique: cards[i].type != cards[j].type AND
+ *   cards[i].type != cards[k].type AND cards[j].type != cards[k].type
  * * one is wild: cards[i].type == WILD OR cards[j].type == WILD OR cards[k].type == WILD
  */

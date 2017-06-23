@@ -9,7 +9,8 @@ var _constants = require('./constants');
 /**
  * Start the match.
  *
- * @param playerCount - Number of players. The match settings determine the minimum and maximum number of players.
+ * @param playerCount - Number of players. The match settings determine
+ *   the minimum and maximum number of players.
  * @example
  * let state = stateMachine.reduce();
  * let action = actionCreators.startMatch(3);
@@ -156,9 +157,12 @@ function capture(armies) {
 /**
  * Move armies between two of your adjacent territories before ending your turn.
  *
- * @param fromTerritoryIndex - Index of territory to move armies from. Must be owned by you, have more than one army, and be adjacent to toTerritoryIndex.
- * @param toTerritoryIndex - Index of territory to move armies to. Must be owned by you and adjacent to fromTerritoryIndex.
- * @param armies - Number of armies to move. You must leave one army behind, so the number may between one and the number of the armies on fromTerritoryIndex.
+ * @param fromTerritoryIndex - Index of territory to move armies from. Must
+ *   be owned by you, have more than one army, and be adjacent to toTerritoryIndex.
+ * @param toTerritoryIndex - Index of territory to move armies to. Must be
+ *   owned by you and adjacent to fromTerritoryIndex.
+ * @param armies - Number of armies to move. You must leave one army behind,
+ *   so the number may between one and the number of the armies on fromTerritoryIndex.
  */
 function fortify(fromTerritoryIndex, toTerritoryIndex, armies) {
   return {
@@ -186,7 +190,7 @@ function drawRandomCard(cardIndex) {
     type: _constants.ACTIONS.DRAW_RANDOM_CARD,
     cardIndex: cardIndex
   };
-};
+}
 
 exports.default = {
   startMatch: startMatch,

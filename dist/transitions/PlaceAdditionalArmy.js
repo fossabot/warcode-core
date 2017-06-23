@@ -4,19 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-/**
- * After players claim all territories, players take turns placing one
- * of their undeployed armies on territory they occupy each turn.
- *
- * When a player places an additional army,
- * * The current player looses one undeployed army
- * * The territory armies are incremented
- *
- */
-
-
 exports.default = function (matchConfig, extendedState) {
   var territories = extendedState.territories,
       currentPlayerIndex = extendedState.currentPlayerIndex;
@@ -32,7 +19,7 @@ exports.default = function (matchConfig, extendedState) {
     var territoryIndex = action.territoryIndex;
 
 
-    return _extends({}, extendedState, {
+    return Object.assign({}, extendedState, {
       territories: (0, _replaceElements4.default)(extendedState.territories, _defineProperty({}, territoryIndex, {
         owner: currentPlayerIndex,
         armies: extendedState.territories[territoryIndex].armies + 1
@@ -59,3 +46,13 @@ var _replaceElements4 = _interopRequireDefault(_replaceElements3);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/**
+ * After players claim all territories, players take turns placing one
+ * of their undeployed armies on territory they occupy each turn.
+ *
+ * When a player places an additional army,
+ * * The current player looses one undeployed army
+ * * The territory armies are incremented
+ *
+ */

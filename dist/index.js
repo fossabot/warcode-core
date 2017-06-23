@@ -28,6 +28,8 @@ Object.defineProperty(exports, 'PSEUDOSTATES', {
 
 var _MatchConfig = require('./MatchConfig');
 
+var _MatchConfig2 = _interopRequireDefault(_MatchConfig);
+
 var _StateMachine = require('./StateMachine');
 
 var _StateMachine2 = _interopRequireDefault(_StateMachine);
@@ -38,7 +40,7 @@ var _actionCreators2 = _interopRequireDefault(_actionCreators);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var matchConfig = (0, _MatchConfig.parseMatchConfig)();
+var matchConfig = (0, _MatchConfig2.default)();
 var stateMachine = new _StateMachine2.default(matchConfig);
 
 exports.actionCreators = _actionCreators2.default;

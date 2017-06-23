@@ -4,14 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-/**
- * Select player to take first move, similarly to each player rolling
- * a die to determine the first player at the beginning the game.
- */
-
-
 exports.default = function (matchConfig, extendedState) {
   var players = extendedState.players;
 
@@ -23,7 +15,7 @@ exports.default = function (matchConfig, extendedState) {
   };
 
   var reduce = function reduce(action) {
-    return _extends({}, extendedState, {
+    return Object.assign({}, extendedState, {
       currentPlayerIndex: action.firstPlayerIndex
     });
   };

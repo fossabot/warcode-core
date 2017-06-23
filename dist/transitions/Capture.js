@@ -4,15 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-/**
- * When you defeat all armies on a defending territory, you must occupy it by
- * moving armies from the attacking territory. The number of armies moved must
- * be at least the same number of dice rolled in the decisive battle.
- */
-
-
 exports.default = function (matchConfig, extendedState) {
   var territories = extendedState.territories,
       activeBattle = extendedState.activeBattle,
@@ -37,7 +28,7 @@ exports.default = function (matchConfig, extendedState) {
         defendingTerritoryIndex = activeBattle.defendingTerritoryIndex;
 
 
-    return _extends({}, extendedState, {
+    return Object.assign({}, extendedState, {
       territories: (0, _replaceElements3.default)(extendedState.territories, (_replaceElements = {}, _defineProperty(_replaceElements, attackingTerritoryIndex, {
         owner: extendedState.territories[attackingTerritoryIndex].owner,
         armies: extendedState.territories[attackingTerritoryIndex].armies - armies
@@ -66,3 +57,9 @@ var _replaceElements3 = _interopRequireDefault(_replaceElements2);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/**
+ * When you defeat all armies on a defending territory, you must occupy it by
+ * moving armies from the attacking territory. The number of armies moved must
+ * be at least the same number of dice rolled in the decisive battle.
+ */

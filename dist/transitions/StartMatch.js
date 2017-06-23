@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (matchConfig, extendedState) {
+exports.default = function (matchConfig) {
   var minPlayers = matchConfig.minPlayers,
       maxPlayers = matchConfig.maxPlayers,
       territories = matchConfig.territories,
