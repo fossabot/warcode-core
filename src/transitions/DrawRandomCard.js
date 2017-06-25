@@ -11,28 +11,19 @@ import replaceElements from './replaceElements';
 export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const { cardOwner, currentPlayerIndex } = extendedState;
 
-  const guard = action => {
-    const { cardIndex } = action;
+  const guard = ({ cardIndex }) =>
+    Number.isInteger(cardIndex) &&
+    cardIndex >= 0 &&
+    cardIndex < cardOwner.length &&
+    cardOwner[cardIndex] === undefined;
 
-    return (
-      Number.isInteger(cardIndex) &&
-      cardIndex >= 0 &&
-      cardIndex < cardOwner.length &&
-      cardOwner[cardIndex] === undefined
-    );
-  };
-
-  const reduce = action => {
-    const { cardIndex } = action;
-
-    return {
-      ...extendedState,
-      cardOwner: replaceElements(extendedState.cardOwner, {
-        [cardIndex]: currentPlayerIndex,
-      }),
-      capturedTerritories: undefined,
-    };
-  };
+  const reduce = ({ cardIndex }) => ({
+    ...extendedState,
+    cardOwner: replaceElements(extendedState.cardOwner, {
+      [cardIndex]: currentPlayerIndex,
+    }),
+    capturedTerritories: undefined,
+  });
 
   return new TransitionGuarded(ACTIONS.DRAW_RANDOM_CARD, guard, reduce);
 }

@@ -55,22 +55,18 @@ function countUndeployedArmies(matchConfig, extendedState, playerIndex) {
  */
 export default function(matchConfig: MatchConfig, extendedState: MatchState): Transition {
   const guard = () => undefined;
+  const nextPlayer = nextPlayerIndex(extendedState);
 
-  const reduce = () => {
-    // SETUP TURN
-    const nextPlayer = nextPlayerIndex(extendedState);
-
-    return {
-      ...extendedState,
-      currentPlayerIndex: nextPlayer,
-      players: replaceElements(extendedState.players, {
-        [nextPlayer]: {
-          undeployedArmies: countUndeployedArmies(matchConfig, extendedState, nextPlayer),
-        },
-      }),
-      capturedTerritories: 0,
-    };
-  };
+  const reduce = () => ({
+    ...extendedState,
+    currentPlayerIndex: nextPlayer,
+    players: replaceElements(extendedState.players, {
+      [nextPlayer]: {
+        undeployedArmies: countUndeployedArmies(matchConfig, extendedState, nextPlayer),
+      },
+    }),
+    capturedTerritories: 0,
+  });
 
   return new Transition(guard, reduce);
 }

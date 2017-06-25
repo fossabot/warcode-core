@@ -37,23 +37,17 @@ const getLoses = (attackerDice: number[], defenderDice: number[]) => {
 export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const { territories, activeBattle } = extendedState;
 
-  const guard = action => {
-    const { attackerDice, defenderDice } = action;
-    return (
-      !!activeBattle &&
-      Array.isArray(attackerDice) &&
-      attackerDice.length === activeBattle.attackingDiceCount &&
-      attackerDice.every(d => d >= 1 && d <= 6) &&
-      Array.isArray(defenderDice) &&
-      defenderDice.length >= 1 &&
-      defenderDice.length <=
-        Math.min(2, territories[activeBattle.defendingTerritoryIndex].armies) &&
-      defenderDice.every(d => d >= 1 && d <= 6)
-    );
-  };
+  const guard = ({ attackerDice, defenderDice }) =>
+    !!activeBattle &&
+    Array.isArray(attackerDice) &&
+    attackerDice.length === activeBattle.attackingDiceCount &&
+    attackerDice.every(d => d >= 1 && d <= 6) &&
+    Array.isArray(defenderDice) &&
+    defenderDice.length >= 1 &&
+    defenderDice.length <= Math.min(2, territories[activeBattle.defendingTerritoryIndex].armies) &&
+    defenderDice.every(d => d >= 1 && d <= 6);
 
-  const reduce = action => {
-    const { attackerDice, defenderDice } = action;
+  const reduce = ({ attackerDice, defenderDice }) => {
     if (!activeBattle) {
       return extendedState;
     }

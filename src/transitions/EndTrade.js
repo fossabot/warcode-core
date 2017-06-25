@@ -10,10 +10,7 @@ import TransitionGuarded from './TransitionGuarded';
 export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const { cardOwner, currentPlayerIndex } = extendedState;
 
-  const guard = () => {
-    const cardsHeldByPlayer = cardOwner.filter(c => c === currentPlayerIndex).length;
-    return cardsHeldByPlayer < 5;
-  };
+  const guard = () => cardOwner.filter(c => c === currentPlayerIndex).length < 5;
 
   const reduce = () => extendedState;
 

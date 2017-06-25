@@ -31,13 +31,14 @@ import replaceElements from './replaceElements';
  *   cards[i].type != cards[k].type AND cards[j].type != cards[k].type
  * * one is wild: cards[i].type == WILD OR cards[j].type == WILD OR cards[k].type == WILD
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
-  const { cards, cardOccupiedTerritoryReward } = matchConfig;
+export default function(
+  { cards, cardOccupiedTerritoryReward }: MatchConfig,
+  extendedState: MatchState
+): TransitionGuarded {
   const { cardOwner, territories, currentPlayerIndex, tradeCount } = extendedState;
 
-  const guard = action => {
+  const guard = ({ i, j, k }) => {
     const isValidIndices = x => x >= 0 && x < cards.length;
-    const { i, j, k } = action;
     const areValidIndices = isValidIndices(i) && isValidIndices(j) && isValidIndices(k);
     const areUniqueCards = i !== j && j !== k && i !== k;
     const isOwner =
@@ -57,8 +58,7 @@ export default function(matchConfig: MatchConfig, extendedState: MatchState): Tr
     return isSameType || areDifferentTypes || containsWildCard;
   };
 
-  const reduce = action => {
-    const { i, j, k } = action;
+  const reduce = ({ i, j, k }) => {
     const count = tradeCount + 1;
     const tradeAward = count <= 5 ? (count + 1) * 2 : (count - 3) * 5;
 

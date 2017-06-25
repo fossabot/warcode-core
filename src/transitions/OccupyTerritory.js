@@ -22,35 +22,27 @@ import replaceElements from './replaceElements';
 export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const { territories, currentPlayerIndex } = extendedState;
 
-  const guard = action => {
-    const { territoryIndex } = action;
-    return (
-      Number.isInteger(territoryIndex) &&
-      territoryIndex >= 0 &&
-      territoryIndex < territories.length &&
-      territories[territoryIndex].owner === undefined &&
-      territories[territoryIndex].armies === 0
-    );
-  };
+  const guard = ({ territoryIndex }) =>
+    Number.isInteger(territoryIndex) &&
+    territoryIndex >= 0 &&
+    territoryIndex < territories.length &&
+    territories[territoryIndex].owner === undefined &&
+    territories[territoryIndex].armies === 0;
 
-  const reduce = action => {
-    const { territoryIndex } = action;
-
-    return {
-      ...extendedState,
-      territories: replaceElements(extendedState.territories, {
-        [territoryIndex]: {
-          owner: currentPlayerIndex,
-          armies: 1,
-        },
-      }),
-      players: replaceElements(extendedState.players, {
-        [currentPlayerIndex]: {
-          undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies - 1,
-        },
-      }),
-    };
-  };
+  const reduce = ({ territoryIndex }) => ({
+    ...extendedState,
+    territories: replaceElements(extendedState.territories, {
+      [territoryIndex]: {
+        owner: currentPlayerIndex,
+        armies: 1,
+      },
+    }),
+    players: replaceElements(extendedState.players, {
+      [currentPlayerIndex]: {
+        undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies - 1,
+      },
+    }),
+  });
 
   return new TransitionGuarded(ACTIONS.OCCUPY_TERRITORY, guard, reduce);
 }

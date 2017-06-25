@@ -31,10 +31,8 @@ import TransitionGuarded from './TransitionGuarded';
 export default function(matchConfig: MatchConfig): TransitionGuarded {
   const { minPlayers, maxPlayers, territories, cards, startingArmiesByPlayers } = matchConfig;
 
-  const guard = action => {
-    const { playerCount } = action;
-    return Number.isInteger(playerCount) && playerCount >= minPlayers && playerCount <= maxPlayers;
-  };
+  const guard = ({ playerCount }) =>
+    Number.isInteger(playerCount) && playerCount >= minPlayers && playerCount <= maxPlayers;
 
   const reduce = ({ playerCount }) => ({
     territories: Array(territories.length).fill({

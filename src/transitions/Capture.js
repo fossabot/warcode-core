@@ -13,18 +13,13 @@ import replaceElements from './replaceElements';
 export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const { territories, activeBattle, currentPlayerIndex } = extendedState;
 
-  const guard = action => {
-    const { armies } = action;
-    return (
-      !!activeBattle &&
-      Number.isInteger(armies) &&
-      armies >= activeBattle.attackingDiceCount &&
-      armies < territories[activeBattle.attackingTerritoryIndex].armies
-    );
-  };
+  const guard = ({ armies }) =>
+    !!activeBattle &&
+    Number.isInteger(armies) &&
+    armies >= activeBattle.attackingDiceCount &&
+    armies < territories[activeBattle.attackingTerritoryIndex].armies;
 
-  const reduce = action => {
-    const { armies } = action;
+  const reduce = ({ armies }) => {
     if (!activeBattle) {
       return extendedState;
     }

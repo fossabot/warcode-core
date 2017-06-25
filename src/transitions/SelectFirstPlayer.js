@@ -11,18 +11,14 @@ import TransitionGuarded from './TransitionGuarded';
 export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
   const { players } = extendedState;
 
-  const guard = action => {
-    const { firstPlayerIndex } = action;
-    return (
-      Number.isInteger(firstPlayerIndex) &&
-      firstPlayerIndex >= 0 &&
-      firstPlayerIndex < players.length
-    );
-  };
+  const guard = ({ firstPlayerIndex }) =>
+    Number.isInteger(firstPlayerIndex) &&
+    firstPlayerIndex >= 0 &&
+    firstPlayerIndex < players.length;
 
-  const reduce = action => ({
+  const reduce = ({ firstPlayerIndex }) => ({
     ...extendedState,
-    currentPlayerIndex: action.firstPlayerIndex,
+    currentPlayerIndex: firstPlayerIndex,
   });
 
   return new TransitionGuarded(ACTIONS.SELECT_FIRST_PLAYER, guard, reduce);
