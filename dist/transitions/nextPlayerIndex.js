@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = nextPlayerIndex;
 
 
-function activePlayerIndicies(_ref) {
+var activePlayerIndicies = function activePlayerIndicies(_ref) {
   var players = _ref.players,
       territories = _ref.territories;
 
@@ -30,8 +30,9 @@ function activePlayerIndicies(_ref) {
     });
   }
 
+  // eslint-disable-next-line fp/no-mutating-methods
   return Array.from(indicies).sort();
-}
+};
 
 // MUST BE RUN AT END OF TURN, USING EXTENDED STATE TO BE RETURNED BY REDUCER
 

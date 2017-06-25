@@ -1,3 +1,4 @@
+// @flow
 import expect from 'expect';
 import { STATES } from '../../constants';
 import PlaceAdditionalArmy from '../PlaceAdditionalArmy';

@@ -180,30 +180,6 @@ function StateMachine(matchConfig) {
     };
   };
 
-  // Similar to Redux reduce and a transition in UML State Machine in response to an event.
-  // const reduce = (extendedState = { stateKey: STATES.INITIALIZING }, action = {}) => {
-  //   const MAX_TRANSITIONS = 10;
-  //
-  //   let newState = Object.assign({}, extendedState);
-  //
-  //   for (let i = 0; i < MAX_TRANSITIONS; i += 1) {
-  //     // assertStateInvariants(newState);
-  //
-  //     const transition = getTransition(newState, action);
-  //     if (!transition) {
-  //       return newState;
-  //     }
-  //
-  //     // apply new action to compute the updated state
-  //     if (typeof transition.reduce === 'function') {
-  //       newState = transition.reduce(action);
-  //     }
-  //     newState.stateKey = transition.nextStateKey;
-  //   }
-  //   // TODO - log error
-  //   throw { message: `stuck in loop leaving ${extendedState.stateKey}` };
-  // };
-
   const reduce = (extendedState = { stateKey: STATES.INITIALIZING }, action = {}, ttl = 10) => {
     if (ttl < 1) {
       // TODO - log error
@@ -244,6 +220,6 @@ function StateMachine(matchConfig) {
       return reduce(extendedState, action);
     },
   };
-};
+}
 
 export default StateMachine;

@@ -29,6 +29,7 @@ var _config2 = _interopRequireDefault(_config);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var matchConfig = (0, _MatchConfig2.default)(_config2.default);
+
 var currentPlayerIndex = 0;
 var matchExtendedState = {
   stateKey: _constants.STATES.BATTLING,

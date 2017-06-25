@@ -15,7 +15,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = function () {
   var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _traditional2.default;
 
-  // TODO: validate graph, cards, etc
+  // TODO: validate the configs graph, cards, etc
+  // TODO: document this reducer
   var reduce = function reduce(acc, _ref, territoryIndex) {
     var _ref2 = _slicedToArray(_ref, 3),
         name = _ref2[0],
