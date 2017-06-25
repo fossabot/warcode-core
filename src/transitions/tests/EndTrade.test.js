@@ -1,5 +1,7 @@
 // @flow
 import expect from 'expect';
+import type { MatchConfig } from '../../MatchConfig';
+import type { MatchState } from '../../MatchState';
 import { STATES } from '../../constants';
 import EndTrade from '../EndTrade';
 import TransitionGuarded from '../TransitionGuarded';
@@ -7,9 +9,9 @@ import parseMatchConfig from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 import testConfig from './config.json';
 
-const matchConfig = parseMatchConfig(testConfig);
+const matchConfig: MatchConfig = parseMatchConfig(testConfig);
 const currentPlayerIndex = 0;
-const matchExtendedState = {
+const matchExtendedState: MatchState = {
   stateKey: STATES.BATTLING,
   currentPlayerIndex,
   territories: [
@@ -35,6 +37,9 @@ const matchExtendedState = {
     },
   ],
   cardOwner: Array(5).fill(currentPlayerIndex),
+  capturedTerritories: 0,
+  tradeCount: 0,
+  activeBattle: undefined,
 };
 
 test('guard checks card count', () => {
@@ -46,7 +51,7 @@ test('guard checks card count', () => {
 test('reduce updates state', () => {
   const transition: TransitionGuarded = new EndTrade(matchConfig, matchExtendedState);
   const action = actionCreators.endTrade();
-  const n = transition.reduce(action);
+  const n: MatchState = transition.reduce(action);
 
   expect(n.stateKey).toBe(STATES.BATTLING);
 });

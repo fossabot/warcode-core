@@ -1,6 +1,6 @@
 // @flow
 import type { MatchConfig } from '../MatchConfig';
-import { ACTIONS } from '../constants';
+import { ACTIONS, STATES } from '../constants';
 import TransitionGuarded from './TransitionGuarded';
 
 /**
@@ -36,23 +36,21 @@ export default function(matchConfig: MatchConfig): TransitionGuarded {
     return Number.isInteger(playerCount) && playerCount >= minPlayers && playerCount <= maxPlayers;
   };
 
-  const reduce = action => {
-    const { playerCount } = action;
-    return {
-      territories: Array(territories.length).fill({
-        owner: undefined,
-        armies: 0,
-      }),
-      cardOwner: Array(cards.length).fill(undefined),
-      players: Array(playerCount).fill({
-        undeployedArmies: startingArmiesByPlayers[playerCount],
-      }),
-      currentPlayerIndex: -1,
-      tradeCount: 0,
-      capturedTerritories: 0,
-      activeBattle: undefined,
-    };
-  };
+  const reduce = ({ playerCount }) => ({
+    territories: Array(territories.length).fill({
+      owner: undefined,
+      armies: 0,
+    }),
+    cardOwner: Array(cards.length).fill(undefined),
+    players: Array(playerCount).fill({
+      undeployedArmies: startingArmiesByPlayers[playerCount],
+    }),
+    currentPlayerIndex: -1,
+    tradeCount: 0,
+    capturedTerritories: 0,
+    activeBattle: undefined,
+    stateKey: STATES.INITIALIZING,
+  });
 
   return new TransitionGuarded(ACTIONS.START_MATCH, guard, reduce);
 }

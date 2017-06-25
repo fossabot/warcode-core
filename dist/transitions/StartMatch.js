@@ -18,9 +18,8 @@ exports.default = function (matchConfig) {
     return Number.isInteger(playerCount) && playerCount >= minPlayers && playerCount <= maxPlayers;
   };
 
-  var reduce = function reduce(action) {
-    var playerCount = action.playerCount;
-
+  var reduce = function reduce(_ref) {
+    var playerCount = _ref.playerCount;
     return {
       territories: Array(territories.length).fill({
         owner: undefined,
@@ -33,7 +32,8 @@ exports.default = function (matchConfig) {
       currentPlayerIndex: -1,
       tradeCount: 0,
       capturedTerritories: 0,
-      activeBattle: undefined
+      activeBattle: undefined,
+      stateKey: _constants.STATES.INITIALIZING
     };
   };
 

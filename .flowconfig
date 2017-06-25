@@ -3,4 +3,5 @@ unsafe.enable_getters_and_setters=true
 
 
 [ignore]
-.*/node_modules/documentation/.*
+<PROJECT_ROOT>/node_modules/documentation/.*
+.*/tests/.*

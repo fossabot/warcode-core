@@ -1,5 +1,6 @@
 // @flow
 export type MatchState = {
+  stateKey: string,
   territories: Array<{
     owner: number,
     armies: number,
@@ -10,6 +11,7 @@ export type MatchState = {
   }>,
   currentPlayerIndex: ?number,
   tradeCount: number,
+  // number of territories captured by player this turn
   capturedTerritories: number,
   activeBattle: ?{
     attackingTerritoryIndex: number,

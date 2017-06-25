@@ -49,7 +49,10 @@ var matchExtendedState = {
   }, {
     undeployedArmies: 0
   }],
-  cardOwner: Array(5).fill(currentPlayerIndex)
+  cardOwner: Array(5).fill(currentPlayerIndex),
+  capturedTerritories: 0,
+  tradeCount: 0,
+  activeBattle: undefined
 };
 
 test('guard checks card count', function () {
