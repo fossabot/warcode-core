@@ -3,12 +3,12 @@ import type { MatchState } from '../MatchState';
 
 /** Transition with guard or reduce, leaving a pseudostate */
 class Transition {
-  _guard: Guard;
-  _reduce: Reduce;
+  guardAttribute: Guard;
+  reduceAttribute: Reduce;
 
   constructor(guard: Guard, reduce: Reduce) {
-    this._guard = guard;
-    this._reduce = reduce;
+    this.guardAttribute = guard;
+    this.reduceAttribute = reduce;
   }
 
   get action(): ?string {
@@ -17,12 +17,12 @@ class Transition {
 
   /** @returns true, false, or undefined when there is no guard */
   guard(action: actionInterface): ?boolean {
-    return this._guard(action);
+    return this.guardAttribute(action);
   }
 
   reduce(action: actionInterface): ?MatchState {
-    if (typeof this._reduce === 'function') {
-      return this._reduce(action);
+    if (typeof this.reduceAttribute === 'function') {
+      return this.reduceAttribute(action);
     }
     return undefined;
   }

@@ -13,8 +13,8 @@ var Transition = function () {
   function Transition(guard, reduce) {
     _classCallCheck(this, Transition);
 
-    this._guard = guard;
-    this._reduce = reduce;
+    this.guardAttribute = guard;
+    this.reduceAttribute = reduce;
   }
 
   _createClass(Transition, [{
@@ -23,13 +23,13 @@ var Transition = function () {
 
     /** @returns true, false, or undefined when there is no guard */
     value: function guard(action) {
-      return this._guard(action);
+      return this.guardAttribute(action);
     }
   }, {
     key: 'reduce',
     value: function reduce(action) {
-      if (typeof this._reduce === 'function') {
-        return this._reduce(action);
+      if (typeof this.reduceAttribute === 'function') {
+        return this.reduceAttribute(action);
       }
       return undefined;
     }

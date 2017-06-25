@@ -7,14 +7,14 @@ import StateMachine from '../src/StateMachine';
 (function documentActionCreators() {
   const docs = documentation.buildSync(['./src/actionCreators.js'], {});
 
-  documentation.formats.md(docs, {}, function(err, res) {
+  documentation.formats.md(docs, {}, (err, res) => {
     if (err) {
       console.error('err', err);
       return;
     }
-    fs.writeFile("docs/action-creators.md", res, function(err) {
-      if(err) {
-        return console.log(err);
+    fs.writeFile("docs/action-creators.md", res, err2 => {
+      if(err2) {
+        return console.log(err2);
       }
     });
   });
@@ -59,68 +59,46 @@ The transitions with labels are documented below.
 `
   };
   const options = { toc: [headerSection, ...classOrder] };
+  const docs = documentation.buildSync(filenames, options);
+  const docsModified = docs.map(d =>
+    Object.assign({}, d,  { params: undefined, returns: undefined }));
 
-  let docs = documentation.buildSync(filenames, options);
-  docs = docs.map((d) => {
-    d.params = undefined;
-    d.returns = undefined;
-    return d;
-  });
-
-  documentation.formats.md(docs, {}, function(err, res) {
+  documentation.formats.md(docsModified, {}, (err, res) => {
     if (err) {
       console.error('err', err);
       return;
     }
-    fs.writeFile("docs/mechanics.md", res, function(err) {
-      if(err) {
-        return console.log(err);
-      }
-    });
+    fs.writeFile("docs/mechanics.md", res, err2 => err2 ? console.log(err2) : undefined);
   });
 })();
 
-(function buildStateDiagram() {
-  const image = Viz(getDot(), { format: 'svg', engine: 'dot' });
-  fs.writeFile("docs/state-machine.svg", image, function(err) {
-    if(err) {
-      return console.log(err);
-    }
+const getTransitionLines = () => {
+  const stateMachine = new StateMachine({});
+  const transitions = stateMachine.getTransitions({}, {});
+  const edges = transitions.map(([from, to, transition]) => {
+    const label = transition.action ? transition.action : '';
+    return [from, to, label];
   });
 
-  function getDot() {
-    const lines = [
+  return edges.map(([from, to, label]) =>
+    `    ${from} -> ${to}[label="${label}"];`
+  );
+};
+
+(function buildStateDiagram() {
+  const getStates = () => [
+    ...STATES.map(s => `    ${STATES[s]}[shape="box", style=rounded];`),
+    ...STATES.map(s => `    ${PSEUDOSTATES[s]}[shape="diamond", style=""];`),
+  ];
+
+  const getDot = () =>
+    [
       'digraph {',
       ...getStates(),
       ...getTransitionLines(),
       '}'
-      ];
+    ].join('\n');
 
-    return lines.join('\n');
-  }
-
-  function getStates() {
-    const lines = [];
-
-    for (const s in STATES) {
-      if (STATES.hasOwnProperty(s)) {
-        lines.push(`    ${STATES[s]}[shape="box", style=rounded];`);
-      }
-    }
-
-    for (const s in PSEUDOSTATES) {
-      if (PSEUDOSTATES.hasOwnProperty(s)) {
-        lines.push(`    ${PSEUDOSTATES[s]}[shape="diamond", style=""];`);
-      }
-    }
-
-    return lines;
-  }
-
-  function getTransitionLines() {
-    const edges = StateMachine.getEdges();
-    return edges.map(([from, to, label]) => {
-      return `    ${from} -> ${to}[label=\"${label}\"];`;
-    });
-  }
+  const image = Viz(getDot(), { format: 'svg', engine: 'dot' });
+  fs.writeFile("docs/state-machine.svg", image, err => err ? console.log(err) : undefined);
 })();

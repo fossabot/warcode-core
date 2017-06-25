@@ -173,7 +173,6 @@ function StateMachine(matchConfig) {
   // @return {{nextStateKey: string, reduce: Function}} transition object, may to pseudostate
   var getTransition = function getTransition(extendedState, action) {
     var allTransitions = getTransitions(extendedState);
-
     var fromCurrentState = allTransitions.filter(function (_ref) {
       var _ref2 = _slicedToArray(_ref, 1),
           from = _ref2[0];
@@ -188,7 +187,7 @@ function StateMachine(matchConfig) {
 
       if (!t || typeof t.guard !== 'function' || typeof t.reduce !== 'function') {
         // TODO log error
-        throw { message: 'invalid state state' };
+        throw { message: 'invalid state' };
       }
     });
 
@@ -296,20 +295,6 @@ function StateMachine(matchConfig) {
       return _reduce(extendedState, action);
     }
   };
-}
-
-StateMachine.getEdges = function () {
-  var stateMachine = new StateMachine({});
-  var transitions = stateMachine.getTransitions({}, {});
-  return transitions.map(function (_ref11) {
-    var _ref12 = _slicedToArray(_ref11, 3),
-        from = _ref12[0],
-        to = _ref12[1],
-        transition = _ref12[2];
-
-    var label = transition.action ? transition.action : '';
-    return [from, to, label];
-  });
 };
 
 exports.default = StateMachine;

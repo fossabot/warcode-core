@@ -147,14 +147,13 @@ function StateMachine(matchConfig) {
   // @return {{nextStateKey: string, reduce: Function}} transition object, may to pseudostate
   const getTransition = (extendedState, action) => {
     const allTransitions = getTransitions(extendedState);
-
     const fromCurrentState = allTransitions.filter(([from]) => from === extendedState.stateKey);
 
     // throw exception for invalid states
     fromCurrentState.forEach(([, , t]) => {
       if (!t || typeof t.guard !== 'function' || typeof t.reduce !== 'function') {
         // TODO log error
-        throw { message: 'invalid state state' };
+        throw { message: 'invalid state' };
       }
     });
 
@@ -245,15 +244,6 @@ function StateMachine(matchConfig) {
       return reduce(extendedState, action);
     },
   };
-}
-
-StateMachine.getEdges = () => {
-  const stateMachine = new StateMachine({});
-  const transitions = stateMachine.getTransitions({}, {});
-  return transitions.map(([from, to, transition]) => {
-    const label = transition.action ? transition.action : '';
-    return [from, to, label];
-  });
 };
 
 export default StateMachine;

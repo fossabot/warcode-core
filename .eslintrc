@@ -22,14 +22,13 @@
     "class-methods-use-this": ["error", { "exceptMethods": ["action"] }],
     "max-len": ["error", { "code": 100 }],
     "no-throw-literal": "warn",
-    "no-underscore-dangle": [ "error", { "allowAfterThis": true } ],
     "fp/no-class": "warn",
     "fp/no-mutation": "warn",
     "fp/no-mutating-methods": "warn",
-    "fp/no-nil": 0,
+    "fp/no-nil": "off",
     "fp/no-this": "warn",
-    "fp/no-throw": 0,
-    "fp/no-unused-expression": 0,
-    "flowtype/no-types-missing-file-annotation": 1
+    "fp/no-throw": "warn",
+    "fp/no-unused-expression": "off",
+    "flowtype/no-types-missing-file-annotation": "warn"
   }
 }
