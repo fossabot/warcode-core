@@ -12,10 +12,6 @@ var _Fortify = require('../Fortify');
 
 var _Fortify2 = _interopRequireDefault(_Fortify);
 
-var _TransitionGuarded = require('../TransitionGuarded');
-
-var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
-
 var _MatchConfig = require('../../MatchConfig');
 
 var _MatchConfig2 = _interopRequireDefault(_MatchConfig);

@@ -4,7 +4,7 @@ import type { MatchConfig } from '../../MatchConfig';
 import type { MatchState } from '../../MatchState';
 import { STATES } from '../../constants';
 import EndTrade from '../EndTrade';
-import TransitionGuarded from '../TransitionGuarded';
+import type TransitionType from '../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 import testConfig from './config.json';
@@ -43,13 +43,13 @@ const matchExtendedState: MatchState = {
 };
 
 test('guard checks card count', () => {
-  const transition: TransitionGuarded = new EndTrade(matchConfig, matchExtendedState);
+  const transition: TransitionType = new EndTrade(matchConfig, matchExtendedState);
   const action = actionCreators.endTrade();
   expect(transition.guard(action)).toEqual(false);
 });
 
 test('reduce updates state', () => {
-  const transition: TransitionGuarded = new EndTrade(matchConfig, matchExtendedState);
+  const transition: TransitionType = new EndTrade(matchConfig, matchExtendedState);
   const action = actionCreators.endTrade();
   const n: MatchState = transition.reduce(action);
 

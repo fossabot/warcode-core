@@ -1,29 +1,29 @@
 // @flow
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
+import type { TransitionType } from './TransitionType';
 import { ACTIONS } from '../constants';
-import TransitionGuarded from './TransitionGuarded';
 import replaceElements from './replaceElements';
 
 /**
  * Simulate player drawing a random card from the deck.
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionType {
   const { cardOwner, currentPlayerIndex } = extendedState;
 
-  const guard = ({ cardIndex }) =>
-    Number.isInteger(cardIndex) &&
-    cardIndex >= 0 &&
-    cardIndex < cardOwner.length &&
-    cardOwner[cardIndex] === undefined;
-
-  const reduce = ({ cardIndex }) => ({
-    ...extendedState,
-    cardOwner: replaceElements(extendedState.cardOwner, {
-      [cardIndex]: currentPlayerIndex,
+  return {
+    guard: ({ type, cardIndex }) =>
+      type === ACTIONS.DRAW_RANDOM_CARD &&
+      Number.isInteger(cardIndex) &&
+      cardIndex >= 0 &&
+      cardIndex < cardOwner.length &&
+      cardOwner[cardIndex] === undefined,
+    reduce: ({ cardIndex }) => ({
+      ...extendedState,
+      cardOwner: replaceElements(extendedState.cardOwner, {
+        [cardIndex]: currentPlayerIndex,
+      }),
+      capturedTerritories: undefined,
     }),
-    capturedTerritories: undefined,
-  });
-
-  return new TransitionGuarded(ACTIONS.DRAW_RANDOM_CARD, guard, reduce);
+  };
 }

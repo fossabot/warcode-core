@@ -2,7 +2,7 @@
 import expect from 'expect';
 import { STATES } from '../../constants';
 import TradeCards from '../TradeCards';
-import TransitionGuarded from '../TransitionGuarded';
+import type TransitionType from '../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 import testConfig from './config.json';
@@ -38,7 +38,7 @@ const matchExtendedState = {
 };
 
 test('guard checks capture parameters', () => {
-  const transition: TransitionGuarded = new TradeCards(matchConfig, matchExtendedState);
+  const transition: TransitionType = new TradeCards(matchConfig, matchExtendedState);
   const actions = [
     [actionCreators.tradeCards(0, 1, 2), true],
     [actionCreators.tradeCards(0, 1, 4), true],
@@ -54,7 +54,7 @@ test('guard checks capture parameters', () => {
 });
 
 test('reduce updates state', () => {
-  const transition: TransitionGuarded = new TradeCards(matchConfig, matchExtendedState);
+  const transition: TransitionType = new TradeCards(matchConfig, matchExtendedState);
   const action = actionCreators.tradeCards(0, 1, 2);
   const n = transition.reduce(action);
 

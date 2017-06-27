@@ -10,45 +10,40 @@ exports.default = function (matchConfig, extendedState) {
       currentPlayerIndex = extendedState.currentPlayerIndex;
 
 
-  var guard = function guard(action) {
-    var armies = action.armies;
+  return {
+    guard: function guard(_ref) {
+      var type = _ref.type,
+          armies = _ref.armies;
+      return type === _constants.ACTIONS.CAPTURE && !!activeBattle && Number.isInteger(armies) && armies >= activeBattle.attackingDiceCount && armies < territories[activeBattle.attackingTerritoryIndex].armies;
+    },
+    reduce: function reduce(_ref2) {
+      var _replaceElements;
 
-    return !!activeBattle && Number.isInteger(armies) && armies >= activeBattle.attackingDiceCount && armies < territories[activeBattle.attackingTerritoryIndex].armies;
-  };
+      var armies = _ref2.armies;
 
-  var reduce = function reduce(action) {
-    var _replaceElements;
+      if (!activeBattle) {
+        return extendedState;
+      }
+      var attackingTerritoryIndex = activeBattle.attackingTerritoryIndex,
+          defendingTerritoryIndex = activeBattle.defendingTerritoryIndex;
 
-    var armies = action.armies;
 
-    if (!activeBattle) {
-      return extendedState;
+      return Object.assign({}, extendedState, {
+        territories: (0, _replaceElements3.default)(extendedState.territories, (_replaceElements = {}, _defineProperty(_replaceElements, attackingTerritoryIndex, {
+          owner: extendedState.territories[attackingTerritoryIndex].owner,
+          armies: extendedState.territories[attackingTerritoryIndex].armies - armies
+        }), _defineProperty(_replaceElements, defendingTerritoryIndex, {
+          owner: currentPlayerIndex,
+          armies: armies
+        }), _replaceElements)),
+        capturedTerritories: extendedState.capturedTerritories + 1,
+        activeBattle: undefined
+      });
     }
-    var attackingTerritoryIndex = activeBattle.attackingTerritoryIndex,
-        defendingTerritoryIndex = activeBattle.defendingTerritoryIndex;
-
-
-    return Object.assign({}, extendedState, {
-      territories: (0, _replaceElements3.default)(extendedState.territories, (_replaceElements = {}, _defineProperty(_replaceElements, attackingTerritoryIndex, {
-        owner: extendedState.territories[attackingTerritoryIndex].owner,
-        armies: extendedState.territories[attackingTerritoryIndex].armies - armies
-      }), _defineProperty(_replaceElements, defendingTerritoryIndex, {
-        owner: currentPlayerIndex,
-        armies: armies
-      }), _replaceElements)),
-      capturedTerritories: extendedState.capturedTerritories + 1,
-      activeBattle: undefined
-    });
   };
-
-  return new _TransitionGuarded2.default(_constants.ACTIONS.CAPTURE, guard, reduce);
 };
 
 var _constants = require('../constants');
-
-var _TransitionGuarded = require('./TransitionGuarded');
-
-var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
 
 var _replaceElements2 = require('./replaceElements');
 

@@ -2,7 +2,7 @@
 import expect from 'expect';
 import { STATES } from '../../constants';
 import Battle from '../Battle';
-import TransitionGuarded from '../TransitionGuarded';
+import type TransitionType from '../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 import testConfig from './config.json';
@@ -36,7 +36,7 @@ const matchExtendedState = {
 };
 
 test('guard checks player and territory', () => {
-  const transition: TransitionGuarded = new Battle(matchConfig, matchExtendedState);
+  const transition: TransitionType = new Battle(matchConfig, matchExtendedState);
 
   [
     [actionCreators.battle(1, 0, 3), true],
@@ -54,7 +54,7 @@ test('reduce updates state', () => {
   const attackingTerritoryIndex = 1;
   const defendingTerritoryIndex = 0;
   const attackingDiceCount = 3;
-  const transition: TransitionGuarded = new Battle(matchConfig, matchExtendedState);
+  const transition: TransitionType = new Battle(matchConfig, matchExtendedState);
   const action = actionCreators.battle(
     attackingTerritoryIndex,
     defendingTerritoryIndex,

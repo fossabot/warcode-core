@@ -2,7 +2,7 @@
 import expect from 'expect';
 import { STATES } from '../../constants';
 import Fortify from '../Fortify';
-import TransitionGuarded from '../TransitionGuarded';
+import type TransitionType from '../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 import testConfig from './config.json';
@@ -36,7 +36,7 @@ const matchExtendedState = {
 };
 
 test('guard checks capture parameters', () => {
-  const transition: TransitionGuarded = new Fortify(matchConfig, matchExtendedState);
+  const transition: TransitionType = new Fortify(matchConfig, matchExtendedState);
   const actions = [
     [actionCreators.fortify(1, 2, 1), true],
     [actionCreators.fortify(1, 2, 0), false],
@@ -51,7 +51,7 @@ test('guard checks capture parameters', () => {
 });
 
 test('reduce updates state', () => {
-  const transition: TransitionGuarded = new Fortify(matchConfig, matchExtendedState);
+  const transition: TransitionType = new Fortify(matchConfig, matchExtendedState);
   const armiesToMove = 3;
   const from = 1;
   const to = 2;

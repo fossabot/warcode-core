@@ -2,7 +2,7 @@
 import expect from 'expect';
 import { STATES } from '../../constants';
 import StartMatch from '../StartMatch';
-import TransitionGuarded from '../TransitionGuarded';
+import type TransitionType from '../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 
@@ -13,7 +13,7 @@ const matchExtendedState = {
 
 test('guard validates player count', () => {
   const tryValue = playerCount => {
-    const transition: TransitionGuarded = new StartMatch(matchConfig, matchExtendedState);
+    const transition: TransitionType = new StartMatch(matchConfig, matchExtendedState);
     const action = actionCreators.startMatch(playerCount);
     return transition.guard(action);
   };

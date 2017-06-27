@@ -9,24 +9,17 @@ exports.default = function (matchConfig, extendedState) {
       currentPlayerIndex = extendedState.currentPlayerIndex;
 
 
-  var guard = function guard() {
-    var cardsHeldByPlayer = cardOwner.filter(function (c) {
-      return c === currentPlayerIndex;
-    }).length;
-    return cardsHeldByPlayer < 5;
+  return {
+    guard: function guard(_ref) {
+      var type = _ref.type;
+      return type === _constants.ACTIONS.END_TRADE && cardOwner.filter(function (c) {
+        return c === currentPlayerIndex;
+      }).length < 5;
+    },
+    reduce: function reduce() {
+      return extendedState;
+    }
   };
-
-  var reduce = function reduce() {
-    return extendedState;
-  };
-
-  return new _TransitionGuarded2.default(_constants.ACTIONS.END_TRADE, guard, reduce);
 };
 
 var _constants = require('../constants');
-
-var _TransitionGuarded = require('./TransitionGuarded');
-
-var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

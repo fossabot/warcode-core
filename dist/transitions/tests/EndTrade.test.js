@@ -10,10 +10,6 @@ var _EndTrade = require('../EndTrade');
 
 var _EndTrade2 = _interopRequireDefault(_EndTrade);
 
-var _TransitionGuarded = require('../TransitionGuarded');
-
-var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
-
 var _MatchConfig = require('../../MatchConfig');
 
 var _MatchConfig2 = _interopRequireDefault(_MatchConfig);
@@ -29,7 +25,6 @@ var _config2 = _interopRequireDefault(_config);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var matchConfig = (0, _MatchConfig2.default)(_config2.default);
-
 var currentPlayerIndex = 0;
 var matchExtendedState = {
   stateKey: _constants.STATES.BATTLING,

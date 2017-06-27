@@ -10,38 +10,30 @@ exports.default = function (matchConfig, extendedState) {
       currentPlayerIndex = extendedState.currentPlayerIndex;
 
 
-  var guard = function guard(action) {
-    var territoryIndex = action.territoryIndex,
-        armies = action.armies;
-
-
-    return Number.isInteger(territoryIndex) && territoryIndex >= 0 && territoryIndex < territories.length && territories[territoryIndex].owner === currentPlayerIndex && players[currentPlayerIndex].undeployedArmies >= armies;
+  return {
+    guard: function guard(_ref) {
+      var type = _ref.type,
+          territoryIndex = _ref.territoryIndex,
+          armies = _ref.armies;
+      return type === _constants.ACTIONS.PLACE_NEW_ARMIES && Number.isInteger(territoryIndex) && territoryIndex >= 0 && territoryIndex < territories.length && territories[territoryIndex].owner === currentPlayerIndex && players[currentPlayerIndex].undeployedArmies >= armies;
+    },
+    reduce: function reduce(_ref2) {
+      var territoryIndex = _ref2.territoryIndex,
+          armies = _ref2.armies;
+      return Object.assign({}, extendedState, {
+        territories: (0, _replaceElements4.default)(extendedState.territories, _defineProperty({}, territoryIndex, {
+          owner: currentPlayerIndex,
+          armies: extendedState.territories[territoryIndex].armies + armies
+        })),
+        players: (0, _replaceElements4.default)(extendedState.players, _defineProperty({}, currentPlayerIndex, {
+          undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies - armies
+        }))
+      });
+    }
   };
-
-  var reduce = function reduce(action) {
-    var territoryIndex = action.territoryIndex,
-        armies = action.armies;
-
-
-    return Object.assign({}, extendedState, {
-      territories: (0, _replaceElements4.default)(extendedState.territories, _defineProperty({}, territoryIndex, {
-        owner: currentPlayerIndex,
-        armies: extendedState.territories[territoryIndex].armies + armies
-      })),
-      players: (0, _replaceElements4.default)(extendedState.players, _defineProperty({}, currentPlayerIndex, {
-        undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies - armies
-      }))
-    });
-  };
-
-  return new _TransitionGuarded2.default(_constants.ACTIONS.PLACE_NEW_ARMIES, guard, reduce);
 };
 
 var _constants = require('../constants');
-
-var _TransitionGuarded = require('./TransitionGuarded');
-
-var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
 
 var _replaceElements3 = require('./replaceElements');
 

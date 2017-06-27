@@ -1,8 +1,8 @@
 // @flow
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
+import type { TransitionType } from './TransitionType';
 import { ACTIONS } from '../constants';
-import TransitionGuarded from './TransitionGuarded';
 import replaceElements from './replaceElements';
 
 /**
@@ -34,69 +34,72 @@ import replaceElements from './replaceElements';
 export default function(
   { cards, cardOccupiedTerritoryReward }: MatchConfig,
   extendedState: MatchState
-): TransitionGuarded {
+): TransitionType {
   const { cardOwner, territories, currentPlayerIndex, tradeCount } = extendedState;
 
-  const guard = ({ i, j, k }) => {
-    const isValidIndices = x => x >= 0 && x < cards.length;
-    const areValidIndices = isValidIndices(i) && isValidIndices(j) && isValidIndices(k);
-    const areUniqueCards = i !== j && j !== k && i !== k;
-    const isOwner =
-      cardOwner[i] === currentPlayerIndex &&
-      cardOwner[j] === currentPlayerIndex &&
-      cardOwner[k] === currentPlayerIndex;
-    if (!areValidIndices || !areUniqueCards || !isOwner) {
-      return false;
-    }
-    const isWild = index => cards[index][1] === null;
-    const containsWildCard = isWild(i) || isWild(j) || isWild(k);
-    const a = cards[i][0];
-    const b = cards[j][0];
-    const c = cards[k][0];
-    const isSameType = a === b && b === c;
-    const areDifferentTypes = a !== b && a !== c && b !== c;
-    return isSameType || areDifferentTypes || containsWildCard;
-  };
-
-  const reduce = ({ i, j, k }) => {
-    const count = tradeCount + 1;
-    const tradeAward = count <= 5 ? (count + 1) * 2 : (count - 3) * 5;
-
-    const territoryUpdate = (() => {
-      if (cards[i][1] === undefined || cards[i][1] < 0) {
-        return {};
+  return {
+    guard: ({ type, i, j, k }) => {
+      if (type !== ACTIONS.TRADE_CARDS) {
+        return false;
       }
-
-      const firstCardTerritoryIndex: number = cards[i][1];
-      if (territories[firstCardTerritoryIndex].owner !== currentPlayerIndex) {
-        return {};
+      const isValidIndices = x => x >= 0 && x < cards.length;
+      const areValidIndices = isValidIndices(i) && isValidIndices(j) && isValidIndices(k);
+      const areUniqueCards = i !== j && j !== k && i !== k;
+      const isOwner =
+        cardOwner[i] === currentPlayerIndex &&
+        cardOwner[j] === currentPlayerIndex &&
+        cardOwner[k] === currentPlayerIndex;
+      if (!areValidIndices || !areUniqueCards || !isOwner) {
+        return false;
       }
+      const isWild = index => cards[index][1] === null;
+      const containsWildCard = isWild(i) || isWild(j) || isWild(k);
+      const a = cards[i][0];
+      const b = cards[j][0];
+      const c = cards[k][0];
+      const isSameType = a === b && b === c;
+      const areDifferentTypes = a !== b && a !== c && b !== c;
+      return isSameType || areDifferentTypes || containsWildCard;
+    },
+    reduce: ({ i, j, k }) => {
+      const count = tradeCount + 1;
+      const tradeAward = count <= 5 ? (count + 1) * 2 : (count - 3) * 5;
 
-      const card = extendedState.territories[firstCardTerritoryIndex];
+      const territoryUpdate = (() => {
+        if (cards[i][1] === undefined || cards[i][1] < 0) {
+          return {};
+        }
+
+        const firstCardTerritoryIndex: number = cards[i][1];
+        if (territories[firstCardTerritoryIndex].owner !== currentPlayerIndex) {
+          return {};
+        }
+
+        const card = extendedState.territories[firstCardTerritoryIndex];
+        return {
+          [firstCardTerritoryIndex]: {
+            owner: card.owner,
+            armies: card.armies + cardOccupiedTerritoryReward,
+          },
+        };
+      })();
+
       return {
-        [firstCardTerritoryIndex]: {
-          owner: card.owner,
-          armies: card.armies + cardOccupiedTerritoryReward,
-        },
+        ...extendedState,
+        tradeCount: count,
+        players: replaceElements(extendedState.players, {
+          [currentPlayerIndex]: {
+            undeployedArmies:
+              extendedState.players[currentPlayerIndex].undeployedArmies + tradeAward,
+          },
+        }),
+        cardOwner: replaceElements(extendedState.cardOwner, {
+          [i]: null,
+          [j]: null,
+          [k]: null,
+        }),
+        territories: replaceElements(extendedState.territories, territoryUpdate),
       };
-    })();
-
-    return {
-      ...extendedState,
-      tradeCount: count,
-      players: replaceElements(extendedState.players, {
-        [currentPlayerIndex]: {
-          undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies + tradeAward,
-        },
-      }),
-      cardOwner: replaceElements(extendedState.cardOwner, {
-        [i]: null,
-        [j]: null,
-        [k]: null,
-      }),
-      territories: replaceElements(extendedState.territories, territoryUpdate),
-    };
+    },
   };
-
-  return new TransitionGuarded(ACTIONS.TRADE_CARDS, guard, reduce);
 }

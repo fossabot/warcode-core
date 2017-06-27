@@ -1,8 +1,8 @@
 // @flow
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
+import type { TransitionType } from './TransitionType';
 import { ACTIONS } from '../constants';
-import TransitionGuarded from './TransitionGuarded';
 import replaceElements from './replaceElements';
 
 const getLoses = (attackerDice: number[], defenderDice: number[]) => {
@@ -34,42 +34,43 @@ const getLoses = (attackerDice: number[], defenderDice: number[]) => {
  * territory contains a single army. When the territory contains multiple
  * armies, the defender may roll either one or two dice.
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionGuarded {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionType {
   const { territories, activeBattle } = extendedState;
 
-  const guard = ({ attackerDice, defenderDice }) =>
-    !!activeBattle &&
-    Array.isArray(attackerDice) &&
-    attackerDice.length === activeBattle.attackingDiceCount &&
-    attackerDice.every(d => d >= 1 && d <= 6) &&
-    Array.isArray(defenderDice) &&
-    defenderDice.length >= 1 &&
-    defenderDice.length <= Math.min(2, territories[activeBattle.defendingTerritoryIndex].armies) &&
-    defenderDice.every(d => d >= 1 && d <= 6);
+  return {
+    guard: ({ type, attackerDice, defenderDice }) =>
+      type === ACTIONS.ROLL_DICE &&
+      !!activeBattle &&
+      Array.isArray(attackerDice) &&
+      attackerDice.length === activeBattle.attackingDiceCount &&
+      attackerDice.every(d => d >= 1 && d <= 6) &&
+      Array.isArray(defenderDice) &&
+      defenderDice.length >= 1 &&
+      defenderDice.length <=
+        Math.min(2, territories[activeBattle.defendingTerritoryIndex].armies) &&
+      defenderDice.every(d => d >= 1 && d <= 6),
+    reduce: ({ attackerDice, defenderDice }) => {
+      if (!activeBattle) {
+        return extendedState;
+      }
 
-  const reduce = ({ attackerDice, defenderDice }) => {
-    if (!activeBattle) {
-      return extendedState;
-    }
+      const attackingTerritoryIndex = activeBattle.attackingTerritoryIndex;
+      const defendingTerritoryIndex = activeBattle.defendingTerritoryIndex;
+      const loses = getLoses(attackerDice, defenderDice);
 
-    const attackingTerritoryIndex = activeBattle.attackingTerritoryIndex;
-    const defendingTerritoryIndex = activeBattle.defendingTerritoryIndex;
-    const loses = getLoses(attackerDice, defenderDice);
-
-    return {
-      ...extendedState,
-      territories: replaceElements(extendedState.territories, {
-        [attackingTerritoryIndex]: {
-          owner: extendedState.territories[attackingTerritoryIndex].owner,
-          armies: extendedState.territories[attackingTerritoryIndex].armies - loses.attacker,
-        },
-        [defendingTerritoryIndex]: {
-          owner: extendedState.territories[defendingTerritoryIndex].owner,
-          armies: extendedState.territories[defendingTerritoryIndex].armies - loses.defender,
-        },
-      }),
-    };
+      return {
+        ...extendedState,
+        territories: replaceElements(extendedState.territories, {
+          [attackingTerritoryIndex]: {
+            owner: extendedState.territories[attackingTerritoryIndex].owner,
+            armies: extendedState.territories[attackingTerritoryIndex].armies - loses.attacker,
+          },
+          [defendingTerritoryIndex]: {
+            owner: extendedState.territories[defendingTerritoryIndex].owner,
+            armies: extendedState.territories[defendingTerritoryIndex].armies - loses.defender,
+          },
+        }),
+      };
+    },
   };
-
-  return new TransitionGuarded(ACTIONS.ROLL_DICE, guard, reduce);
 }

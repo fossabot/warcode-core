@@ -2,7 +2,7 @@
 import expect from 'expect';
 import { STATES } from '../../constants';
 import PlaceNewArmies from '../PlaceNewArmies';
-import TransitionGuarded from '../TransitionGuarded';
+import type TransitionType from '../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 
@@ -36,7 +36,7 @@ const matchExtendedState = {
 
 test('guard checks player and territory', () => {
   const tryValue = territoryIndex => {
-    const transition: TransitionGuarded = new PlaceNewArmies(matchConfig, matchExtendedState);
+    const transition: TransitionType = new PlaceNewArmies(matchConfig, matchExtendedState);
     const action = actionCreators.placeNewArmies(territoryIndex, 3);
     return transition.guard(action);
   };
@@ -52,7 +52,7 @@ test('guard checks player and territory', () => {
 test('reduce updates player and territory', () => {
   const territoryIndex = 0;
   const armies = 3;
-  const transition: TransitionGuarded = new PlaceNewArmies(matchConfig, matchExtendedState);
+  const transition: TransitionType = new PlaceNewArmies(matchConfig, matchExtendedState);
   const action = actionCreators.placeNewArmies(territoryIndex, armies);
   const n = transition.reduce(action);
   const currentPlayerIndex = matchExtendedState.currentPlayerIndex;

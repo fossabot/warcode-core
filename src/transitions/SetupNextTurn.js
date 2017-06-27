@@ -1,8 +1,8 @@
 // @flow
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
+import type { TransitionType } from './TransitionType';
 import nextPlayerIndex from './nextPlayerIndex';
-import Transition from './Transition';
 import replaceElements from './replaceElements';
 
 function calcTerrtitoryAward(extendedState, matchConfig, playerIndex) {
@@ -53,20 +53,20 @@ function countUndeployedArmies(matchConfig, extendedState, playerIndex) {
  * | South America  | 2     |
  *
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): Transition {
-  const guard = () => undefined;
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionType {
   const nextPlayer = nextPlayerIndex(extendedState);
 
-  const reduce = () => ({
-    ...extendedState,
-    currentPlayerIndex: nextPlayer,
-    players: replaceElements(extendedState.players, {
-      [nextPlayer]: {
-        undeployedArmies: countUndeployedArmies(matchConfig, extendedState, nextPlayer),
-      },
+  return {
+    guard: undefined, // TODO - update caller to check function for undefined, rather than response
+    reduce: () => ({
+      ...extendedState,
+      currentPlayerIndex: nextPlayer,
+      players: replaceElements(extendedState.players, {
+        [nextPlayer]: {
+          undeployedArmies: countUndeployedArmies(matchConfig, extendedState, nextPlayer),
+        },
+      }),
+      capturedTerritories: 0,
     }),
-    capturedTerritories: 0,
-  });
-
-  return new Transition(guard, reduce);
+  };
 }

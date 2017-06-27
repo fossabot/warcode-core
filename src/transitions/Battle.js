@@ -1,8 +1,8 @@
 // @flow
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
+import type { TransitionType } from './TransitionType';
 import { ACTIONS } from '../constants';
-import TransitionGuarded from './TransitionGuarded';
 
 /**
  * The objective of battling is to capture an opponent's territory by defeating all of its armies.
@@ -17,31 +17,31 @@ import TransitionGuarded from './TransitionGuarded';
  * For example, if you are attacking from a territory with three armies, you
  * may only roll two dice.
  */
-export default function({ edges }: MatchConfig, extendedState: MatchState): TransitionGuarded {
+export default function({ edges }: MatchConfig, extendedState: MatchState): TransitionType {
   const { territories, currentPlayerIndex } = extendedState;
 
-  const guard = ({ attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount }) =>
-    Number.isInteger(attackingTerritoryIndex) &&
-    attackingTerritoryIndex >= 0 &&
-    attackingTerritoryIndex < territories.length &&
-    territories[attackingTerritoryIndex].owner === currentPlayerIndex &&
-    territories[attackingTerritoryIndex].armies > 1 &&
-    Number.isInteger(defendingTerritoryIndex) &&
-    defendingTerritoryIndex >= 0 &&
-    defendingTerritoryIndex < territories.length &&
-    territories[defendingTerritoryIndex].owner !== currentPlayerIndex &&
-    edges.some(([a, d]) => a === attackingTerritoryIndex && d === defendingTerritoryIndex) &&
-    attackingDiceCount >= 1 &&
-    attackingDiceCount <= Math.min(3, territories[attackingTerritoryIndex].armies - 1);
-
-  const reduce = ({ attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount }) => ({
-    ...extendedState,
-    activeBattle: {
-      attackingTerritoryIndex,
-      defendingTerritoryIndex,
-      attackingDiceCount,
-    },
-  });
-
-  return new TransitionGuarded(ACTIONS.BATTLE, guard, reduce);
+  return {
+    guard: ({ type, attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount }) =>
+      type === ACTIONS.BATTLE &&
+      Number.isInteger(attackingTerritoryIndex) &&
+      attackingTerritoryIndex >= 0 &&
+      attackingTerritoryIndex < territories.length &&
+      territories[attackingTerritoryIndex].owner === currentPlayerIndex &&
+      territories[attackingTerritoryIndex].armies > 1 &&
+      Number.isInteger(defendingTerritoryIndex) &&
+      defendingTerritoryIndex >= 0 &&
+      defendingTerritoryIndex < territories.length &&
+      territories[defendingTerritoryIndex].owner !== currentPlayerIndex &&
+      edges.some(([a, d]) => a === attackingTerritoryIndex && d === defendingTerritoryIndex) &&
+      attackingDiceCount >= 1 &&
+      attackingDiceCount <= Math.min(3, territories[attackingTerritoryIndex].armies - 1),
+    reduce: ({ attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount }) => ({
+      ...extendedState,
+      activeBattle: {
+        attackingTerritoryIndex,
+        defendingTerritoryIndex,
+        attackingDiceCount,
+      },
+    }),
+  };
 }

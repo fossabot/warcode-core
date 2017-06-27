@@ -2,7 +2,7 @@
 import expect from 'expect';
 import { STATES } from '../../constants';
 import PlaceAdditionalArmy from '../PlaceAdditionalArmy';
-import TransitionGuarded from '../TransitionGuarded';
+import type TransitionType from '../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 
@@ -36,7 +36,7 @@ const matchExtendedState = {
 
 test('guard validates player and territory', () => {
   const tryValue = territoryIndex => {
-    const transition: TransitionGuarded = new PlaceAdditionalArmy(matchConfig, matchExtendedState);
+    const transition: TransitionType = new PlaceAdditionalArmy(matchConfig, matchExtendedState);
     const action = actionCreators.placeAdditionalArmy(territoryIndex);
     return transition.guard(action);
   };
@@ -51,7 +51,7 @@ test('guard validates player and territory', () => {
 
 test('reduce updates player and territory', () => {
   const territoryIndex = 0;
-  const transition: TransitionGuarded = new PlaceAdditionalArmy(matchConfig, matchExtendedState);
+  const transition: TransitionType = new PlaceAdditionalArmy(matchConfig, matchExtendedState);
   const action = actionCreators.placeAdditionalArmy(territoryIndex);
   const n = transition.reduce(action);
 

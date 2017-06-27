@@ -12,10 +12,6 @@ var _Capture = require('../Capture');
 
 var _Capture2 = _interopRequireDefault(_Capture);
 
-var _TransitionGuarded = require('../TransitionGuarded');
-
-var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
-
 var _MatchConfig = require('../../MatchConfig');
 
 var _MatchConfig2 = _interopRequireDefault(_MatchConfig);

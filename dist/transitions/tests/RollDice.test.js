@@ -12,10 +12,6 @@ var _RollDice = require('../RollDice');
 
 var _RollDice2 = _interopRequireDefault(_RollDice);
 
-var _TransitionGuarded = require('../TransitionGuarded');
-
-var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
-
 var _MatchConfig = require('../../MatchConfig');
 
 var _MatchConfig2 = _interopRequireDefault(_MatchConfig);

@@ -9,50 +9,45 @@ exports.default = function (matchConfig, extendedState) {
       activeBattle = extendedState.activeBattle;
 
 
-  var guard = function guard(action) {
-    var attackerDice = action.attackerDice,
-        defenderDice = action.defenderDice;
+  return {
+    guard: function guard(_ref) {
+      var type = _ref.type,
+          attackerDice = _ref.attackerDice,
+          defenderDice = _ref.defenderDice;
+      return type === _constants.ACTIONS.ROLL_DICE && !!activeBattle && Array.isArray(attackerDice) && attackerDice.length === activeBattle.attackingDiceCount && attackerDice.every(function (d) {
+        return d >= 1 && d <= 6;
+      }) && Array.isArray(defenderDice) && defenderDice.length >= 1 && defenderDice.length <= Math.min(2, territories[activeBattle.defendingTerritoryIndex].armies) && defenderDice.every(function (d) {
+        return d >= 1 && d <= 6;
+      });
+    },
+    reduce: function reduce(_ref2) {
+      var _replaceElements;
 
-    return !!activeBattle && Array.isArray(attackerDice) && attackerDice.length === activeBattle.attackingDiceCount && attackerDice.every(function (d) {
-      return d >= 1 && d <= 6;
-    }) && Array.isArray(defenderDice) && defenderDice.length >= 1 && defenderDice.length <= Math.min(2, territories[activeBattle.defendingTerritoryIndex].armies) && defenderDice.every(function (d) {
-      return d >= 1 && d <= 6;
-    });
-  };
+      var attackerDice = _ref2.attackerDice,
+          defenderDice = _ref2.defenderDice;
 
-  var reduce = function reduce(action) {
-    var _replaceElements;
+      if (!activeBattle) {
+        return extendedState;
+      }
 
-    var attackerDice = action.attackerDice,
-        defenderDice = action.defenderDice;
+      var attackingTerritoryIndex = activeBattle.attackingTerritoryIndex;
+      var defendingTerritoryIndex = activeBattle.defendingTerritoryIndex;
+      var loses = getLoses(attackerDice, defenderDice);
 
-    if (!activeBattle) {
-      return extendedState;
+      return Object.assign({}, extendedState, {
+        territories: (0, _replaceElements3.default)(extendedState.territories, (_replaceElements = {}, _defineProperty(_replaceElements, attackingTerritoryIndex, {
+          owner: extendedState.territories[attackingTerritoryIndex].owner,
+          armies: extendedState.territories[attackingTerritoryIndex].armies - loses.attacker
+        }), _defineProperty(_replaceElements, defendingTerritoryIndex, {
+          owner: extendedState.territories[defendingTerritoryIndex].owner,
+          armies: extendedState.territories[defendingTerritoryIndex].armies - loses.defender
+        }), _replaceElements))
+      });
     }
-
-    var attackingTerritoryIndex = activeBattle.attackingTerritoryIndex;
-    var defendingTerritoryIndex = activeBattle.defendingTerritoryIndex;
-    var loses = getLoses(attackerDice, defenderDice);
-
-    return Object.assign({}, extendedState, {
-      territories: (0, _replaceElements3.default)(extendedState.territories, (_replaceElements = {}, _defineProperty(_replaceElements, attackingTerritoryIndex, {
-        owner: extendedState.territories[attackingTerritoryIndex].owner,
-        armies: extendedState.territories[attackingTerritoryIndex].armies - loses.attacker
-      }), _defineProperty(_replaceElements, defendingTerritoryIndex, {
-        owner: extendedState.territories[defendingTerritoryIndex].owner,
-        armies: extendedState.territories[defendingTerritoryIndex].armies - loses.defender
-      }), _replaceElements))
-    });
   };
-
-  return new _TransitionGuarded2.default(_constants.ACTIONS.ROLL_DICE, guard, reduce);
 };
 
 var _constants = require('../constants');
-
-var _TransitionGuarded = require('./TransitionGuarded');
-
-var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
 
 var _replaceElements2 = require('./replaceElements');
 

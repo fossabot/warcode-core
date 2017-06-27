@@ -10,10 +10,6 @@ var _PlaceAdditionalArmy = require('../PlaceAdditionalArmy');
 
 var _PlaceAdditionalArmy2 = _interopRequireDefault(_PlaceAdditionalArmy);
 
-var _TransitionGuarded = require('../TransitionGuarded');
-
-var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
-
 var _MatchConfig = require('../../MatchConfig');
 
 var _MatchConfig2 = _interopRequireDefault(_MatchConfig);
@@ -25,6 +21,7 @@ var _actionCreators2 = _interopRequireDefault(_actionCreators);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var matchConfig = (0, _MatchConfig2.default)();
+
 var matchExtendedState = {
   stateKey: _constants.STATES.PLACING_ADDITIONAL_ARMY,
   currentPlayerIndex: 0,

@@ -9,35 +9,28 @@ exports.default = function (matchConfig, extendedState) {
       currentPlayerIndex = extendedState.currentPlayerIndex;
 
 
-  var guard = function guard(action) {
-    var territoryIndex = action.territoryIndex;
-
-    return Number.isInteger(territoryIndex) && territoryIndex >= 0 && territoryIndex < territories.length && territories[territoryIndex].owner === undefined && territories[territoryIndex].armies === 0;
+  return {
+    guard: function guard(_ref) {
+      var type = _ref.type,
+          territoryIndex = _ref.territoryIndex;
+      return type === _constants.ACTIONS.OCCUPY_TERRITORY && Number.isInteger(territoryIndex) && territoryIndex >= 0 && territoryIndex < territories.length && territories[territoryIndex].owner === undefined && territories[territoryIndex].armies === 0;
+    },
+    reduce: function reduce(_ref2) {
+      var territoryIndex = _ref2.territoryIndex;
+      return Object.assign({}, extendedState, {
+        territories: (0, _replaceElements4.default)(extendedState.territories, _defineProperty({}, territoryIndex, {
+          owner: currentPlayerIndex,
+          armies: 1
+        })),
+        players: (0, _replaceElements4.default)(extendedState.players, _defineProperty({}, currentPlayerIndex, {
+          undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies - 1
+        }))
+      });
+    }
   };
-
-  var reduce = function reduce(action) {
-    var territoryIndex = action.territoryIndex;
-
-
-    return Object.assign({}, extendedState, {
-      territories: (0, _replaceElements4.default)(extendedState.territories, _defineProperty({}, territoryIndex, {
-        owner: currentPlayerIndex,
-        armies: 1
-      })),
-      players: (0, _replaceElements4.default)(extendedState.players, _defineProperty({}, currentPlayerIndex, {
-        undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies - 1
-      }))
-    });
-  };
-
-  return new _TransitionGuarded2.default(_constants.ACTIONS.OCCUPY_TERRITORY, guard, reduce);
 };
 
 var _constants = require('../constants');
-
-var _TransitionGuarded = require('./TransitionGuarded');
-
-var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
 
 var _replaceElements3 = require('./replaceElements');
 

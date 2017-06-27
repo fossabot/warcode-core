@@ -12,10 +12,6 @@ var _DrawRandomCard = require('../DrawRandomCard');
 
 var _DrawRandomCard2 = _interopRequireDefault(_DrawRandomCard);
 
-var _TransitionGuarded = require('../TransitionGuarded');
-
-var _TransitionGuarded2 = _interopRequireDefault(_TransitionGuarded);
-
 var _MatchConfig = require('../../MatchConfig');
 
 var _MatchConfig2 = _interopRequireDefault(_MatchConfig);
