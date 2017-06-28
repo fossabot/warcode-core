@@ -20,19 +20,20 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
  */
 
 
-exports.default = function (_ref, extendedState) {
+exports.default = function (_ref, extendedState, action) {
   var edges = _ref.edges;
   var territories = extendedState.territories,
       currentPlayerIndex = extendedState.currentPlayerIndex;
 
 
   return {
+    action: action,
     guard: function guard(_ref2) {
       var type = _ref2.type,
           fromTerritoryIndex = _ref2.fromTerritoryIndex,
           toTerritoryIndex = _ref2.toTerritoryIndex,
           armies = _ref2.armies;
-      return type === _constants.ACTIONS.FORTIFY && Number.isInteger(fromTerritoryIndex) && fromTerritoryIndex >= 0 && fromTerritoryIndex < territories.length && territories[fromTerritoryIndex].owner === currentPlayerIndex && territories[fromTerritoryIndex].armies > 1 && Number.isInteger(toTerritoryIndex) && toTerritoryIndex >= 0 && toTerritoryIndex < territories.length && territories[toTerritoryIndex].owner === currentPlayerIndex && edges.some(function (_ref3) {
+      return type === action && Number.isInteger(fromTerritoryIndex) && fromTerritoryIndex >= 0 && fromTerritoryIndex < territories.length && territories[fromTerritoryIndex].owner === currentPlayerIndex && territories[fromTerritoryIndex].armies > 1 && Number.isInteger(toTerritoryIndex) && toTerritoryIndex >= 0 && toTerritoryIndex < territories.length && territories[toTerritoryIndex].owner === currentPlayerIndex && edges.some(function (_ref3) {
         var _ref4 = _slicedToArray(_ref3, 2),
             a = _ref4[0],
             b = _ref4[1];
@@ -58,8 +59,6 @@ exports.default = function (_ref, extendedState) {
     }
   };
 };
-
-var _constants = require('../constants');
 
 var _replaceElements2 = require('./replaceElements');
 

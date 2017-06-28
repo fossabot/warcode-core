@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (matchConfig) {
+exports.default = function (matchConfig, matchState, action) {
   var minPlayers = matchConfig.minPlayers,
       maxPlayers = matchConfig.maxPlayers,
       territories = matchConfig.territories,
@@ -13,10 +13,11 @@ exports.default = function (matchConfig) {
 
 
   return {
+    action: action,
     guard: function guard(_ref) {
       var type = _ref.type,
           playerCount = _ref.playerCount;
-      return type === _constants.ACTIONS.START_MATCH && Number.isInteger(playerCount) && playerCount >= minPlayers && playerCount <= maxPlayers;
+      return type === action && Number.isInteger(playerCount) && playerCount >= minPlayers && playerCount <= maxPlayers;
     },
     reduce: function reduce(_ref2) {
       var playerCount = _ref2.playerCount;

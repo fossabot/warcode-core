@@ -1,6 +1,6 @@
 // @flow
 import expect from 'expect';
-import { STATES } from '../../constants';
+import { ACTIONS, STATES } from '../../constants';
 import OccupyTerritory from '../OccupyTerritory';
 import type TransitionType from '../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
@@ -36,7 +36,11 @@ const matchExtendedState = {
 
 test('guard validates territory index', () => {
   const tryValue = territoryIndex => {
-    const transition: TransitionType = new OccupyTerritory(matchConfig, matchExtendedState);
+    const transition: TransitionType = new OccupyTerritory(
+      matchConfig,
+      matchExtendedState,
+      ACTIONS.OCCUPY_TERRITORY
+    );
     const action = actionCreators.occupyTerritory(territoryIndex);
     return transition.guard(action);
   };
@@ -51,7 +55,11 @@ test('guard validates territory index', () => {
 
 test('reduce updates player and territory', () => {
   const territoryIndex = 0;
-  const transition: TransitionType = new OccupyTerritory(matchConfig, matchExtendedState);
+  const transition: TransitionType = new OccupyTerritory(
+    matchConfig,
+    matchExtendedState,
+    ACTIONS.OCCUPY_TERRITORY
+  );
   const action = actionCreators.occupyTerritory(territoryIndex);
   const n = transition.reduce(action);
   // console.log('matchExtendedState', JSON.stringify(matchExtendedState));

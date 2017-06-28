@@ -5,7 +5,7 @@ import transitions from './transitions/';
 const getTransition = (matchConfig, extendedState, action) => {
   const fromCurrentState = transitions
     .filter(([from]) => from === extendedState.stateKey)
-    .map(([from, to, t]) => [from, to, t(matchConfig, extendedState)]);
+    .map(([from, to, t, a]) => [from, to, t(matchConfig, extendedState, a)]);
 
   // get transitions that could be followed from the current state
   const guardSatisfied = fromCurrentState.filter(

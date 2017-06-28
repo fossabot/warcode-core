@@ -1,5 +1,5 @@
 import transitions from '../';
-import { STATES, PSEUDOSTATES } from '../../constants';
+import { ACTIONS, STATES, PSEUDOSTATES } from '../../constants';
 // import testConfig from './config.json';
 // import StateMachine from '../../StateMachine';
 // import parseMatchConfig from '../../MatchConfig';
@@ -30,6 +30,13 @@ test('single final state', () => {
   const statesWithOutbound = new Set(transitions.map(([from]) => from)).size;
   const allStates = stateKeys.length;
   expect(allStates - statesWithOutbound).toBe(1);
+});
+
+test('actions are string or optional', () => {
+  const actions = Object.values(ACTIONS);
+  transitions.forEach(([, , , action]) => {
+    expect(action === undefined || actions.includes(action)).toBe(true);
+  });
 });
 
 // test('pseudostates have single outbound else, without a guard or action', () => {

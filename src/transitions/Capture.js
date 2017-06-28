@@ -2,7 +2,6 @@
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
-import { ACTIONS } from '../constants';
 import replaceElements from './replaceElements';
 
 /**
@@ -10,12 +9,17 @@ import replaceElements from './replaceElements';
  * moving armies from the attacking territory. The number of armies moved must
  * be at least the same number of dice rolled in the decisive battle.
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionType {
+export default function(
+  matchConfig: MatchConfig,
+  extendedState: MatchState,
+  action: string
+): TransitionType {
   const { territories, activeBattle, currentPlayerIndex } = extendedState;
 
   return {
+    action,
     guard: ({ type, armies }) =>
-      type === ACTIONS.CAPTURE &&
+      type === action &&
       !!activeBattle &&
       Number.isInteger(armies) &&
       armies >= activeBattle.attackingDiceCount &&

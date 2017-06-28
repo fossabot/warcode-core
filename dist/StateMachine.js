@@ -22,12 +22,13 @@ var getTransition = function getTransition(matchConfig, extendedState, action) {
 
     return from === extendedState.stateKey;
   }).map(function (_ref3) {
-    var _ref4 = _slicedToArray(_ref3, 3),
+    var _ref4 = _slicedToArray(_ref3, 4),
         from = _ref4[0],
         to = _ref4[1],
-        t = _ref4[2];
+        t = _ref4[2],
+        a = _ref4[3];
 
-    return [from, to, t(matchConfig, extendedState)];
+    return [from, to, t(matchConfig, extendedState, a)];
   });
 
   // get transitions that could be followed from the current state

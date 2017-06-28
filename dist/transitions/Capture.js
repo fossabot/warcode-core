@@ -4,17 +4,18 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (matchConfig, extendedState) {
+exports.default = function (matchConfig, extendedState, action) {
   var territories = extendedState.territories,
       activeBattle = extendedState.activeBattle,
       currentPlayerIndex = extendedState.currentPlayerIndex;
 
 
   return {
+    action: action,
     guard: function guard(_ref) {
       var type = _ref.type,
           armies = _ref.armies;
-      return type === _constants.ACTIONS.CAPTURE && !!activeBattle && Number.isInteger(armies) && armies >= activeBattle.attackingDiceCount && armies < territories[activeBattle.attackingTerritoryIndex].armies;
+      return type === action && !!activeBattle && Number.isInteger(armies) && armies >= activeBattle.attackingDiceCount && armies < territories[activeBattle.attackingTerritoryIndex].armies;
     },
     reduce: function reduce(_ref2) {
       var _replaceElements;
@@ -42,8 +43,6 @@ exports.default = function (matchConfig, extendedState) {
     }
   };
 };
-
-var _constants = require('../constants');
 
 var _replaceElements2 = require('./replaceElements');
 

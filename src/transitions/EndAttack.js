@@ -2,14 +2,18 @@
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
-import { ACTIONS } from '../constants';
 
 /**
  * You may stop attacking opponent's territories at anytime.
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionType {
+export default function(
+  matchConfig: MatchConfig,
+  extendedState: MatchState,
+  action: string
+): TransitionType {
   return {
-    guard: ({ type }) => type === ACTIONS.END_ATTACK,
+    action,
+    guard: ({ type }) => type === action,
     reduce: () => extendedState,
   };
 }

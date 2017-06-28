@@ -2,7 +2,6 @@
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
-import { ACTIONS } from '../constants';
 import replaceElements from './replaceElements';
 
 /**
@@ -33,13 +32,15 @@ import replaceElements from './replaceElements';
  */
 export default function(
   { cards, cardOccupiedTerritoryReward }: MatchConfig,
-  extendedState: MatchState
+  extendedState: MatchState,
+  action: string
 ): TransitionType {
   const { cardOwner, territories, currentPlayerIndex, tradeCount } = extendedState;
 
   return {
+    action,
     guard: ({ type, i, j, k }) => {
-      if (type !== ACTIONS.TRADE_CARDS) {
+      if (type !== action) {
         return false;
       }
       const isValidIndices = x => x >= 0 && x < cards.length;

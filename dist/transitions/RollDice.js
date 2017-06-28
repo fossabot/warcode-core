@@ -4,17 +4,18 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (matchConfig, extendedState) {
+exports.default = function (matchConfig, extendedState, action) {
   var territories = extendedState.territories,
       activeBattle = extendedState.activeBattle;
 
 
   return {
+    action: action,
     guard: function guard(_ref) {
       var type = _ref.type,
           attackerDice = _ref.attackerDice,
           defenderDice = _ref.defenderDice;
-      return type === _constants.ACTIONS.ROLL_DICE && !!activeBattle && Array.isArray(attackerDice) && attackerDice.length === activeBattle.attackingDiceCount && attackerDice.every(function (d) {
+      return type === action && !!activeBattle && Array.isArray(attackerDice) && attackerDice.length === activeBattle.attackingDiceCount && attackerDice.every(function (d) {
         return d >= 1 && d <= 6;
       }) && Array.isArray(defenderDice) && defenderDice.length >= 1 && defenderDice.length <= Math.min(2, territories[activeBattle.defendingTerritoryIndex].armies) && defenderDice.every(function (d) {
         return d >= 1 && d <= 6;
@@ -46,8 +47,6 @@ exports.default = function (matchConfig, extendedState) {
     }
   };
 };
-
-var _constants = require('../constants');
 
 var _replaceElements2 = require('./replaceElements');
 

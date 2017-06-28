@@ -1,7 +1,8 @@
 // @flow
 import type { MatchConfig } from '../MatchConfig';
+import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
-import { ACTIONS, STATES } from '../constants';
+import { STATES } from '../constants';
 
 /**
  * Start match
@@ -28,12 +29,17 @@ import { ACTIONS, STATES } from '../constants';
  * // newMatchState === { stateID: STATES.SELECTING_FIRST_PLAYER, ... }
  *
  */
-export default function(matchConfig: MatchConfig): TransitionType {
+export default function(
+  matchConfig: MatchConfig,
+  matchState: MatchState,
+  action: string
+): TransitionType {
   const { minPlayers, maxPlayers, territories, cards, startingArmiesByPlayers } = matchConfig;
 
   return {
+    action,
     guard: ({ type, playerCount }) =>
-      type === ACTIONS.START_MATCH &&
+      type === action &&
       Number.isInteger(playerCount) &&
       playerCount >= minPlayers &&
       playerCount <= maxPlayers,

@@ -53,7 +53,7 @@ var matchExtendedState = {
 };
 
 test('guard checks capture parameters', function () {
-  var transition = new _Capture2.default(matchConfig, matchExtendedState);
+  var transition = new _Capture2.default(matchConfig, matchExtendedState, _constants.ACTIONS.CAPTURE);
   var actions = [[_actionCreators2.default.capture(0), false], [_actionCreators2.default.capture(1), false], [_actionCreators2.default.capture(2), false], [_actionCreators2.default.capture(3), true], [_actionCreators2.default.capture(4), true], [_actionCreators2.default.capture(5), true], [_actionCreators2.default.capture(6), false]];
   actions.forEach(function (_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
@@ -69,7 +69,7 @@ test('reduce updates state', function () {
       attackingTerritoryIndex = _matchExtendedState$a.attackingTerritoryIndex,
       defendingTerritoryIndex = _matchExtendedState$a.defendingTerritoryIndex;
 
-  var transition = new _Capture2.default(matchConfig, matchExtendedState);
+  var transition = new _Capture2.default(matchConfig, matchExtendedState, _constants.ACTIONS.CAPTURE);
   var armiesToMove = 3;
   var action = _actionCreators2.default.capture(armiesToMove);
   var n = transition.reduce(action);

@@ -2,7 +2,6 @@
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
-import { ACTIONS } from '../constants';
 import replaceElements from './replaceElements';
 
 /**
@@ -14,12 +13,17 @@ import replaceElements from './replaceElements';
  * * The territory armies are incremented
  *
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionType {
+export default function(
+  matchConfig: MatchConfig,
+  extendedState: MatchState,
+  action: string
+): TransitionType {
   const { territories, currentPlayerIndex } = extendedState;
 
   return {
+    action,
     guard: ({ type, territoryIndex }) =>
-      type === ACTIONS.PLACE_ADDITIONAL_ARMY &&
+      type === action &&
       Number.isInteger(territoryIndex) &&
       territoryIndex >= 0 &&
       territoryIndex < territories.length &&

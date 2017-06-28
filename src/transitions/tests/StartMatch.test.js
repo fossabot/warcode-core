@@ -1,6 +1,6 @@
 // @flow
 import expect from 'expect';
-import { STATES } from '../../constants';
+import { ACTIONS, STATES } from '../../constants';
 import StartMatch from '../StartMatch';
 import type TransitionType from '../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
@@ -13,7 +13,11 @@ const matchExtendedState = {
 
 test('guard validates player count', () => {
   const tryValue = playerCount => {
-    const transition: TransitionType = new StartMatch(matchConfig, matchExtendedState);
+    const transition: TransitionType = new StartMatch(
+      matchConfig,
+      matchExtendedState,
+      ACTIONS.START_MATCH
+    );
     const action = actionCreators.startMatch(playerCount);
     return transition.guard(action);
   };
@@ -27,7 +31,7 @@ test('guard validates player count', () => {
 
 test('reduce creates valid initial state', () => {
   const playerCount = 5;
-  const transtion = new StartMatch(matchConfig, matchExtendedState);
+  const transtion = new StartMatch(matchConfig, matchExtendedState, ACTIONS.START_MATCH);
   const action = actionCreators.startMatch(playerCount);
   const n = transtion.reduce(action);
 

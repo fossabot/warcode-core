@@ -1,6 +1,6 @@
 // @flow
 import expect from 'expect';
-import { STATES } from '../../constants';
+import { ACTIONS, STATES } from '../../constants';
 import TradeCards from '../TradeCards';
 import type TransitionType from '../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
@@ -38,7 +38,11 @@ const matchExtendedState = {
 };
 
 test('guard checks capture parameters', () => {
-  const transition: TransitionType = new TradeCards(matchConfig, matchExtendedState);
+  const transition: TransitionType = new TradeCards(
+    matchConfig,
+    matchExtendedState,
+    ACTIONS.TRADE_CARDS
+  );
   const actions = [
     [actionCreators.tradeCards(0, 1, 2), true],
     [actionCreators.tradeCards(0, 1, 4), true],
@@ -54,7 +58,11 @@ test('guard checks capture parameters', () => {
 });
 
 test('reduce updates state', () => {
-  const transition: TransitionType = new TradeCards(matchConfig, matchExtendedState);
+  const transition: TransitionType = new TradeCards(
+    matchConfig,
+    matchExtendedState,
+    ACTIONS.TRADE_CARDS
+  );
   const action = actionCreators.tradeCards(0, 1, 2);
   const n = transition.reduce(action);
 

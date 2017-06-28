@@ -50,7 +50,7 @@ var matchExtendedState = {
 };
 
 test('guard checks capture parameters', function () {
-  var transition = new _TradeCards2.default(matchConfig, matchExtendedState);
+  var transition = new _TradeCards2.default(matchConfig, matchExtendedState, _constants.ACTIONS.TRADE_CARDS);
   var actions = [[_actionCreators2.default.tradeCards(0, 1, 2), true], [_actionCreators2.default.tradeCards(0, 1, 4), true], [_actionCreators2.default.tradeCards(4, 1, 5), true], [_actionCreators2.default.tradeCards(-1, 0, 2), false], [_actionCreators2.default.tradeCards(0, 1, 10), false], [_actionCreators2.default.tradeCards(0, 0, 2), false], [_actionCreators2.default.tradeCards(0, 2, 3), false]];
   actions.forEach(function (_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
@@ -62,7 +62,7 @@ test('guard checks capture parameters', function () {
 });
 
 test('reduce updates state', function () {
-  var transition = new _TradeCards2.default(matchConfig, matchExtendedState);
+  var transition = new _TradeCards2.default(matchConfig, matchExtendedState, _constants.ACTIONS.TRADE_CARDS);
   var action = _actionCreators2.default.tradeCards(0, 1, 2);
   var n = transition.reduce(action);
 

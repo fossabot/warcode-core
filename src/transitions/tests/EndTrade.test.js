@@ -2,7 +2,7 @@
 import expect from 'expect';
 import type { MatchConfig } from '../../MatchConfig';
 import type { MatchState } from '../../MatchState';
-import { STATES } from '../../constants';
+import { ACTIONS, STATES } from '../../constants';
 import EndTrade from '../EndTrade';
 import type TransitionType from '../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
@@ -43,13 +43,21 @@ const matchExtendedState: MatchState = {
 };
 
 test('guard checks card count', () => {
-  const transition: TransitionType = new EndTrade(matchConfig, matchExtendedState);
+  const transition: TransitionType = new EndTrade(
+    matchConfig,
+    matchExtendedState,
+    ACTIONS.END_TRADE
+  );
   const action = actionCreators.endTrade();
   expect(transition.guard(action)).toEqual(false);
 });
 
 test('reduce updates state', () => {
-  const transition: TransitionType = new EndTrade(matchConfig, matchExtendedState);
+  const transition: TransitionType = new EndTrade(
+    matchConfig,
+    matchExtendedState,
+    ACTIONS.END_TRADE
+  );
   const action = actionCreators.endTrade();
   const n: MatchState = transition.reduce(action);
 

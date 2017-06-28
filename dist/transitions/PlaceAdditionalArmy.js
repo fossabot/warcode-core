@@ -4,16 +4,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (matchConfig, extendedState) {
+exports.default = function (matchConfig, extendedState, action) {
   var territories = extendedState.territories,
       currentPlayerIndex = extendedState.currentPlayerIndex;
 
 
   return {
+    action: action,
     guard: function guard(_ref) {
       var type = _ref.type,
           territoryIndex = _ref.territoryIndex;
-      return type === _constants.ACTIONS.PLACE_ADDITIONAL_ARMY && Number.isInteger(territoryIndex) && territoryIndex >= 0 && territoryIndex < territories.length && territories[territoryIndex].owner === currentPlayerIndex && territories[territoryIndex].armies >= 1;
+      return type === action && Number.isInteger(territoryIndex) && territoryIndex >= 0 && territoryIndex < territories.length && territories[territoryIndex].owner === currentPlayerIndex && territories[territoryIndex].armies >= 1;
     },
     reduce: function reduce(_ref2) {
       var territoryIndex = _ref2.territoryIndex;
@@ -29,8 +30,6 @@ exports.default = function (matchConfig, extendedState) {
     }
   };
 };
-
-var _constants = require('../constants');
 
 var _replaceElements3 = require('./replaceElements');
 

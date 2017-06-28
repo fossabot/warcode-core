@@ -2,7 +2,6 @@
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
-import { ACTIONS } from '../constants';
 
 /**
  * The objective of battling is to capture an opponent's territory by defeating all of its armies.
@@ -17,12 +16,17 @@ import { ACTIONS } from '../constants';
  * For example, if you are attacking from a territory with three armies, you
  * may only roll two dice.
  */
-export default function({ edges }: MatchConfig, extendedState: MatchState): TransitionType {
+export default function(
+  { edges }: MatchConfig,
+  extendedState: MatchState,
+  action: string
+): TransitionType {
   const { territories, currentPlayerIndex } = extendedState;
 
   return {
+    action,
     guard: ({ type, attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount }) =>
-      type === ACTIONS.BATTLE &&
+      type === action &&
       Number.isInteger(attackingTerritoryIndex) &&
       attackingTerritoryIndex >= 0 &&
       attackingTerritoryIndex < territories.length &&

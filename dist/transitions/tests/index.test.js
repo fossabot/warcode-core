@@ -62,6 +62,16 @@ test('single final state', function () {
   expect(allStates - statesWithOutbound).toBe(1);
 });
 
+test('actions are string or optional', function () {
+  var actions = Object.values(_constants.ACTIONS);
+  _2.default.forEach(function (_ref9) {
+    var _ref10 = _slicedToArray(_ref9, 4),
+        action = _ref10[3];
+
+    expect(action === undefined || actions.includes(action)).toBe(true);
+  });
+});
+
 // test('pseudostates have single outbound else, without a guard or action', () => {
 //   const config = parseMatchConfig(testConfig);
 //   const initState = StateMachine(config).reduce();

@@ -4,15 +4,16 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (matchConfig, extendedState) {
+exports.default = function (matchConfig, extendedState, action) {
   var cardOwner = extendedState.cardOwner,
       currentPlayerIndex = extendedState.currentPlayerIndex;
 
 
   return {
+    action: action,
     guard: function guard(_ref) {
       var type = _ref.type;
-      return type === _constants.ACTIONS.END_TRADE && cardOwner.filter(function (c) {
+      return type === action && cardOwner.filter(function (c) {
         return c === currentPlayerIndex;
       }).length < 5;
     },
@@ -21,5 +22,3 @@ exports.default = function (matchConfig, extendedState) {
     }
   };
 };
-
-var _constants = require('../constants');

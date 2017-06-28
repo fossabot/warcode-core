@@ -2,7 +2,6 @@
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
-import { ACTIONS } from '../constants';
 import replaceElements from './replaceElements';
 
 const getLoses = (attackerDice: number[], defenderDice: number[]) => {
@@ -34,12 +33,17 @@ const getLoses = (attackerDice: number[], defenderDice: number[]) => {
  * territory contains a single army. When the territory contains multiple
  * armies, the defender may roll either one or two dice.
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionType {
+export default function(
+  matchConfig: MatchConfig,
+  extendedState: MatchState,
+  action: string
+): TransitionType {
   const { territories, activeBattle } = extendedState;
 
   return {
+    action,
     guard: ({ type, attackerDice, defenderDice }) =>
-      type === ACTIONS.ROLL_DICE &&
+      type === action &&
       !!activeBattle &&
       Array.isArray(attackerDice) &&
       attackerDice.length === activeBattle.attackingDiceCount &&

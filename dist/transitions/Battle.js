@@ -21,19 +21,20 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
  */
 
 
-exports.default = function (_ref, extendedState) {
+exports.default = function (_ref, extendedState, action) {
   var edges = _ref.edges;
   var territories = extendedState.territories,
       currentPlayerIndex = extendedState.currentPlayerIndex;
 
 
   return {
+    action: action,
     guard: function guard(_ref2) {
       var type = _ref2.type,
           attackingTerritoryIndex = _ref2.attackingTerritoryIndex,
           defendingTerritoryIndex = _ref2.defendingTerritoryIndex,
           attackingDiceCount = _ref2.attackingDiceCount;
-      return type === _constants.ACTIONS.BATTLE && Number.isInteger(attackingTerritoryIndex) && attackingTerritoryIndex >= 0 && attackingTerritoryIndex < territories.length && territories[attackingTerritoryIndex].owner === currentPlayerIndex && territories[attackingTerritoryIndex].armies > 1 && Number.isInteger(defendingTerritoryIndex) && defendingTerritoryIndex >= 0 && defendingTerritoryIndex < territories.length && territories[defendingTerritoryIndex].owner !== currentPlayerIndex && edges.some(function (_ref3) {
+      return type === action && Number.isInteger(attackingTerritoryIndex) && attackingTerritoryIndex >= 0 && attackingTerritoryIndex < territories.length && territories[attackingTerritoryIndex].owner === currentPlayerIndex && territories[attackingTerritoryIndex].armies > 1 && Number.isInteger(defendingTerritoryIndex) && defendingTerritoryIndex >= 0 && defendingTerritoryIndex < territories.length && territories[defendingTerritoryIndex].owner !== currentPlayerIndex && edges.some(function (_ref3) {
         var _ref4 = _slicedToArray(_ref3, 2),
             a = _ref4[0],
             d = _ref4[1];
@@ -55,5 +56,3 @@ exports.default = function (_ref, extendedState) {
     }
   };
 };
-
-var _constants = require('../constants');

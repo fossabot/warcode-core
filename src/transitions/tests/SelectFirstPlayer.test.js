@@ -1,6 +1,6 @@
 // @flow
 import expect from 'expect';
-import { STATES } from '../../constants';
+import { ACTIONS, STATES } from '../../constants';
 import SelectFirstPlayer from '../SelectFirstPlayer';
 import type TransitionType from '../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
@@ -21,7 +21,11 @@ const matchExtendedState = {
 
 test('guard validates first player index', () => {
   const tryValue = firstPlayerIndex => {
-    const transition: TransitionType = new SelectFirstPlayer(matchConfig, matchExtendedState);
+    const transition: TransitionType = new SelectFirstPlayer(
+      matchConfig,
+      matchExtendedState,
+      ACTIONS.SELECT_FIRST_PLAYER
+    );
     const action = actionCreators.selectFirstPlayer(firstPlayerIndex);
     return transition.guard(action);
   };
@@ -36,7 +40,11 @@ test('guard validates first player index', () => {
 });
 
 test('reduce creates valid initial state', () => {
-  const transition: TransitionType = new SelectFirstPlayer(matchConfig, matchExtendedState);
+  const transition: TransitionType = new SelectFirstPlayer(
+    matchConfig,
+    matchExtendedState,
+    ACTIONS.SELECT_FIRST_PLAYER
+  );
   const firstPlayerIndex = 0;
   const action = actionCreators.selectFirstPlayer(firstPlayerIndex);
   const n = transition.reduce(action);

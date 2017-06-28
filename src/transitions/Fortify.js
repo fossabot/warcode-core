@@ -2,7 +2,6 @@
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
-import { ACTIONS } from '../constants';
 import replaceElements from './replaceElements';
 
 /**
@@ -17,12 +16,17 @@ import replaceElements from './replaceElements';
  *
  *  You may end your turn, skipping fortification.
  */
-export default function({ edges }: MatchConfig, extendedState: MatchState): TransitionType {
+export default function(
+  { edges }: MatchConfig,
+  extendedState: MatchState,
+  action: string
+): TransitionType {
   const { territories, currentPlayerIndex } = extendedState;
 
   return {
+    action,
     guard: ({ type, fromTerritoryIndex, toTerritoryIndex, armies }) =>
-      type === ACTIONS.FORTIFY &&
+      type === action &&
       Number.isInteger(fromTerritoryIndex) &&
       fromTerritoryIndex >= 0 &&
       fromTerritoryIndex < territories.length &&

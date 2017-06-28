@@ -44,7 +44,7 @@ var matchExtendedState = {
 
 test('guard validates territory index', function () {
   var tryValue = function tryValue(territoryIndex) {
-    var transition = new _OccupyTerritory2.default(matchConfig, matchExtendedState);
+    var transition = new _OccupyTerritory2.default(matchConfig, matchExtendedState, _constants.ACTIONS.OCCUPY_TERRITORY);
     var action = _actionCreators2.default.occupyTerritory(territoryIndex);
     return transition.guard(action);
   };
@@ -59,7 +59,7 @@ test('guard validates territory index', function () {
 
 test('reduce updates player and territory', function () {
   var territoryIndex = 0;
-  var transition = new _OccupyTerritory2.default(matchConfig, matchExtendedState);
+  var transition = new _OccupyTerritory2.default(matchConfig, matchExtendedState, _constants.ACTIONS.OCCUPY_TERRITORY);
   var action = _actionCreators2.default.occupyTerritory(territoryIndex);
   var n = transition.reduce(action);
   // console.log('matchExtendedState', JSON.stringify(matchExtendedState));

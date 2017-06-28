@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (_ref, extendedState) {
+exports.default = function (_ref, extendedState, action) {
   var cards = _ref.cards,
       cardOccupiedTerritoryReward = _ref.cardOccupiedTerritoryReward;
   var cardOwner = extendedState.cardOwner,
@@ -14,13 +14,14 @@ exports.default = function (_ref, extendedState) {
 
 
   return {
+    action: action,
     guard: function guard(_ref2) {
       var type = _ref2.type,
           i = _ref2.i,
           j = _ref2.j,
           k = _ref2.k;
 
-      if (type !== _constants.ACTIONS.TRADE_CARDS) {
+      if (type !== action) {
         return false;
       }
       var isValidIndices = function isValidIndices(x) {
@@ -81,8 +82,6 @@ exports.default = function (_ref, extendedState) {
     }
   };
 };
-
-var _constants = require('../constants');
 
 var _replaceElements3 = require('./replaceElements');
 

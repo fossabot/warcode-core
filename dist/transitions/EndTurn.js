@@ -4,16 +4,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (matchConfig, extendedState) {
+exports.default = function (matchConfig, extendedState, action) {
   return {
+    action: action,
     guard: function guard(_ref) {
       var type = _ref.type;
-      return type === _constants.ACTIONS.END_TURN;
+      return type === action;
     },
     reduce: function reduce() {
       return extendedState;
     }
   };
 };
-
-var _constants = require('../constants');
