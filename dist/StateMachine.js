@@ -16,7 +16,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // @return {{nextStateKey: string, reduce: Function}} transition object, may to pseudostate
 var getTransition = function getTransition(matchConfig, extendedState, action) {
-  // TODO [[string, string, (matchConfig: MatchConfig, matchState: MatchState): TransitionType]]
   var fromCurrentState = _transitions2.default.filter(function (_ref) {
     var _ref2 = _slicedToArray(_ref, 1),
         from = _ref2[0];
@@ -48,8 +47,9 @@ var getTransition = function getTransition(matchConfig, extendedState, action) {
 
   // quit when there path is indeterminant, meaning there are multiple transitions
   if (guardSatisfied.length > 1 || elses.length > 1) {
-    // TODO log error
-    throw { message: 'nondeterministic state' };
+    // there is an error in the state machine
+    // console.error(`nondeterministic state`);
+    return undefined;
   }
 
   // stop when blocked by transition guards
@@ -57,16 +57,14 @@ var getTransition = function getTransition(matchConfig, extendedState, action) {
 
   if (nextTranstion) {
     var _nextTranstion = _slicedToArray(nextTranstion, 3),
-        to = _nextTranstion[1],
+        nextStateKey = _nextTranstion[1],
         _reduce = _nextTranstion[2].reduce;
 
-    return {
-      nextStateKey: to,
-      reduce: function reduce() {
+    return { nextStateKey: nextStateKey, reduce: function reduce() {
         return _reduce(action);
-      }
-    };
+      } };
   }
+
   return undefined;
 };
 
@@ -78,8 +76,8 @@ var _reduce2 = function _reduce2(matchConfig) {
   var ttl = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 10;
 
   if (ttl < 1) {
-    // TODO - log error
-    throw { message: 'state machine entered a loop ' + extendedState.stateKey };
+    // console.error(`state machine entered a loop ${extendedState.stateKey}`);
+    return extendedState;
   }
 
   var transition = getTransition(matchConfig, extendedState, action);
@@ -97,6 +95,7 @@ var _reduce2 = function _reduce2(matchConfig) {
 
 exports.default = function (matchConfig) {
   return {
+    // TODO - note that the final, game winning action may be invalid
     isActionValid: function isActionValid(matchState, action) {
       return !Object.is(matchState, _reduce2(matchState, action));
     },
