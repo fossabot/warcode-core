@@ -1,26 +1,30 @@
 import Viz from 'viz.js';
 import documentation from 'documentation';
 import fs from 'fs';
-import {STATES, PSEUDOSTATES} from '../src/constants';
+import { STATES, PSEUDOSTATES } from '../src/constants';
 import transitions from '../src/transitions/';
 
-// (function documentActionCreators() {
-//   const docs = documentation.buildSync(['./src/actionCreators.js'], {});
-//
-//   documentation.formats.md(docs, {}, (err, res) => {
-//     if (err) {
-//       console.error('err', err);
-//       return;
-//     }
-//     fs.writeFile("docs/action-creators.md", res, err2 => {
-//       if(err2) {
-//         return console.log(err2);
-//       }
-//       return undefined;
-//     });
-//   });
-// })();
-//
+// TODO create /dist/docs
+
+(function documentActionCreators() {
+  // documentation.build(['./src/actionCreators.js'], {})
+  //   // .then(documentation.formats.md)
+  //   .then(output => {
+  //     console.log(output);
+  //     // fs.writeFileSync('./dist/docs/output.md', output);
+  //   });
+  //
+  // documentation.formats.md(docs, {}, (err, res) => {
+  //   if (err) {
+  //     console.error('err', err);
+  //     return;
+  //   }
+  //   console.log(res)
+  //   // fs.writeFile("dist/docs/action-creators.md", res, err2 =>
+  //   //   err2 => err2 ? console.error(err2) : undefined);
+  // });
+})();
+
 // (function documentTransitions() {
 //   const classOrder = [
 //     'StartMatch',
@@ -82,4 +86,4 @@ const dot = [
   '}'
 ].join('\n');
 const image = Viz(dot, { format: 'svg', engine: 'dot' });
-fs.writeFile("docs/state-machine.svg", image, err => err ? console.log(err) : undefined);
+fs.writeFile("dist/docs/state-machine.svg", image, err => err ? console.error(err) : undefined);
