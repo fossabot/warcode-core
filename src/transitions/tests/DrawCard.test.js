@@ -38,7 +38,7 @@ const matchExtendedState = {
 };
 
 test('guard checks capture parameters', () => {
-  const transition: TransitionType = new DrawRandomCard(matchConfig, matchExtendedState);
+  const transition: TransitionType = DrawRandomCard(matchConfig, matchExtendedState);
   const actions = [
     [actionCreators.drawRandomCard(-1), false],
     [actionCreators.drawRandomCard(0), true],
@@ -55,7 +55,7 @@ test('guard checks capture parameters', () => {
 });
 
 test('reduce updates state', () => {
-  const transition: TransitionType = new DrawRandomCard(matchConfig, matchExtendedState);
+  const transition: TransitionType = DrawRandomCard(matchConfig, matchExtendedState);
   const cardIndex = 1;
   const action = actionCreators.drawRandomCard(cardIndex);
   const n = transition.reduce(action);

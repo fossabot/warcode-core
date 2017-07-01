@@ -36,7 +36,7 @@ const matchExtendedState = {
 
 test('guard checks player and territory', () => {
   const tryValue = territoryIndex => {
-    const transition: TransitionType = new PlaceNewArmies(
+    const transition: TransitionType = PlaceNewArmies(
       matchConfig,
       matchExtendedState,
       ACTIONS.PLACE_NEW_ARMIES
@@ -56,7 +56,7 @@ test('guard checks player and territory', () => {
 test('reduce updates player and territory', () => {
   const territoryIndex = 0;
   const armies = 3;
-  const transition: TransitionType = new PlaceNewArmies(
+  const transition: TransitionType = PlaceNewArmies(
     matchConfig,
     matchExtendedState,
     ACTIONS.PLACE_NEW_ARMIES

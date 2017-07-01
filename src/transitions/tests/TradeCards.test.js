@@ -38,7 +38,7 @@ const matchExtendedState = {
 };
 
 test('guard checks capture parameters', () => {
-  const transition: TransitionType = new TradeCards(
+  const transition: TransitionType = TradeCards(
     matchConfig,
     matchExtendedState,
     ACTIONS.TRADE_CARDS
@@ -58,7 +58,7 @@ test('guard checks capture parameters', () => {
 });
 
 test('reduce updates state', () => {
-  const transition: TransitionType = new TradeCards(
+  const transition: TransitionType = TradeCards(
     matchConfig,
     matchExtendedState,
     ACTIONS.TRADE_CARDS

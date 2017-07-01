@@ -28,26 +28,28 @@ import { STATES } from '../constants';
  * // newMatchState === { stateID: STATES.SELECTING_FIRST_PLAYER, ... }
  *
  */
-export default function(matchConfig: MatchConfig): TransitionType {
-  const { minPlayers, maxPlayers, territories, cards, startingArmiesByPlayers } = matchConfig;
-
-  return {
-    guard: ({ playerCount }) =>
-      Number.isInteger(playerCount) && playerCount >= minPlayers && playerCount <= maxPlayers,
-    reduce: ({ playerCount }) => ({
-      territories: Array(territories.length).fill({
-        owner: undefined,
-        armies: 0,
-      }),
-      cardOwner: Array(cards.length).fill(undefined),
-      players: Array(playerCount).fill({
-        undeployedArmies: startingArmiesByPlayers[playerCount],
-      }),
-      currentPlayerIndex: -1,
-      tradeCount: 0,
-      capturedTerritories: 0,
-      activeBattle: undefined,
-      stateKey: STATES.INITIALIZING,
+export default ({
+  minPlayers,
+  maxPlayers,
+  territories,
+  cards,
+  startingArmiesByPlayers,
+}: MatchConfig): TransitionType => ({
+  guard: ({ playerCount }) =>
+    Number.isInteger(playerCount) && playerCount >= minPlayers && playerCount <= maxPlayers,
+  reduce: ({ playerCount }) => ({
+    territories: Array(territories.length).fill({
+      owner: undefined,
+      armies: 0,
     }),
-  };
-}
+    cardOwner: Array(cards.length).fill(undefined),
+    players: Array(playerCount).fill({
+      undeployedArmies: startingArmiesByPlayers[playerCount],
+    }),
+    currentPlayerIndex: -1,
+    tradeCount: 0,
+    capturedTerritories: 0,
+    activeBattle: undefined,
+    stateKey: STATES.INITIALIZING,
+  }),
+});

@@ -36,7 +36,7 @@ const matchExtendedState = {
 };
 
 test('guard checks capture parameters', () => {
-  const transition: TransitionType = new Fortify(matchConfig, matchExtendedState, ACTIONS.FORTIFY);
+  const transition: TransitionType = Fortify(matchConfig, matchExtendedState, ACTIONS.FORTIFY);
   const actions = [
     [actionCreators.fortify(1, 2, 1), true],
     [actionCreators.fortify(1, 2, 0), false],
@@ -51,7 +51,7 @@ test('guard checks capture parameters', () => {
 });
 
 test('reduce updates state', () => {
-  const transition: TransitionType = new Fortify(matchConfig, matchExtendedState, ACTIONS.FORTIFY);
+  const transition: TransitionType = Fortify(matchConfig, matchExtendedState, ACTIONS.FORTIFY);
   const armiesToMove = 3;
   const from = 1;
   const to = 2;

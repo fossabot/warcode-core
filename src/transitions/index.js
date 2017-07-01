@@ -67,7 +67,7 @@ export const getTransition = (matchConfig, extendedState, action) => {
   const fromCurrentState = transitions
     .filter(([from]) => from === extendedState.stateKey)
     .map(([from, to, t, actionType]) => {
-      const { guard, reduce } = t(matchConfig, extendedState);
+      const { guard, reduce } = t(matchConfig, extendedState, action);
       return { from, to, actionType, guard, reduce };
     });
 
@@ -85,8 +85,9 @@ export const getTransition = (matchConfig, extendedState, action) => {
   }
 
   if (guardSatisfied.length > 1) {
-    // The state machine should not allow for a given state and action to
-    // satisfy the guards of more than one transition guard
+    // Either the action or the state machine is invalid. The state machine
+    // should not allow for a given state and action to
+    // satisfy the guards of more than one transition guard.
     return undefined;
   }
 

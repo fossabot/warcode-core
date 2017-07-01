@@ -36,7 +36,7 @@ const matchExtendedState = {
 
 test('guard validates territory index', () => {
   const tryValue = territoryIndex => {
-    const transition: TransitionType = new OccupyTerritory(
+    const transition: TransitionType = OccupyTerritory(
       matchConfig,
       matchExtendedState,
       ACTIONS.OCCUPY_TERRITORY
@@ -55,7 +55,7 @@ test('guard validates territory index', () => {
 
 test('reduce updates player and territory', () => {
   const territoryIndex = 0;
-  const transition: TransitionType = new OccupyTerritory(
+  const transition: TransitionType = OccupyTerritory(
     matchConfig,
     matchExtendedState,
     ACTIONS.OCCUPY_TERRITORY

@@ -13,29 +13,27 @@ import replaceElements from './replaceElements';
  * * The territory armies are incremented
  *
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionType {
-  const { territories, currentPlayerIndex } = extendedState;
-
-  return {
-    guard: ({ territoryIndex }) =>
-      Number.isInteger(territoryIndex) &&
-      territoryIndex >= 0 &&
-      territoryIndex < territories.length &&
-      territories[territoryIndex].owner === currentPlayerIndex &&
-      territories[territoryIndex].armies >= 1,
-    reduce: ({ territoryIndex }) => ({
-      ...extendedState,
-      territories: replaceElements(extendedState.territories, {
-        [territoryIndex]: {
-          owner: currentPlayerIndex,
-          armies: extendedState.territories[territoryIndex].armies + 1,
-        },
-      }),
-      players: replaceElements(extendedState.players, {
-        [currentPlayerIndex]: {
-          undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies - 1,
-        },
-      }),
+export default (
+  matchConfig: MatchConfig,
+  { players, territories, currentPlayerIndex }: MatchState
+): TransitionType => ({
+  guard: ({ territoryIndex }) =>
+    Number.isInteger(territoryIndex) &&
+    territoryIndex >= 0 &&
+    territoryIndex < territories.length &&
+    territories[territoryIndex].owner === currentPlayerIndex &&
+    territories[territoryIndex].armies >= 1,
+  reduce: ({ territoryIndex }) => ({
+    territories: replaceElements(territories, {
+      [territoryIndex]: {
+        owner: currentPlayerIndex,
+        armies: territories[territoryIndex].armies + 1,
+      },
     }),
-  };
-}
+    players: replaceElements(players, {
+      [currentPlayerIndex]: {
+        undeployedArmies: players[currentPlayerIndex].undeployedArmies - 1,
+      },
+    }),
+  }),
+});

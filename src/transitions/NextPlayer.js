@@ -4,12 +4,9 @@ import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
 import nextPlayerIndex from './nextPlayerIndex';
 
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionType {
-  return {
-    guard: undefined,
-    reduce: () => ({
-      ...extendedState,
-      currentPlayerIndex: nextPlayerIndex(extendedState),
-    }),
-  };
-}
+export default (matchConfig: MatchConfig, extendedState: MatchState): TransitionType => ({
+  guard: undefined,
+  reduce: () => ({
+    currentPlayerIndex: nextPlayerIndex(extendedState),
+  }),
+});

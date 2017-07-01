@@ -53,13 +53,12 @@ function countUndeployedArmies(matchConfig, extendedState, playerIndex) {
  * | South America  | 2     |
  *
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionType {
+export default (matchConfig: MatchConfig, extendedState: MatchState): TransitionType => {
   const nextPlayer = nextPlayerIndex(extendedState);
 
   return {
-    guard: undefined, // TODO - update caller to check function for undefined, rather than response
+    guard: undefined,
     reduce: () => ({
-      ...extendedState,
       currentPlayerIndex: nextPlayer,
       players: replaceElements(extendedState.players, {
         [nextPlayer]: {
@@ -69,4 +68,4 @@ export default function(matchConfig: MatchConfig, extendedState: MatchState): Tr
       capturedTerritories: 0,
     }),
   };
-}
+};

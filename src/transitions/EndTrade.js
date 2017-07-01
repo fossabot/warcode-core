@@ -6,11 +6,10 @@ import type { TransitionType } from './TransitionType';
 /**
  * You may end trading as long as you hold four or fewer cards.
  */
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionType {
-  const { cardOwner, currentPlayerIndex } = extendedState;
-
-  return {
-    guard: () => cardOwner.filter(c => c === currentPlayerIndex).length < 5,
-    reduce: () => extendedState,
-  };
-}
+export default (
+  matchConfig: MatchConfig,
+  { cardOwner, currentPlayerIndex }: MatchState
+): TransitionType => ({
+  guard: () => cardOwner.filter(c => c === currentPlayerIndex).length < 5,
+  reduce: () => {},
+});

@@ -43,23 +43,15 @@ const matchExtendedState: MatchState = {
 };
 
 test('guard checks card count', () => {
-  const transition: TransitionType = new EndTrade(
-    matchConfig,
-    matchExtendedState,
-    ACTIONS.END_TRADE
-  );
+  const transition: TransitionType = EndTrade(matchConfig, matchExtendedState, ACTIONS.END_TRADE);
   const action = actionCreators.endTrade();
   expect(transition.guard(action)).toEqual(false);
 });
 
 test('reduce updates state', () => {
-  const transition: TransitionType = new EndTrade(
-    matchConfig,
-    matchExtendedState,
-    ACTIONS.END_TRADE
-  );
+  const transition: TransitionType = EndTrade(matchConfig, matchExtendedState, ACTIONS.END_TRADE);
   const action = actionCreators.endTrade();
-  const n: MatchState = transition.reduce(action);
+  const n: MatchState = { ...matchExtendedState, ...transition.reduce(action) };
 
   expect(n.stateKey).toBe(STATES.BATTLING);
 });

@@ -13,7 +13,7 @@ const matchExtendedState = {
 
 test('guard validates player count', () => {
   const tryValue = playerCount => {
-    const transition: TransitionType = new StartMatch(
+    const transition: TransitionType = StartMatch(
       matchConfig,
       matchExtendedState,
       ACTIONS.START_MATCH

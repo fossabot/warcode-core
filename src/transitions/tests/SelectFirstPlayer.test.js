@@ -21,7 +21,7 @@ const matchExtendedState = {
 
 test('guard validates first player index', () => {
   const tryValue = firstPlayerIndex => {
-    const transition: TransitionType = new SelectFirstPlayer(
+    const transition: TransitionType = SelectFirstPlayer(
       matchConfig,
       matchExtendedState,
       ACTIONS.SELECT_FIRST_PLAYER
@@ -40,7 +40,7 @@ test('guard validates first player index', () => {
 });
 
 test('reduce creates valid initial state', () => {
-  const transition: TransitionType = new SelectFirstPlayer(
+  const transition: TransitionType = SelectFirstPlayer(
     matchConfig,
     matchExtendedState,
     ACTIONS.SELECT_FIRST_PLAYER

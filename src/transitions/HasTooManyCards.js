@@ -3,13 +3,12 @@ import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
 
-export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionType {
-  const { territories, currentPlayerIndex } = extendedState;
-  const isGameOver = () => territories.every(t => t.owner === currentPlayerIndex);
-
-  return {
-    guard: () =>
-      territories.filter(c => c.owner === currentPlayerIndex).length > 5 && !isGameOver(),
-    reduce: () => extendedState,
-  };
-}
+export default (
+  matchConfig: MatchConfig,
+  { cards, territories, currentPlayerIndex }: MatchState
+): TransitionType => ({
+  guard: () =>
+    cards.filter(c => c.owner === currentPlayerIndex).length > 5 &&
+    territories.some(t => t.owner !== currentPlayerIndex), // hasn't won
+  reduce: () => {},
+});

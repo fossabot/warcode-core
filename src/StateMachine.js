@@ -21,8 +21,9 @@ const reduce = (matchConfig, extendedState = intialState, action = {}, ttl = 10)
 
   // return next state to transition to
   const nextState = {
-    ...transition.reduce(action),
-    ...{ stateKey: transition.to },
+    ...extendedState, // start with base state
+    ...transition.reduce(action), // apply transition updates
+    ...{ stateKey: transition.to }, // set the stateKey
   };
 
   return reduce(matchConfig, nextState, action, ttl - 1);

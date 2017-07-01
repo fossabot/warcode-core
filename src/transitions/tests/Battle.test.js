@@ -36,7 +36,7 @@ const matchExtendedState = {
 };
 
 test('guard checks player and territory', () => {
-  const transition: TransitionType = new Battle(matchConfig, matchExtendedState, ACTIONS.BATTLE);
+  const transition: TransitionType = Battle(matchConfig, matchExtendedState, ACTIONS.BATTLE);
 
   [
     [actionCreators.battle(1, 0, 3), true],
@@ -54,13 +54,13 @@ test('reduce updates state', () => {
   const attackingTerritoryIndex = 1;
   const defendingTerritoryIndex = 0;
   const attackingDiceCount = 3;
-  const transition: TransitionType = new Battle(matchConfig, matchExtendedState, ACTIONS.BATTLE);
+  const transition: TransitionType = Battle(matchConfig, matchExtendedState, ACTIONS.BATTLE);
   const action = actionCreators.battle(
     attackingTerritoryIndex,
     defendingTerritoryIndex,
     attackingDiceCount
   );
-  const n = transition.reduce(action);
+  const n = { ...matchExtendedState, ...transition.reduce(action) };
 
   expect(n.activeBattle)
     .toExist()

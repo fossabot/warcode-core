@@ -36,7 +36,7 @@ const matchExtendedState = {
 
 test('guard validates player and territory', () => {
   const tryValue = territoryIndex => {
-    const transition: TransitionType = new PlaceAdditionalArmy(
+    const transition: TransitionType = PlaceAdditionalArmy(
       matchConfig,
       matchExtendedState,
       ACTIONS.PLACE_ADDITIONAL_ARMY
@@ -55,7 +55,7 @@ test('guard validates player and territory', () => {
 
 test('reduce updates player and territory', () => {
   const territoryIndex = 0;
-  const transition: TransitionType = new PlaceAdditionalArmy(
+  const transition: TransitionType = PlaceAdditionalArmy(
     matchConfig,
     matchExtendedState,
     ACTIONS.PLACE_ADDITIONAL_ARMY
