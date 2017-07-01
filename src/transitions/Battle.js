@@ -16,17 +16,11 @@ import type { TransitionType } from './TransitionType';
  * For example, if you are attacking from a territory with three armies, you
  * may only roll two dice.
  */
-export default function(
-  { edges }: MatchConfig,
-  extendedState: MatchState,
-  action: string
-): TransitionType {
+export default function({ edges }: MatchConfig, extendedState: MatchState): TransitionType {
   const { territories, currentPlayerIndex } = extendedState;
 
   return {
-    action,
-    guard: ({ type, attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount }) =>
-      type === action &&
+    guard: ({ attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount }) =>
       Number.isInteger(attackingTerritoryIndex) &&
       attackingTerritoryIndex >= 0 &&
       attackingTerritoryIndex < territories.length &&

@@ -18,17 +18,11 @@ import replaceElements from './replaceElements';
  * * Turn is passed to the next player
  *
  */
-export default function(
-  matchConfig: MatchConfig,
-  extendedState: MatchState,
-  action: string
-): TransitionType {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionType {
   const { territories, currentPlayerIndex } = extendedState;
 
   return {
-    action,
-    guard: ({ type, territoryIndex }) =>
-      type === action &&
+    guard: ({ territoryIndex }) =>
       Number.isInteger(territoryIndex) &&
       territoryIndex >= 0 &&
       territoryIndex < territories.length &&

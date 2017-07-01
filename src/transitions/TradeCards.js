@@ -32,17 +32,12 @@ import replaceElements from './replaceElements';
  */
 export default function(
   { cards, cardOccupiedTerritoryReward }: MatchConfig,
-  extendedState: MatchState,
-  action: string
+  extendedState: MatchState
 ): TransitionType {
   const { cardOwner, territories, currentPlayerIndex, tradeCount } = extendedState;
 
   return {
-    action,
-    guard: ({ type, i, j, k }) => {
-      if (type !== action) {
-        return false;
-      }
+    guard: ({ i, j, k }) => {
       const isValidIndices = x => x >= 0 && x < cards.length;
       const areValidIndices = isValidIndices(i) && isValidIndices(j) && isValidIndices(k);
       const areUniqueCards = i !== j && j !== k && i !== k;

@@ -5,14 +5,19 @@ import transitions from './transitions/';
 const getTransition = (matchConfig, extendedState, action) => {
   const fromCurrentState = transitions
     .filter(([from]) => from === extendedState.stateKey)
-    .map(([from, to, t, a]) => [from, to, t(matchConfig, extendedState, a)]);
+    .map(([from, to, t, a]) => [from, to, t(matchConfig, extendedState), a]);
 
-  // get transitions that could be followed from the current state
+  // get tran,sitions that could be followed from the current state
   const guardSatisfied = fromCurrentState.filter(
-    ([, , { guard }]) => typeof guard === 'function' && guard(action) === true
+    ([, , { guard }, a]) =>
+      (a === undefined || a === action.type) &&
+      typeof guard === 'function' &&
+      guard(action) === true
   );
 
-  const elses = fromCurrentState.filter(([, , { guard }]) => guard === undefined);
+  const elses = fromCurrentState.filter(
+    ([, , { guard }, a]) => a === undefined && guard === undefined
+  );
 
   // quit when there path is indeterminant, meaning there are multiple transitions
   if (guardSatisfied.length > 1 || elses.length > 1) {
@@ -22,10 +27,9 @@ const getTransition = (matchConfig, extendedState, action) => {
   }
 
   // stop when blocked by transition guards
-  const nextTranstion = guardSatisfied[0] || elses[0];
-
-  if (nextTranstion) {
-    const [, nextStateKey, { reduce }] = nextTranstion;
+  const nextTransition = guardSatisfied[0] || elses[0];
+  if (nextTransition) {
+    const [, nextStateKey, { reduce }] = nextTransition;
     return { nextStateKey, reduce: () => reduce(action) };
   }
 

@@ -7,17 +7,11 @@ import type { TransitionType } from './TransitionType';
  * Select player to take first move, similarly to each player rolling
  * a die to determine the first player at the beginning the game.
  */
-export default function(
-  matchConfig: MatchConfig,
-  extendedState: MatchState,
-  action: string
-): TransitionType {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionType {
   const { players } = extendedState;
 
   return {
-    action,
-    guard: ({ type, firstPlayerIndex }) =>
-      type === action &&
+    guard: ({ firstPlayerIndex }) =>
       Number.isInteger(firstPlayerIndex) &&
       firstPlayerIndex >= 0 &&
       firstPlayerIndex < players.length,

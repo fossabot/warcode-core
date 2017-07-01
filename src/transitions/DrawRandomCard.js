@@ -2,7 +2,6 @@
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
-import { ACTIONS } from '../constants';
 import replaceElements from './replaceElements';
 
 /**
@@ -12,8 +11,7 @@ export default function(matchConfig: MatchConfig, extendedState: MatchState): Tr
   const { cardOwner, currentPlayerIndex } = extendedState;
 
   return {
-    guard: ({ type, cardIndex }) =>
-      type === ACTIONS.DRAW_RANDOM_CARD &&
+    guard: ({ cardIndex }) =>
       Number.isInteger(cardIndex) &&
       cardIndex >= 0 &&
       cardIndex < cardOwner.length &&

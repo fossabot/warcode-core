@@ -21,7 +21,7 @@ import IsGameOver from './IsGameOver';
 import HasPlayerEarnedCard from './HasPlayerEarnedCard';
 import HasTooManyCards from './HasTooManyCards';
 import IsUnoccupiedTerritory from './IsUnoccupiedTerritory';
-import DoesPlayerHaveUndeployedArmies from './DoesPlayerHaveUndeployedArmies';
+import HasUndeployedArmies from './HasUndeployedArmies';
 import NextPlayer from './NextPlayer';
 import Else from './Else';
 
@@ -44,7 +44,7 @@ export default [
   [S.TRADING_CARDS, P.HAS_CARDS, TradeCards, A.TRADING_CARDS],
   [S.TRADING_CARDS, S.PLACING_NEW_ARMIES, EndTrade, A.END_TRADE],
   [S.PLACING_NEW_ARMIES, P.HAS_UNDEPLOYED_ARMIES, PlaceNewArmies, A.PLACE_NEW_ARMIES],
-  [P.HAS_UNDEPLOYED_ARMIES, S.PLACING_NEW_ARMIES, DoesPlayerHaveUndeployedArmies],
+  [P.HAS_UNDEPLOYED_ARMIES, S.PLACING_NEW_ARMIES, HasUndeployedArmies],
   [P.HAS_UNDEPLOYED_ARMIES, S.BATTLING, Else],
   [S.BATTLING, S.FORTIFYING, EndAttack, A.END_ATTACK],
   [S.BATTLING, S.ROLLING_DICE, Battle, A.BATTLE],

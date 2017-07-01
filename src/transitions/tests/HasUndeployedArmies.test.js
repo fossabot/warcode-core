@@ -1,5 +1,5 @@
 import expect from 'expect';
-import DoesPlayerHaveUndeployedArmies from '../DoesPlayerHaveUndeployedArmies';
+import HasUndeployedArmies from '../HasUndeployedArmies';
 import parseMatchConfig from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 import testConfig from './config.json';
@@ -37,13 +37,13 @@ const matchExtendedState = {
 // TODO - try correct type and stateS
 
 test('guard checks state', () => {
-  const transition = new DoesPlayerHaveUndeployedArmies(matchConfig, matchExtendedState);
+  const transition = new HasUndeployedArmies(matchConfig, matchExtendedState);
   const action = actionCreators.startMatch(5);
   expect(transition.guard(action)).toEqual(false);
 });
 
 test('guard checks that player has deployed all their armies', () => {
-  const transition = new DoesPlayerHaveUndeployedArmies(matchConfig, matchExtendedState);
+  const transition = new HasUndeployedArmies(matchConfig, matchExtendedState);
   const action = actionCreators.placeNewArmies(0, 1);
   expect(transition.guard(action)).toEqual(false);
 });
@@ -55,7 +55,7 @@ test('guard is true when player has undeployed armies', () => {
       players: [{ undeployedArmies: 1 }, { undeployedArmies: 0 }],
     },
   };
-  const transition = new DoesPlayerHaveUndeployedArmies(matchConfig, matchExtendedStateCopy);
+  const transition = new HasUndeployedArmies(matchConfig, matchExtendedStateCopy);
   const action = actionCreators.placeNewArmies(0, 1);
   expect(transition.guard(action)).toEqual(true);
   expect(transition.reduce(action)).toEqual(matchExtendedStateCopy);

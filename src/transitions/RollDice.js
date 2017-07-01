@@ -33,17 +33,11 @@ const getLoses = (attackerDice: number[], defenderDice: number[]) => {
  * territory contains a single army. When the territory contains multiple
  * armies, the defender may roll either one or two dice.
  */
-export default function(
-  matchConfig: MatchConfig,
-  extendedState: MatchState,
-  action: string
-): TransitionType {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionType {
   const { territories, activeBattle } = extendedState;
 
   return {
-    action,
-    guard: ({ type, attackerDice, defenderDice }) =>
-      type === action &&
+    guard: ({ attackerDice, defenderDice }) =>
       !!activeBattle &&
       Array.isArray(attackerDice) &&
       attackerDice.length === activeBattle.attackingDiceCount &&

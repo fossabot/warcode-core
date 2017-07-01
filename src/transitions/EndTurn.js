@@ -6,14 +6,9 @@ import type { TransitionType } from './TransitionType';
 
  * You end the turn, ending fortification.
  */
-export default function(
-  matchConfig: MatchConfig,
-  extendedState: MatchState,
-  action: string
-): TransitionType {
+export default function(matchConfig: MatchConfig, extendedState: MatchState): TransitionType {
   return {
-    action,
-    guard: ({ type }) => type === action,
+    guard: () => true,
     reduce: () => extendedState,
   };
 }
