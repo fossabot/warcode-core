@@ -5,10 +5,10 @@ import type { TransitionType } from './TransitionType';
 
 export default (
   matchConfig: MatchConfig,
-  { cards, territories, currentPlayerIndex }: MatchState
+  { cardOwner, territories, currentPlayerIndex }: MatchState
 ): TransitionType => ({
   guard: () =>
-    cards.filter(c => c.owner === currentPlayerIndex).length > 5 &&
+    cardOwner.filter(c => c === currentPlayerIndex).length > 5 &&
     territories.some(t => t.owner !== currentPlayerIndex), // hasn't won
   reduce: () => {},
 });
