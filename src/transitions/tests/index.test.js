@@ -1,4 +1,4 @@
-import transitions from '../';
+import { transitions } from '../';
 import { ACTIONS, STATES, PSEUDOSTATES } from '../../constants';
 // import testConfig from './config.json';
 // import StateMachine from '../../StateMachine';
@@ -50,3 +50,5 @@ test('actions are string or optional', () => {
 //
 //   expect(elseTransitionDesitinations.length).toEqual(new Set(elseTransitionDesitinations).size);
 // });
+
+// TODO test getTransition

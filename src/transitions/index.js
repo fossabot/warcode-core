@@ -29,7 +29,7 @@ const A = ACTIONS;
 const S = STATES;
 const P = PSEUDOSTATES;
 
-export default [
+export const transitions = [
   [S.INITIALIZING, S.SELECTING_FIRST_PLAYER, StartMatch, A.START_MATCH],
   [S.SELECTING_FIRST_PLAYER, P.INITIAL_CHOICE, SelectFirstPlayer, A.SELECT_FIRST_PLAYER],
   [P.INITIAL_CHOICE, S.OCCUPYING, IsUnoccupiedTerritory],
@@ -61,3 +61,50 @@ export default [
   [P.HAS_EARNED_CARD, P.SETUP_NEXT_TURN, Else],
   [S.DRAWING_RANDOM_CARD, P.SETUP_NEXT_TURN, DrawRandomCard, A.DRAW_RANDOM_CARD],
 ];
+
+export const getTransition = (matchConfig, extendedState, action) => {
+  // get all transitions leaving the current state
+  const fromCurrentState = transitions
+    .filter(([from]) => from === extendedState.stateKey)
+    .map(([from, to, t, actionType]) => {
+      const { guard, reduce } = t(matchConfig, extendedState);
+      return { from, to, actionType, guard, reduce };
+    });
+
+  // get transitions that match action and satisfy guards
+  const guardSatisfied = fromCurrentState.filter(
+    ({ actionType, guard }) =>
+      (actionType === undefined || actionType === action.type) &&
+      typeof guard === 'function' &&
+      guard(action) === true
+  );
+
+  // return the transition with satisified guard condition
+  if (guardSatisfied.length === 1) {
+    return guardSatisfied[0];
+  }
+
+  if (guardSatisfied.length > 1) {
+    // The state machine should not allow for a given state and action to
+    // satisfy the guards of more than one transition guard
+    return undefined;
+  }
+
+  // get transitions without guards
+  const elses = fromCurrentState.filter(
+    ({ actionType, guard }) => actionType === undefined && guard === undefined
+  );
+
+  // return the else transition
+  if (elses.length === 1) {
+    return elses[0];
+  }
+
+  if (elses.length > 1) {
+    // The state machine contains more than else transition from this state
+    return undefined;
+  }
+
+  // No transitions remaining for this state and action
+  return undefined;
+};
