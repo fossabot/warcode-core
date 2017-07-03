@@ -6,8 +6,6 @@ const { createCompleteDiagram, diagramState } = require('./createDiagram');
 const { ACTIONS, STATES, PSEUDOSTATES } = require('../../dist/constants');
 const { transitions } = require ('../../dist/transitions/');
 
-// TODO - document to gh-pages branch in version numbered directory
-
 const actionCreatorsFilename = '../src/actionCreators.js';
 const outDirectory = '../docs';
 const indexFilename = `${outDirectory}/index.md`;
