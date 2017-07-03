@@ -2,7 +2,7 @@
 
 # SelectFirstPlayer
 Select player to take first move, similarly to each player rolling a dieto begin the game.
-![SelectFirstPlayer state diagram](../docs/actions/selectfirstplayer.svg)
+![SelectFirstPlayer state diagram](actions/selectfirstplayer.svg)
   
 
 ## Action Object Format

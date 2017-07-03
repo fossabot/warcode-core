@@ -2,7 +2,7 @@
 
 # EndTrade
 End trading and begin the attacking phase of the turn.You must continue trading when you hold five or six cards.
-![EndTrade state diagram](../docs/actions/endtrade.svg)
+![EndTrade state diagram](actions/endtrade.svg)
   
 
 ## Action Object Format

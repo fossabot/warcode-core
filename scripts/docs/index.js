@@ -31,8 +31,8 @@ documentation.build(actionCreatorsFilename, { extension: 'es6' })
       diagramURL: `actions/${name.toLowerCase()}.svg`,
     }));
 
-    actions.forEach(({ doc, markdownFilename, name, diagramFilename }) => {
-      const markdown = actionToMarkdown(name, doc, diagramFilename);
+    actions.forEach(({ doc, markdownFilename, name, diagramURL }) => {
+      const markdown = actionToMarkdown(name, doc, diagramURL);
       fs.writeFile(markdownFilename, markdown, handleWriteError);
     });
 

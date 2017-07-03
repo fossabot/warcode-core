@@ -2,7 +2,7 @@
 
 # PlaceNewArmies
 Place some undeployed armies on an occupied territory to start the turn
-![PlaceNewArmies state diagram](../docs/actions/placenewarmies.svg)
+![PlaceNewArmies state diagram](actions/placenewarmies.svg)
   
 
 ## Action Object Format

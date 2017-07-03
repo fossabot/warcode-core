@@ -2,7 +2,7 @@
 
 # Capture
 Capture the defeated territory by moving armies into it
-![Capture state diagram](../docs/actions/capture.svg)
+![Capture state diagram](actions/capture.svg)
   
 
 ## Action Object Format

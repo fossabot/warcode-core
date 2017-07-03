@@ -2,7 +2,7 @@
 
 # PlaceAdditionalArmy
 Select a territory you own to place an additional army.
-![PlaceAdditionalArmy state diagram](../docs/actions/placeadditionalarmy.svg)
+![PlaceAdditionalArmy state diagram](actions/placeadditionalarmy.svg)
   
 
 ## Action Object Format

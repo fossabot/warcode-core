@@ -9,11 +9,11 @@ const appendDescriptions = (description) => {
   return descriptionParagraphs.join('\n');
 };
 
-const docAction = (name, { description }, diagramFilename) => {
+const docAction = (name, { description }, diagramURL) => {
   return `
 # ${name}
 ${appendDescriptions(description)}
-![${name} state diagram](${diagramFilename})
+![${name} state diagram](${diagramURL})
   `;
 };
 
@@ -53,8 +53,8 @@ ${example}
   `;
 };
 
-module.exports = (actionName, doc, diagramFilename) => `
-${docAction(actionName, doc, diagramFilename)}
+module.exports = (actionName, doc, diagramURL) => `
+${docAction(actionName, doc, diagramURL)}
 ${docActionFormat(actionName, doc)}
 ${docActionCreator(doc)}
   `;

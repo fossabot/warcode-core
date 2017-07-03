@@ -2,7 +2,7 @@
 
 # Fortify
 Move armies between two of your adjacent territories before ending your turn.
-![Fortify state diagram](../docs/actions/fortify.svg)
+![Fortify state diagram](actions/fortify.svg)
   
 
 ## Action Object Format

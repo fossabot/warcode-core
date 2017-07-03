@@ -2,7 +2,7 @@
 
 # EndTurn
 End turn without fortifying.
-![EndTurn state diagram](../docs/actions/endturn.svg)
+![EndTurn state diagram](actions/endturn.svg)
   
 
 ## Action Object Format

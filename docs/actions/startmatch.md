@@ -2,7 +2,7 @@
 
 # StartMatch
 Start the match.
-![StartMatch state diagram](../docs/actions/startmatch.svg)
+![StartMatch state diagram](actions/startmatch.svg)
   
 
 ## Action Object Format

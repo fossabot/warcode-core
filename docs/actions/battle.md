@@ -2,7 +2,7 @@
 
 # Battle
 Select a territory to attack, neighboring defending territory, and dice to roll
-![Battle state diagram](../docs/actions/battle.svg)
+![Battle state diagram](actions/battle.svg)
   
 
 ## Action Object Format

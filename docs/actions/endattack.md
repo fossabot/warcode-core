@@ -2,7 +2,7 @@
 
 # EndAttack
 End attack and begin fortifying
-![EndAttack state diagram](../docs/actions/endattack.svg)
+![EndAttack state diagram](actions/endattack.svg)
   
 
 ## Action Object Format
