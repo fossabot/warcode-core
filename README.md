@@ -4,19 +4,14 @@
 [![Code Climate](https://codeclimate.com/github/matthewspivey/warcode-core/badges/gpa.svg)](https://codeclimate.com/github/matthewspivey/warcode-core)
 [![Test Coverage](https://codeclimate.com/github/matthewspivey/warcode-core/badges/coverage.svg)](https://codeclimate.com/github/matthewspivey/warcode-core/coverage)
 
-Game state manager for WarCode. You can use it to easily build standalone
-browser games, bots, history analyzers, and multiplayer game services.
-To accomplish this, it
+JavaScript rules engine for WarCode apps.
 
-* runs in a browser or Node service running ES5,
-* includes no runtime dependencies,
-* allows the consumer to control randomness,
-* and maintains state of a match in a single, immutable data structure.
+It is being used for standalone browser games, bots, and multiplayer game services.
 
-The use of pure functions and a single, read-only data store fit Redux's
-Three Principles and the State-Action-Model pattern.
+Notable characteristics
+* ♿ ES5 - transpiled code works in old browser and Node versions
+* 🚫 small package with no runtime dependencies
+* 🎲 caller controls randomness of dice and cards
+* λ functional JavaScript operating on an immutable data structure
 
-All player actions are captured as simple, serializable objects. This allows
-implementations to easily communicate over a message bus or websocket. It allows
-us to implement the event sourcing pattern, meaning we can reliably recreate the
-game state from player actions.
+It borrows from both [event sourcing](https://martinfowler.com/eaaDev/EventSourcing.html)  and [State-Action-Model](http://sam.js.org/) patterns. It captures player actions and returns the state of the game as a single data structure.
