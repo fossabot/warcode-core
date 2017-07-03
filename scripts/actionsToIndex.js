@@ -3,7 +3,7 @@ const { ACTIONS, STATES, PSEUDOSTATES } = require('../src/constants');
 const toRow = ({ name, markdownURL, doc }) => {
   const summary = !doc.summary ? '' : doc.summary.children[0].children[0].value;
 
-  return `[\`${name}\`](${markdownURL}) | ${summary}`;
+  return `| [\`${name}\`](${markdownURL}) | ${summary} |`;
 };
 
 module.exports = (actions, stateDiagramURL) => `
@@ -23,9 +23,11 @@ This state diagram contains several elements.
 ## Actions & States
 Every play you make during a match is modeled by one of the following actions
 
-Action              | Description
-------------------- | -----------
+
+| Action              | Description |
+| :------------------ | :---------- |
 ${actions.map(toRow).join('\n')}
+
 
 Before each players turn, the state passes through the [\`SetupNextTurn\`](docs/setupnextturn.html)
 pseudostate.
