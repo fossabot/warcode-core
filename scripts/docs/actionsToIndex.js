@@ -2,7 +2,6 @@ const { ACTIONS, STATES, PSEUDOSTATES } = require('../../src/constants');
 
 const toRow = ({ name, markdownURL, doc }) => {
   const summary = (!doc.summary) ? '' : doc.summary.children[0].children[0].value;
-  PlaceAdditionalArmy
 
   return `[\`${name}\`](${markdownURL}) | ${summary}`;
 }

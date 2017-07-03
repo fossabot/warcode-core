@@ -1,12 +1,13 @@
 const documentation = require('documentation');
 const fs = require('fs');
 const actionToMarkdown = require('./actionToMarkdown');
+const pseudoToMarkdown = require('./pseduoToMarkdown');
 const actionsToIndex = require('./actionsToIndex');
 const { createCompleteDiagram, diagramState } = require('./createDiagram');
 const { ACTIONS, STATES, PSEUDOSTATES } = require('../../src/constants');
 const { transitions } = require ('../../src/transitions/'); // must be raw source
 
-const actionCreatorsFilename = 'src/actionCreators.js'; // must be raw source
+const jsdocFilenames = ['src/actionCreators.js', 'src/transitions/SetupNextTurn.js'];
 const outDirectory = '.';
 const indexFilename = `${outDirectory}/index.md`;
 const stateDiagramFilename = `${outDirectory}/state-machine.svg`;
@@ -18,10 +19,10 @@ if (!fs.existsSync(actionsDir)) fs.mkdirSync(actionsDir);
 
 const handleWriteError = err => err ? console.error(err) : undefined;
 
-documentation.build(actionCreatorsFilename, { extension: 'es6' })
+documentation.build(jsdocFilenames, { extension: 'es6' })
   .then(docs => {
     const transitionsWithActions = transitions.filter(([,,,a]) => !!a);
-    const actions =transitionsWithActions.map(([from, to, t, name]) => ({
+    const actions = transitionsWithActions.map(([from, to, t, name]) => ({
       from,
       to,
       name,
@@ -42,6 +43,10 @@ documentation.build(actionCreatorsFilename, { extension: 'es6' })
       const svg = diagramState(from);
       fs.writeFile(diagramFilename, svg, handleWriteError);
     });
+
+    const setupNextTurnDocs = docs.find(d => d.name.toLowerCase() === PSEUDOSTATES.SETUP_NEXT_TURN.toLowerCase());
+    const setupNextTurn = pseudoToMarkdown(PSEUDOSTATES.SETUP_NEXT_TURN, setupNextTurnDocs);
+    fs.writeFile(`${PSEUDOSTATES.SETUP_NEXT_TURN.toLowerCase()}.md`, setupNextTurn, handleWriteError);
 
     const index = actionsToIndex(actions, stateDiagramURL);
     fs.writeFile(indexFilename, index, handleWriteError);
