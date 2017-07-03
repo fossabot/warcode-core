@@ -36,7 +36,7 @@ documentation
       t,
       doc: docs.find(d => d.name.toLowerCase() === name.toLowerCase()),
       markdownFilename: `dist/docs/actions/${name.toLowerCase()}.md`,
-      markdownURL: `actions/${name.toLowerCase()}.html`,
+      markdownURL: `docs/actions/${name.toLowerCase()}.html`,
       diagramFilename: `dist/docs/actions/${name.toLowerCase()}.svg`,
       diagramURL: `${name.toLowerCase()}.svg`,
     }));

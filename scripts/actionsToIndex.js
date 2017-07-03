@@ -3,7 +3,7 @@ const { ACTIONS, STATES, PSEUDOSTATES } = require('../src/constants');
 const toRow = ({ name, markdownURL, doc }) => {
   const summary = !doc.summary ? '' : doc.summary.children[0].children[0].value.replace(/(\r\n|\n|\r\w)/gm, ' ').replace(/\s\s+/g, ' ');
 
-  return `| [\`${name}\`](${markdownURL}) | ${summary} |`;
+  return `| [${name}](${markdownURL}) | ${summary} |`;
 };
 
 module.exports = (actions, stateDiagramURL) => `
