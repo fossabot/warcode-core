@@ -66,7 +66,6 @@ function selectFirstPlayer(firstPlayerIndex: number): { type: string, firstPlaye
  *
  * @summary Select territory to occupy.
  * @param territoryIndex - Index of territory to occupy. It must be unoccupied.
- * @return {{ type: string; territoryIndex; }}
  */
 function occupyTerritory(territoryIndex: number): { type: string, territoryIndex: number } {
   return {
@@ -264,7 +263,7 @@ function endAttack(): { type: string } {
  * be at least the same number of dice rolled in the decisive battle.
  *
  * @summary Capture the defeated territory by moving armies into it
- * @param armies {number} - number of armies to move
+ * @param armies - number of armies to move
  */
 function capture(armies: number): { type: string, armies: number } {
   return {

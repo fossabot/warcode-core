@@ -1,4 +1,5 @@
 const { ACTIONS, STATES, PSEUDOSTATES } = require('../src/constants');
+import traditionalConfig from '../data/traditional.json';
 
 const toRow = ({ name, markdownURL, doc }) => {
   const summary = !doc.summary ? '' : doc.summary.children[0].children[0].value.replace(/(\r\n|\n|\r\w)/gm, ' ').replace(/\s\s+/g, ' ');
@@ -20,7 +21,7 @@ This state diagram contains several elements.
 * _Lines_ are transitions.
 * _Line labels_ are player actions, such as a selecting a territory.
 
-## Actions & States
+### Actions & States
 Every play you make during a match is modeled by one of the following actions
 
 
@@ -29,6 +30,13 @@ Every play you make during a match is modeled by one of the following actions
 ${actions.map(toRow).join('\n')}
 
 
-Before each players turn, the state passes through the [\`SetupNextTurn\`](docs/setupnextturn.html)
+Before each players turn, the state passes through the [SetupNextTurn](docs/setupnextturn.html)
 pseudostate.
+
+## Match Config
+To setup a game match, we need some configuration to define game board and cards.
+
+\`\`\` javascript
+${traditionalConfig}
+\`\`\`
   `;
