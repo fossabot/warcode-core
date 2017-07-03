@@ -1,7 +1,11 @@
 
 
 # PlaceNewArmies
-Place some undeployed armies on an occupied territory to start the turn
+
+*Place some undeployed armies on an occupied territory to start the turn*
+
+You must place all new armies earned during the beginning of the turn and from trading cards.
+
 ![PlaceNewArmies state diagram](placenewarmies.svg)
   
 
@@ -15,7 +19,9 @@ Field        | Type       | Description
 `armies` | `number` | number of armies to place
 
 
-## Action creator: `placeNewArmies(territoryIndex: number, armies: number)`
+## Action creator
+`placeNewArmies(territoryIndex: number, armies: number)`
+
 
   
   

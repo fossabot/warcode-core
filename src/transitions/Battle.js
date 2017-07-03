@@ -3,19 +3,6 @@ import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
 
-/**
- * The objective of battling is to capture an opponent's territory by defeating all of its armies.
- *
- * To attack, you must select an attacking territory that
- * * you own
- * * has more than one army
- * * is adjacent to the defending territory
- *
- * When you attack, you must decide to roll 1, 2, or 3 dice. You can roll no
- * more dice than one more than the number of armies on the attacking territory.
- * For example, if you are attacking from a territory with three armies, you
- * may only roll two dice.
- */
 export default (
   { edges }: MatchConfig,
   { territories, currentPlayerIndex }: MatchState

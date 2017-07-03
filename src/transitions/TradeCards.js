@@ -4,32 +4,6 @@ import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
 import replaceElements from './replaceElements';
 
-/**
- * Trade three cards for armies. The award increases
- * after each trade made by any player during the match.
- *
- * | Trade | Award |                 |
- * |-------|-------|-----------------|
- * | 1     | 4     | (trade + 1) * 2 |
- * | 2     | 6     | (trade + 1) * 2 |
- * | 3     | 8     | (trade + 1) * 2 |
- * | 4     | 10    | (trade + 1) * 2 |
- * | 5     | 12    | (trade + 1) * 2 |
- * | 6     | 15    | (trade - 3) * 5 |
- * | 7     | 20    | (trade - 3) * 5 |
- * | 8     | 25    | (trade - 3) * 5 |
- * | 9     | 30    | (trade - 3) * 5 |
- *
- * An additional two armies may be awarded when one of the traded cards matches
- * a territory the player occupies. These two armies are immediately placed on
- * the territory itself. The award only applies to a single card.
- *
- * The three cards must meet one of the following
- * * types match: cards[i].type === cards[j].type AND cards[j].type == cards[k].type
- * * types are unique: cards[i].type != cards[j].type AND
- *   cards[i].type != cards[k].type AND cards[j].type != cards[k].type
- * * one is wild: cards[i].type == WILD OR cards[j].type == WILD OR cards[k].type == WILD
- */
 export default (
   { cards, cardOccupiedTerritoryReward }: MatchConfig,
   { cardOwner, territories, currentPlayerIndex, players, tradeCount }: MatchState

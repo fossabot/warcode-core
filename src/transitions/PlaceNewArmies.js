@@ -4,10 +4,6 @@ import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
 import replaceElements from './replaceElements';
 
-/**
- * You must place all new armies earned during the beginning of the turn
- * and from trading cards.and
- */
 export default (
   matchConfig: MatchConfig,
   { territories, players, currentPlayerIndex }: MatchState

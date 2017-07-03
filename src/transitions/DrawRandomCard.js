@@ -4,9 +4,6 @@ import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
 import replaceElements from './replaceElements';
 
-/**
- * Simulate player drawing a random card from the deck.
- */
 export default (
   matchConfig: MatchConfig,
   { cardOwner, currentPlayerIndex }: MatchState

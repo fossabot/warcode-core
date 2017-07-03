@@ -4,18 +4,6 @@ import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
 import replaceElements from './replaceElements';
 
-/**
- * During fortification, you may move armies between two of your adjacent
- * territories before ending your turn.
- *
- * Fortification has a few requirements
- * * you own territory to move armies from
- * * you own territory to move armies to
- * * territories are share and adjacent border
- * * armies to move are less than armies on source territory
- *
- *  You may end your turn, skipping fortification.
- */
 export default (
   { edges }: MatchConfig,
   { territories, currentPlayerIndex }: MatchState

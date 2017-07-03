@@ -4,20 +4,6 @@ import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
 import replaceElements from './replaceElements';
 
-/**
- * At the start of the game, each player takes turns placing a single army
- * on an unoccupied territory.
- *
- * To occupy the territory, you must place an army on an unoccupied territory.
- * An unoccupied territory must have no owner or occupying armies.
- *
- * Upon occupying the territory
- * * The current player's undeployed armies are decremented
- * * The territory owner is updated to the current layer
- * * The territory armies are set to one
- * * Turn is passed to the next player
- *
- */
 export default (
   matchConfig: MatchConfig,
   { territories, currentPlayerIndex, players }: MatchState

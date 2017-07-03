@@ -1,7 +1,12 @@
 
 
 # PlaceAdditionalArmy
-Select a territory you own to place an additional army.
+
+*Select a territory you own to place an additional army.*
+
+After players claim all territories, players take turns placing one of their undeployed armies on territory they occupy each turn.
+When a player places an additional army,
+
 ![PlaceAdditionalArmy state diagram](placeadditionalarmy.svg)
   
 
@@ -14,7 +19,9 @@ Field        | Type       | Description
 `territoryIndex` | `number` | Index of territory to place an additional army. You must occupy it.
 
 
-## Action creator: `placeAdditionalArmy(territoryIndex: number)`
+## Action creator
+`placeAdditionalArmy(territoryIndex: number)`
+
 
   
   

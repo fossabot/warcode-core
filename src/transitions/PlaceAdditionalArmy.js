@@ -4,15 +4,6 @@ import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
 import replaceElements from './replaceElements';
 
-/**
- * After players claim all territories, players take turns placing one
- * of their undeployed armies on territory they occupy each turn.
- *
- * When a player places an additional army,
- * * The current player looses one undeployed army
- * * The territory armies are incremented
- *
- */
 export default (
   matchConfig: MatchConfig,
   { players, territories, currentPlayerIndex }: MatchState

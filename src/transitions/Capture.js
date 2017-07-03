@@ -4,11 +4,6 @@ import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
 import replaceElements from './replaceElements';
 
-/**
- * When you defeat all armies on a defending territory, you must occupy it by
- * moving armies from the attacking territory. The number of armies moved must
- * be at least the same number of dice rolled in the decisive battle.
- */
 export default (
   matchConfig: MatchConfig,
   { territories, capturedTerritories, activeBattle, currentPlayerIndex }: MatchState

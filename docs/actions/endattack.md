@@ -1,7 +1,11 @@
 
 
 # EndAttack
-End attack and begin fortifying
+
+*End attack and begin fortifying*
+
+You may stop attacking opponent's territories at anytime.
+
 ![EndAttack state diagram](endattack.svg)
   
 
@@ -14,7 +18,9 @@ Field        | Type       | Description
 
 
 
-## Action creator: `endAttack()`
+## Action creator
+`endAttack()`
+
 
   
   

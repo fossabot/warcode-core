@@ -1,7 +1,11 @@
 
 
 # EndTurn
+
+*You end the turn, ending fortification.*
+
 End turn without fortifying.
+
 ![EndTurn state diagram](endturn.svg)
   
 
@@ -14,7 +18,9 @@ Field        | Type       | Description
 
 
 
-## Action creator: `endTurn()`
+## Action creator
+`endTurn()`
+
 
   
   

@@ -1,7 +1,12 @@
 
 
 # SelectFirstPlayer
-Select player to take first move, similarly to each player rolling a dieto begin the game.
+
+*Select player to take first move, similarly to each player rolling a die
+to begin the game.*
+
+Select player to take first move, similarly to each player rolling a die to determine the first player at the beginning the game.
+
 ![SelectFirstPlayer state diagram](selectfirstplayer.svg)
   
 
@@ -14,7 +19,9 @@ Field        | Type       | Description
 `firstPlayerIndex` | `number` | Index of the first player.
 
 
-## Action creator: `selectFirstPlayer(firstPlayerIndex: number)`
+## Action creator
+`selectFirstPlayer(firstPlayerIndex: number)`
+
 
 ```javascript
 let state = stateMachine.reduce();

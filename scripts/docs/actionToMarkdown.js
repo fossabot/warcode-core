@@ -1,19 +1,30 @@
-const appendDescriptions = (description) => {
+const appendDescriptions = description => {
   const descriptionParagraphs = [];
   description.children.forEach(c1 => {
     c1.children.forEach(c2 => {
-      descriptionParagraphs.push(c2.value
-        .replace(/(\r\n|\n|\r\w)/gm,' ')
-        .replace(/\s\s+/g, ' '));
+      if (c2 && c2.value) {
+        descriptionParagraphs.push(c2.value
+          .replace(/(\r\n|\n|\r\w)/gm,' ')
+          .replace(/\s\s+/g, ' '));
+      }
     });
   });
 
   return descriptionParagraphs.join('\n');
 };
 
-const docAction = (name, { description }, diagramURL) => {
+const appendSummary = summary => {
+  if (!summary) return;
+
+  return `*${summary.children[0].children[0].value}*`;
+};
+
+const docAction = (name, { description, summary }, diagramURL) => {
   return `
 # ${name}
+
+${appendSummary(summary)}
+
 ${appendDescriptions(description)}
 
 ![${name} state diagram](${diagramURL})
