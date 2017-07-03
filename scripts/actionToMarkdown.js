@@ -3,15 +3,15 @@ const appendDescriptions = description => {
   description.children.forEach(c1 => {
     if (c1.type === 'paragraph') {
       c1.children.forEach(c2 => {
-        descriptionParagraphs.push(c2.value
-          .replace(/(\r\n|\n|\r\w)/gm,' ')
-          .replace(/\s\s+/g, ' '));
+        descriptionParagraphs.push(
+          c2.value.replace(/(\r\n|\n|\r\w)/gm, ' ').replace(/\s\s+/g, ' ')
+        );
       });
     } else if (c1.type === 'table') {
       descriptionParagraphs.push('');
       c1.children.forEach((row, i) => {
         const cells = row.children.map(content => content.children[0]);
-        const values = cells.map(cell => (cell && cell.value) ? cell.value : '');
+        const values = cells.map(cell => (cell && cell.value ? cell.value : ''));
         descriptionParagraphs.push(values.join(' | '));
         if (i === 0) {
           descriptionParagraphs.push(values.map(v => '----').join(' | '));
@@ -29,8 +29,7 @@ const appendSummary = summary => {
   return `*${summary.children[0].children[0].value}*`;
 };
 
-const docAction = (name, { description, summary }, diagramURL) => {
-  return `
+const docAction = (name, { description, summary }, diagramURL) => `
 # ${name}
 
 ${appendSummary(summary)}
@@ -39,13 +38,14 @@ ${appendDescriptions(description)}
 
 ![${name} state diagram](${diagramURL})
   `;
-};
 
 const docActionFormat = (name, { params }) => {
   const rows = params
     .filter(({ title }) => title === 'param')
-    .map(({ name, description, type }) =>
-      `\`${name}\` | \`${type.name}\` | ${appendDescriptions(description)}`);
+    .map(
+      ({ name, description, type }) =>
+        `\`${name}\` | \`${type.name}\` | ${appendDescriptions(description)}`
+    );
 
   return `
 ## Action Object Format
@@ -55,7 +55,7 @@ Field        | Type       | Description
 ------------ | ---------- | -----------
 \`type\`     | \`string\` | "\`${name}\`"
 ${rows.join('\n')}
-`
+`;
 };
 
 const docActionCreator = ({ name, params, examples }) => {
@@ -65,12 +65,16 @@ const docActionCreator = ({ name, params, examples }) => {
     .map(({ name, type }) => `${name}: ${type.name}`)
     .join(', ');
 
-  const example = examples.map(({ description }) => `
+  const example = examples
+    .map(
+      ({ description }) => `
 ### Example
 \`\`\`javascript
 ${description.split('\n').map(l => l.trim()).join('\n')}
 \`\`\`
-  `).join('\n');
+  `
+    )
+    .join('\n');
 
   return `
 ## Action creator

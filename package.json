@@ -15,7 +15,7 @@
   "version": "0.0.3",
   "scripts": {
     "build": "ls -la ./node_modules/webpack/bin/webpack.js",
-    "document": "./node_modules/babel-cli/bin/babel-node.js scripts/docs/index.js",
+    "document": "./node_modules/babel-cli/bin/babel-node.js scripts/index.js",
     "test": "./node_modules/jest-cli/bin/jest.js",
     "eslint": "./node_modules/eslint/bin/eslint.js src",
     "flow": "./node_modules/.bin/flow; test $? -eq 0 -o $? -eq 2",

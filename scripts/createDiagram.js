@@ -1,13 +1,13 @@
 const Viz = require('viz.js');
-const { transitions } = require('../../src/transitions');
-const { ACTIONS, STATES,  PSEUDOSTATES } = require('../../src/constants');
+const { transitions } = require('../src/transitions');
+const { ACTIONS, STATES, PSEUDOSTATES } = require('../src/constants');
 
 process.setMaxListeners(0);
 
-const dotToSvg = (dot) => Viz(dot, { format: 'svg', engine: 'dot' });
+const dotToSvg = dot => Viz(dot, { format: 'svg', engine: 'dot' });
 
 const adjacencyList = {};
-transitions.forEach(([from, to,, action]) => {
+transitions.forEach(([from, to, , action]) => {
   if (!adjacencyList[from]) {
     adjacencyList[from] = [];
   }
@@ -32,7 +32,7 @@ const traverse = state => {
     next = queue.shift();
   }
   return Array.from(seen);
-}
+};
 
 const toDot = (transitions, docPath) => {
   const vertices = new Set();
@@ -42,15 +42,15 @@ const toDot = (transitions, docPath) => {
   });
   const foundStates = [];
   const foundPseudostates = [];
-  vertices.forEach(v => states.has(v) ? foundStates.push(v) : foundPseudostates.push(v));
+  vertices.forEach(v => (states.has(v) ? foundStates.push(v) : foundPseudostates.push(v)));
 
-  const edge = ([from, to,, action]) => {
-    const attributes = [`label="${action||''}"`];
+  const edge = ([from, to, , action]) => {
+    const attributes = [`label="${action || ''}"`];
     const filename = action ? `${action.toLowerCase()}.html` : undefined;
     if (docPath) {
       attributes.push(`href="${docPath}/${filename}"`);
     }
-    return `    ${from} -> ${to}[${attributes.join(", ")}];`;
+    return `    ${from} -> ${to}[${attributes.join(', ')}];`;
   };
 
   return [
@@ -58,11 +58,11 @@ const toDot = (transitions, docPath) => {
     ...foundStates.map(s => `    ${s}[shape="box", style=rounded];`),
     ...foundPseudostates.map(s => `    ${s}[shape="diamond", style=""];`),
     ...transitions.map(edge),
-    '}'
+    '}',
   ].join('\n');
 };
 
 module.exports = {
   createCompleteDiagram: () => dotToSvg(toDot(transitions, './actions')),
-  diagramState: (state) => dotToSvg(toDot(traverse(state))),
+  diagramState: state => dotToSvg(toDot(traverse(state))),
 };
