@@ -14,7 +14,7 @@
   "homepage": "https://github.com/matthewspivey/warcode-core#readme",
   "version": "0.0.3",
   "scripts": {
-    "build": "./node_modules/webpack/bin/webpack.js --optimize-minimize",
+    "build": "ls -la ./node_modules/webpack/bin/webpack.js",
     "document": "./node_modules/babel-cli/bin/babel-node.js scripts/docs/index.js",
     "test": "./node_modules/jest-cli/bin/jest.js",
     "eslint": "./node_modules/eslint/bin/eslint.js src",
