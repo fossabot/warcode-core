@@ -39,7 +39,7 @@ const traverse = action => {
   return Array.from(seen);
 }
 
-const toDot = transitions => {
+const toDot = (transitions, docPath) => {
   const vertices = new Set();
   transitions.forEach(([from, to]) => {
     vertices.add(from);
@@ -49,16 +49,25 @@ const toDot = transitions => {
   const foundPseudostates = [];
   vertices.forEach(v => states.has(v) ? foundStates.push(v) : foundPseudostates.push(v));
 
+  const edge = ([from, to,, action]) => {
+    const attributes = [`label="${action||''}"`];
+    const filename = action ? `${action.toLowerCase()}.html` : undefined;
+    if (docPath) {
+      attributes.push(`href="${docPath}/${filename}"`);
+    }
+    return `    ${from} -> ${to}[${attributes.join(", ")}];`;
+  };
+
   return [
     'digraph {',
     ...foundStates.map(s => `    ${s}[shape="box", style=rounded];`),
     ...foundPseudostates.map(s => `    ${s}[shape="diamond", style=""];`),
-    ...transitions.map(([from, to,, action]) => `    ${from} -> ${to}[label="${action||''}"];`),
+    ...transitions.map(edge),
     '}'
   ].join('\n');
 };
 
 module.exports = {
-  createCompleteDiagram: () => dotToSvg(toDot(transitions)),
+  createCompleteDiagram: () => dotToSvg(toDot(transitions, './actions')),
   diagramState: (state) => dotToSvg(toDot(traverse(state))),
 };

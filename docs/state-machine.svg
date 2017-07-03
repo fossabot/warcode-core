@@ -24,9 +24,15 @@
 <!-- Initializing&#45;&gt;SelectingFirstPlayer -->
 <g id="edge1" class="edge">
 <title>Initializing&#45;&gt;SelectingFirstPlayer</title>
+<g id="a_edge1"><a xlink:href="./actions/startmatch.html" xlink:title="StartMatch">
 <path fill="none" stroke="#000000" d="M220.9783,-1221.0006C220.9783,-1208.8949 220.9783,-1192.8076 220.9783,-1179.0674"/>
 <polygon fill="#000000" stroke="#000000" points="224.4784,-1178.672 220.9783,-1168.672 217.4784,-1178.6721 224.4784,-1178.672"/>
+</a>
+</g>
+<g id="a_edge1&#45;label"><a xlink:href="./actions/startmatch.html" xlink:title="StartMatch">
 <text text-anchor="middle" x="252.08" y="-1190.8" font-family="Times,serif" font-size="14.00" fill="#000000">StartMatch</text>
+</a>
+</g>
 </g>
 <!-- InitialChoice -->
 <g id="node12" class="node">
@@ -37,9 +43,15 @@
 <!-- SelectingFirstPlayer&#45;&gt;InitialChoice -->
 <g id="edge2" class="edge">
 <title>SelectingFirstPlayer&#45;&gt;InitialChoice</title>
+<g id="a_edge2"><a xlink:href="./actions/selectfirstplayer.html" xlink:title="SelectFirstPlayer">
 <path fill="none" stroke="#000000" d="M220.9783,-1132.2006C220.9783,-1120.0949 220.9783,-1104.0076 220.9783,-1090.2674"/>
 <polygon fill="#000000" stroke="#000000" points="224.4784,-1089.872 220.9783,-1079.872 217.4784,-1089.8721 224.4784,-1089.872"/>
+</a>
+</g>
+<g id="a_edge2&#45;label"><a xlink:href="./actions/selectfirstplayer.html" xlink:title="SelectFirstPlayer">
 <text text-anchor="middle" x="268.7981" y="-1102" font-family="Times,serif" font-size="14.00" fill="#000000">SelectFirstPlayer</text>
+</a>
+</g>
 </g>
 <!-- OccupyingTerritory -->
 <g id="node3" class="node">
@@ -56,9 +68,15 @@
 <!-- OccupyingTerritory&#45;&gt;HasPlacedArmies -->
 <g id="edge5" class="edge">
 <title>OccupyingTerritory&#45;&gt;HasPlacedArmies</title>
+<g id="a_edge5"><a xlink:href="./actions/occupyterritory.html" xlink:title="OccupyTerritory">
 <path fill="none" stroke="#000000" d="M67.5443,-970.7586C70.6413,-959.4212 76.2104,-945.2435 85.9123,-936 96.6644,-925.7559 110.5389,-918.3952 124.5122,-913.1173"/>
 <polygon fill="#000000" stroke="#000000" points="125.8534,-916.3571 134.1645,-909.7863 123.5698,-909.74 125.8534,-916.3571"/>
+</a>
+</g>
+<g id="a_edge5&#45;label"><a xlink:href="./actions/occupyterritory.html" xlink:title="OccupyTerritory">
 <text text-anchor="middle" x="133.0113" y="-940.2" font-family="Times,serif" font-size="14.00" fill="#000000">OccupyTerritory</text>
+</a>
+</g>
 </g>
 <!-- PlacingAdditionalArmy -->
 <g id="node4" class="node">
@@ -69,9 +87,15 @@
 <!-- PlacingAdditionalArmy&#45;&gt;HasPlacedArmies -->
 <g id="edge6" class="edge">
 <title>PlacingAdditionalArmy&#45;&gt;HasPlacedArmies</title>
+<g id="a_edge6"><a xlink:href="./actions/placeadditionalarmy.html" xlink:title="PlaceAdditionalArmy">
 <path fill="none" stroke="#000000" d="M199.0068,-970.5399C194.2138,-965.346 189.7829,-959.3121 187.1199,-952.8 183.9477,-945.0427 182.8952,-936.0936 182.8532,-927.7927"/>
 <polygon fill="#000000" stroke="#000000" points="186.3518,-927.8961 183.2569,-917.7634 179.3575,-927.6145 186.3518,-927.8961"/>
+</a>
+</g>
+<g id="a_edge6&#45;label"><a xlink:href="./actions/placeadditionalarmy.html" xlink:title="PlaceAdditionalArmy">
 <text text-anchor="middle" x="249.4075" y="-940.2" font-family="Times,serif" font-size="14.00" fill="#000000">PlaceAdditionalArmy</text>
+</a>
+</g>
 </g>
 <!-- TradingCards -->
 <g id="node5" class="node">
@@ -88,9 +112,15 @@
 <!-- TradingCards&#45;&gt;PlacingNewArmies -->
 <g id="edge13" class="edge">
 <title>TradingCards&#45;&gt;PlacingNewArmies</title>
+<g id="a_edge13"><a xlink:href="./actions/endtrade.html" xlink:title="EndTrade">
 <path fill="none" stroke="#000000" d="M183.6181,-662.5312C183.1694,-651.7205 184.3073,-638.262 190.7833,-628.2 193.615,-623.8003 197.1857,-619.8817 201.182,-616.4037"/>
 <polygon fill="#000000" stroke="#000000" points="203.451,-619.0758 209.3093,-610.2479 199.2245,-613.4957 203.451,-619.0758"/>
+</a>
+</g>
+<g id="a_edge13&#45;label"><a xlink:href="./actions/endtrade.html" xlink:title="EndTrade">
 <text text-anchor="middle" x="218.5758" y="-632.4" font-family="Times,serif" font-size="14.00" fill="#000000">EndTrade</text>
+</a>
+</g>
 </g>
 <!-- HasCards -->
 <g id="node15" class="node">
@@ -101,8 +131,11 @@
 <!-- TradingCards&#45;&gt;HasCards -->
 <g id="edge12" class="edge">
 <title>TradingCards&#45;&gt;HasCards</title>
+<g id="a_edge12"><a xlink:href="./actions/undefined">
 <path fill="none" stroke="#000000" d="M191.8929,-699.0332C192.7379,-707.5685 192.9419,-717.9329 192.5049,-727.3513"/>
 <polygon fill="#000000" stroke="#000000" points="189.0065,-727.1988 191.7391,-737.4352 195.9864,-727.7289 189.0065,-727.1988"/>
+</a>
+</g>
 </g>
 <!-- HasUndeployedArmies -->
 <g id="node16" class="node">
@@ -113,9 +146,15 @@
 <!-- PlacingNewArmies&#45;&gt;HasUndeployedArmies -->
 <g id="edge14" class="edge">
 <title>PlacingNewArmies&#45;&gt;HasUndeployedArmies</title>
+<g id="a_edge14"><a xlink:href="./actions/placenewarmies.html" xlink:title="PlaceNewArmies">
 <path fill="none" stroke="#000000" d="M240.0426,-573.965C233.6528,-563.2371 228.9122,-549.7836 236.0259,-539.4 240.998,-532.1423 256.6823,-524.9712 273.7858,-518.9625"/>
 <polygon fill="#000000" stroke="#000000" points="275.0041,-522.2457 283.3747,-515.7508 272.7808,-515.6081 275.0041,-522.2457"/>
+</a>
+</g>
+<g id="a_edge14&#45;label"><a xlink:href="./actions/placenewarmies.html" xlink:title="PlaceNewArmies">
 <text text-anchor="middle" x="285.9545" y="-543.6" font-family="Times,serif" font-size="14.00" fill="#000000">PlaceNewArmies</text>
+</a>
+</g>
 </g>
 <!-- Battling -->
 <g id="node7" class="node">
@@ -132,9 +171,15 @@
 <!-- Battling&#45;&gt;Fortifying -->
 <g id="edge17" class="edge">
 <title>Battling&#45;&gt;Fortifying</title>
+<g id="a_edge17"><a xlink:href="./actions/endattack.html" xlink:title="EndAttack">
 <path fill="none" stroke="#000000" d="M630.2975,-423.5664C614.5597,-418.3549 596.7225,-409.4198 587.1087,-394.4 582.5906,-387.3413 581.1548,-378.5919 581.1763,-370.259"/>
 <polygon fill="#000000" stroke="#000000" points="584.6815,-370.2978 581.8604,-360.0855 577.6972,-369.8281 584.6815,-370.2978"/>
+</a>
+</g>
+<g id="a_edge17&#45;label"><a xlink:href="./actions/endattack.html" xlink:title="EndAttack">
 <text text-anchor="middle" x="616.9131" y="-381.8" font-family="Times,serif" font-size="14.00" fill="#000000">EndAttack</text>
+</a>
+</g>
 </g>
 <!-- RollingDice -->
 <g id="node9" class="node">
@@ -145,9 +190,15 @@
 <!-- Battling&#45;&gt;RollingDice -->
 <g id="edge18" class="edge">
 <title>Battling&#45;&gt;RollingDice</title>
+<g id="a_edge18"><a xlink:href="./actions/battle.html" xlink:title="Battle">
 <path fill="none" stroke="#000000" d="M677.7616,-412.0006C689.5692,-399.0559 705.5296,-381.5586 718.5846,-367.2464"/>
 <polygon fill="#000000" stroke="#000000" points="721.3404,-369.4188 725.4937,-359.672 716.1687,-364.7014 721.3404,-369.4188"/>
+</a>
+</g>
+<g id="a_edge18&#45;label"><a xlink:href="./actions/battle.html" xlink:title="Battle">
 <text text-anchor="middle" x="724.6971" y="-381.8" font-family="Times,serif" font-size="14.00" fill="#000000">Battle</text>
+</a>
+</g>
 </g>
 <!-- HasEarnedCard -->
 <g id="node20" class="node">
@@ -158,16 +209,28 @@
 <!-- Fortifying&#45;&gt;HasEarnedCard -->
 <g id="edge26" class="edge">
 <title>Fortifying&#45;&gt;HasEarnedCard</title>
+<g id="a_edge26"><a xlink:href="./actions/fortify.html" xlink:title="Fortify">
 <path fill="none" stroke="#000000" d="M590.0501,-323.1831C591.4128,-312.3908 591.253,-298.9334 584.9783,-288.8 579.8045,-280.4446 572.0008,-273.931 563.4792,-268.8871"/>
 <polygon fill="#000000" stroke="#000000" points="564.9022,-265.6815 554.419,-264.1472 561.6573,-271.884 564.9022,-265.6815"/>
+</a>
+</g>
+<g id="a_edge26&#45;label"><a xlink:href="./actions/fortify.html" xlink:title="Fortify">
 <text text-anchor="middle" x="609.4208" y="-293" font-family="Times,serif" font-size="14.00" fill="#000000">Fortify</text>
+</a>
+</g>
 </g>
 <!-- Fortifying&#45;&gt;HasEarnedCard -->
 <g id="edge27" class="edge">
 <title>Fortifying&#45;&gt;HasEarnedCard</title>
+<g id="a_edge27"><a xlink:href="./actions/endturn.html" xlink:title="EndTurn">
 <path fill="none" stroke="#000000" d="M550.4356,-323.5595C543.2534,-318.5623 536.3426,-312.5614 531.2125,-305.6 525.901,-298.3925 522.4365,-289.3739 520.1786,-280.8407"/>
 <polygon fill="#000000" stroke="#000000" points="523.5432,-279.8438 517.9799,-270.8271 516.7061,-281.3451 523.5432,-279.8438"/>
+</a>
+</g>
+<g id="a_edge27&#45;label"><a xlink:href="./actions/endturn.html" xlink:title="EndTurn">
 <text text-anchor="middle" x="555.8612" y="-293" font-family="Times,serif" font-size="14.00" fill="#000000">EndTurn</text>
+</a>
+</g>
 </g>
 <!-- HasDefeatedTerritory -->
 <g id="node17" class="node">
@@ -178,9 +241,15 @@
 <!-- RollingDice&#45;&gt;HasDefeatedTerritory -->
 <g id="edge19" class="edge">
 <title>RollingDice&#45;&gt;HasDefeatedTerritory</title>
+<g id="a_edge19"><a xlink:href="./actions/rolldice.html" xlink:title="RollDice">
 <path fill="none" stroke="#000000" d="M742.1202,-323.3415C743.0695,-312.3407 745.8791,-298.6094 753.4341,-288.8 759.1641,-281.3601 766.8577,-275.3277 775.0593,-270.4812"/>
 <polygon fill="#000000" stroke="#000000" points="776.9048,-273.4639 784.0895,-265.6773 773.6172,-267.284 776.9048,-273.4639"/>
+</a>
+</g>
+<g id="a_edge19&#45;label"><a xlink:href="./actions/rolldice.html" xlink:title="RollDice">
 <text text-anchor="middle" x="778.2504" y="-293" font-family="Times,serif" font-size="14.00" fill="#000000">RollDice</text>
+</a>
+</g>
 </g>
 <!-- Capturing -->
 <g id="node10" class="node">
@@ -197,9 +266,15 @@
 <!-- Capturing&#45;&gt;HasDefeatedOpponent -->
 <g id="edge22" class="edge">
 <title>Capturing&#45;&gt;HasDefeatedOpponent</title>
+<g id="a_edge22"><a xlink:href="./actions/capture.html" xlink:title="Capture">
 <path fill="none" stroke="#000000" d="M750.8384,-161.6157C732.8396,-147.4715 707.8039,-127.7974 688.7285,-112.8072"/>
 <polygon fill="#000000" stroke="#000000" points="690.719,-109.9201 680.6937,-106.4932 686.3938,-115.424 690.719,-109.9201"/>
+</a>
+</g>
+<g id="a_edge22&#45;label"><a xlink:href="./actions/capture.html" xlink:title="Capture">
 <text text-anchor="middle" x="749.1368" y="-131.2" font-family="Times,serif" font-size="14.00" fill="#000000">Capture</text>
+</a>
+</g>
 </g>
 <!-- DrawingRandomCard -->
 <g id="node11" class="node">
@@ -216,87 +291,132 @@
 <!-- DrawingRandomCard&#45;&gt;SetupNextTurn -->
 <g id="edge30" class="edge">
 <title>DrawingRandomCard&#45;&gt;SetupNextTurn</title>
+<g id="a_edge30"><a xlink:href="./actions/drawrandomcard.html" xlink:title="DrawRandomCard">
 <path fill="none" stroke="#000000" d="M315.1811,-186.8766C209.9881,-198.499 22.9783,-223.3083 22.9783,-252.8 22.9783,-754 22.9783,-754 22.9783,-754 22.9783,-778.5334 85.2604,-800.6297 132.8263,-813.9278"/>
 <polygon fill="#000000" stroke="#000000" points="132.1565,-817.373 142.7252,-816.6296 133.9997,-810.62 132.1565,-817.373"/>
+</a>
+</g>
+<g id="a_edge30&#45;label"><a xlink:href="./actions/drawrandomcard.html" xlink:title="DrawRandomCard">
 <text text-anchor="middle" x="75.8493" y="-499.2" font-family="Times,serif" font-size="14.00" fill="#000000">DrawRandomCard</text>
+</a>
+</g>
 </g>
 <!-- InitialChoice&#45;&gt;OccupyingTerritory -->
 <g id="edge3" class="edge">
 <title>InitialChoice&#45;&gt;OccupyingTerritory</title>
+<g id="a_edge3"><a xlink:href="./actions/undefined">
 <path fill="none" stroke="#000000" d="M193.989,-1049.2509C171.5591,-1038.8217 139.0837,-1023.7216 112.2021,-1011.2226"/>
 <polygon fill="#000000" stroke="#000000" points="113.4962,-1007.9644 102.9527,-1006.9219 110.5448,-1014.3118 113.4962,-1007.9644"/>
+</a>
+</g>
 </g>
 <!-- InitialChoice&#45;&gt;PlacingAdditionalArmy -->
 <g id="edge4" class="edge">
 <title>InitialChoice&#45;&gt;PlacingAdditionalArmy</title>
+<g id="a_edge4"><a xlink:href="./actions/undefined">
 <path fill="none" stroke="#000000" d="M220.9783,-1043.7551C220.9783,-1035.6828 220.9783,-1025.9764 220.9783,-1016.9817"/>
 <polygon fill="#000000" stroke="#000000" points="224.4784,-1016.8903 220.9783,-1006.8904 217.4784,-1016.8904 224.4784,-1016.8903"/>
+</a>
+</g>
 </g>
 <!-- HasPlacedArmies&#45;&gt;InitialChoice -->
 <g id="edge7" class="edge">
 <title>HasPlacedArmies&#45;&gt;InitialChoice</title>
+<g id="a_edge7"><a xlink:href="./actions/undefined">
 <path fill="none" stroke="#000000" d="M241.179,-909.3243C270.1207,-915.4577 301.3295,-924.4832 309.9783,-936 328.921,-961.2243 321.2428,-979.7712 304.9783,-1006.8 294.7409,-1023.8126 276.9836,-1036.5746 260.4251,-1045.5004"/>
 <polygon fill="#000000" stroke="#000000" points="258.7455,-1042.4277 251.4046,-1050.0672 261.9073,-1048.673 258.7455,-1042.4277"/>
+</a>
+</g>
 </g>
 <!-- HasPlacedArmies&#45;&gt;SetupNextTurn -->
 <g id="edge8" class="edge">
 <title>HasPlacedArmies&#45;&gt;SetupNextTurn</title>
+<g id="a_edge8"><a xlink:href="./actions/undefined">
 <path fill="none" stroke="#000000" d="M185.9783,-881.9551C185.9783,-873.8828 185.9783,-864.1764 185.9783,-855.1817"/>
 <polygon fill="#000000" stroke="#000000" points="189.4784,-855.0903 185.9783,-845.0904 182.4784,-855.0904 189.4784,-855.0903"/>
+</a>
+</g>
 </g>
 <!-- SetupNextTurn&#45;&gt;HasCards -->
 <g id="edge9" class="edge">
 <title>SetupNextTurn&#45;&gt;HasCards</title>
+<g id="a_edge9"><a xlink:href="./actions/undefined">
 <path fill="none" stroke="#000000" d="M185.9783,-808.9551C185.9783,-800.8828 185.9783,-791.1764 185.9783,-782.1817"/>
 <polygon fill="#000000" stroke="#000000" points="189.4784,-782.0903 185.9783,-772.0904 182.4784,-782.0904 189.4784,-782.0903"/>
+</a>
+</g>
 </g>
 <!-- HasCards&#45;&gt;TradingCards -->
 <g id="edge10" class="edge">
 <title>HasCards&#45;&gt;TradingCards</title>
+<g id="a_edge10"><a xlink:href="./actions/undefined">
 <path fill="none" stroke="#000000" d="M180.2175,-737.4352C179.298,-729.1218 179.0195,-718.8181 179.3821,-709.2991"/>
 <polygon fill="#000000" stroke="#000000" points="182.8934,-709.2432 180.0637,-699.0332 175.9088,-708.7793 182.8934,-709.2432"/>
+</a>
+</g>
 </g>
 <!-- HasCards&#45;&gt;PlacingNewArmies -->
 <g id="edge11" class="edge">
 <title>HasCards&#45;&gt;PlacingNewArmies</title>
+<g id="a_edge11"><a xlink:href="./actions/undefined">
 <path fill="none" stroke="#000000" d="M204.5231,-740.825C217.0268,-730.8519 232.6997,-715.9963 240.9783,-699 252.9981,-674.323 255.502,-642.7846 255.4543,-620.3936"/>
 <polygon fill="#000000" stroke="#000000" points="258.95,-620.1367 255.2564,-610.2066 251.9514,-620.2727 258.95,-620.1367"/>
+</a>
+</g>
 </g>
 <!-- HasUndeployedArmies&#45;&gt;PlacingNewArmies -->
 <g id="edge15" class="edge">
 <title>HasUndeployedArmies&#45;&gt;PlacingNewArmies</title>
+<g id="a_edge15"><a xlink:href="./actions/undefined">
 <path fill="none" stroke="#000000" d="M335.8671,-520.8857C338.9937,-531.8581 340.6776,-545.8389 333.9783,-556.2 331.1059,-560.6424 327.5402,-564.5421 323.5222,-567.9645"/>
 <polygon fill="#000000" stroke="#000000" points="321.3082,-565.2475 315.3013,-573.9749 325.4396,-570.8983 321.3082,-565.2475"/>
+</a>
+</g>
 </g>
 <!-- HasUndeployedArmies&#45;&gt;Battling -->
 <g id="edge16" class="edge">
 <title>HasUndeployedArmies&#45;&gt;Battling</title>
+<g id="a_edge16"><a xlink:href="./actions/undefined">
 <path fill="none" stroke="#000000" d="M381.2185,-491.9134C447.5056,-477.3383 560.4234,-452.51 620.5312,-439.2935"/>
 <polygon fill="#000000" stroke="#000000" points="621.3986,-442.6864 630.4137,-437.1205 619.8953,-435.8498 621.3986,-442.6864"/>
+</a>
+</g>
 </g>
 <!-- HasDefeatedTerritory&#45;&gt;Battling -->
 <g id="edge20" class="edge">
 <title>HasDefeatedTerritory&#45;&gt;Battling</title>
+<g id="a_edge20"><a xlink:href="./actions/undefined">
 <path fill="none" stroke="#000000" d="M822.3266,-270.9769C819.51,-293.5639 812.0835,-332.4382 792.9783,-359.6 771.27,-390.4626 731.7649,-409.0845 701.6108,-419.4269"/>
 <polygon fill="#000000" stroke="#000000" points="700.21,-416.2019 691.7823,-422.6226 702.3745,-422.8589 700.21,-416.2019"/>
+</a>
+</g>
 </g>
 <!-- HasDefeatedTerritory&#45;&gt;Capturing -->
 <g id="edge21" class="edge">
 <title>HasDefeatedTerritory&#45;&gt;Capturing</title>
+<g id="a_edge21"><a xlink:href="./actions/undefined">
 <path fill="none" stroke="#000000" d="M812.6325,-236.2352C806.5711,-227.3854 798.9648,-216.2803 792.1066,-206.2673"/>
 <polygon fill="#000000" stroke="#000000" points="794.8684,-204.1057 786.3298,-197.8332 789.0932,-208.0614 794.8684,-204.1057"/>
+</a>
+</g>
 </g>
 <!-- HasDefeatedOpponent&#45;&gt;TradingCards -->
 <g id="edge23" class="edge">
 <title>HasDefeatedOpponent&#45;&gt;TradingCards</title>
+<g id="a_edge23"><a xlink:href="./actions/undefined">
 <path fill="none" stroke="#000000" d="M572.6115,-97.6771C428.0664,-109.8007 156.9783,-138.0971 156.9783,-179.8 156.9783,-592.2 156.9783,-592.2 156.9783,-592.2 156.9783,-613.4848 164.6002,-636.2845 172.0291,-653.4517"/>
 <polygon fill="#000000" stroke="#000000" points="168.9848,-655.2113 176.3217,-662.8546 175.3526,-652.3042 168.9848,-655.2113"/>
+</a>
+</g>
 </g>
 <!-- HasDefeatedOpponent&#45;&gt;Battling -->
 <g id="edge25" class="edge">
 <title>HasDefeatedOpponent&#45;&gt;Battling</title>
+<g id="a_edge25"><a xlink:href="./actions/undefined">
 <path fill="none" stroke="#000000" d="M660.9783,-109.0279C660.9783,-126.9689 660.9783,-155.2875 660.9783,-179.8 660.9783,-341.6 660.9783,-341.6 660.9783,-341.6 660.9783,-361.8994 660.9783,-384.809 660.9783,-402.2736"/>
 <polygon fill="#000000" stroke="#000000" points="657.4784,-402.3721 660.9783,-412.3721 664.4784,-402.3721 657.4784,-402.3721"/>
+</a>
+</g>
 </g>
 <!-- GameOver -->
 <g id="node19" class="node">
@@ -307,20 +427,29 @@
 <!-- HasDefeatedOpponent&#45;&gt;GameOver -->
 <g id="edge24" class="edge">
 <title>HasDefeatedOpponent&#45;&gt;GameOver</title>
+<g id="a_edge24"><a xlink:href="./actions/undefined">
 <path fill="none" stroke="#000000" d="M660.9783,-72.9551C660.9783,-64.8828 660.9783,-55.1764 660.9783,-46.1817"/>
 <polygon fill="#000000" stroke="#000000" points="664.4784,-46.0903 660.9783,-36.0904 657.4784,-46.0904 664.4784,-46.0903"/>
+</a>
+</g>
 </g>
 <!-- HasEarnedCard&#45;&gt;DrawingRandomCard -->
 <g id="edge28" class="edge">
 <title>HasEarnedCard&#45;&gt;DrawingRandomCard</title>
+<g id="a_edge28"><a xlink:href="./actions/undefined">
 <path fill="none" stroke="#000000" d="M491.3382,-239.0693C473.05,-228.8781 447.6861,-214.744 426.3141,-202.8344"/>
 <polygon fill="#000000" stroke="#000000" points="427.8703,-199.6949 417.4313,-197.8845 424.4629,-205.8096 427.8703,-199.6949"/>
+</a>
+</g>
 </g>
 <!-- HasEarnedCard&#45;&gt;SetupNextTurn -->
 <g id="edge29" class="edge">
 <title>HasEarnedCard&#45;&gt;SetupNextTurn</title>
+<g id="a_edge29"><a xlink:href="./actions/undefined">
 <path fill="none" stroke="#000000" d="M511.3144,-270.0106C506.9111,-287.7949 500.9783,-316.4275 500.9783,-341.6 500.9783,-754 500.9783,-754 500.9783,-754 500.9783,-799.9711 372.0453,-816.9996 279.1553,-823.3026"/>
 <polygon fill="#000000" stroke="#000000" points="278.906,-819.8113 269.1529,-823.9497 279.358,-826.7967 278.906,-819.8113"/>
+</a>
+</g>
 </g>
 </g>
 </svg>
