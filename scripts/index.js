@@ -13,11 +13,17 @@ const outDirectory = 'dist/docs';
 const stateDiagramFilename = 'dist/state-machine.svg';
 const stateDiagramURL = 'state-machine.svg';
 
+const configYml = `# GitHub Pages config
+theme: jekyll-theme-cayman
+title: WarCode
+`;
+
 if (!fs.existsSync('dist')) fs.mkdirSync('dist');
 if (!fs.existsSync('dist/docs')) fs.mkdirSync('dist/docs');
 if (!fs.existsSync('dist/docs/actions')) fs.mkdirSync('dist/docs/actions');
 
 const handleWriteError = err => (err ? console.error(err) : undefined);
+fs.writeFile('dist/_config.yml', configYml, handleWriteError);
 
 documentation
   .build(jsdocFilenames, { extension: 'es6' })
