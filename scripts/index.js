@@ -11,12 +11,11 @@ const jsdocFilenames = ['src/actionCreators.js', 'src/transitions/SetupNextTurn.
 const indexFilename = 'dist/index.md';
 const outDirectory = 'dist/docs';
 const stateDiagramFilename = 'dist/state-machine.svg';
-const stateDiagramURL = 'dist/state-machine.svg';
-const actionsDir = 'dist/docs/actions';
+const stateDiagramURL = 'state-machine.svg';
 
 if (!fs.existsSync('dist')) fs.mkdirSync('dist');
-if (!fs.existsSync(outDirectory)) fs.mkdirSync(outDirectory);
-if (!fs.existsSync(actionsDir)) fs.mkdirSync(actionsDir);
+if (!fs.existsSync('dist/docs')) fs.mkdirSync('dist/docs');
+if (!fs.existsSync('dist/docs/actions')) fs.mkdirSync('dist/docs/actions');
 
 const handleWriteError = err => (err ? console.error(err) : undefined);
 
