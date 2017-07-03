@@ -7,6 +7,13 @@
 Start match
 The number of players determines the number of armies each player receive. The traditional rules award each player the number shown in this table. However, this may vary based on the match settings.
 
+Players | Armies
+---- | ----
+3 | 35
+4 | 30
+5 | 25
+6 | 20
+
 ![StartMatch state diagram](startmatch.svg)
   
 
@@ -23,6 +30,7 @@ Field        | Type       | Description
 `startMatch(playerCount: number)`
 
 
+### Example
 ```javascript
 let state = stateMachine.reduce();
 let action = actionCreators.startMatch(3);

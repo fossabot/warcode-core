@@ -11,6 +11,6 @@ This diagram contains several elements.
 * _Diamonds_ are pseudostates, such as the branch in the flow when a player wins the game.
 * _Lines_ are transitions.
 
-Actions
+## Actions
 ${actions.map(({ name, markdownURL }) => `* [${name}](${markdownURL})`).join('\n')}
   `;

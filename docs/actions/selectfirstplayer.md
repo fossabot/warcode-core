@@ -23,6 +23,7 @@ Field        | Type       | Description
 `selectFirstPlayer(firstPlayerIndex: number)`
 
 
+### Example
 ```javascript
 let state = stateMachine.reduce();
 let action = actionCreators.startMatch(3);

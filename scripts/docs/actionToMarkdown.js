@@ -1,13 +1,23 @@
 const appendDescriptions = description => {
   const descriptionParagraphs = [];
   description.children.forEach(c1 => {
-    c1.children.forEach(c2 => {
-      if (c2 && c2.value) {
+    if (c1.type === 'paragraph') {
+      c1.children.forEach(c2 => {
         descriptionParagraphs.push(c2.value
           .replace(/(\r\n|\n|\r\w)/gm,' ')
           .replace(/\s\s+/g, ' '));
-      }
-    });
+      });
+    } else if (c1.type === 'table') {
+      descriptionParagraphs.push('');
+      c1.children.forEach((row, i) => {
+        const cells = row.children.map(content => content.children[0]);
+        const values = cells.map(cell => (cell && cell.value) ? cell.value : '');
+        descriptionParagraphs.push(values.join(' | '));
+        if (i === 0) {
+          descriptionParagraphs.push(values.map(v => '----').join(' | '));
+        }
+      });
+    }
   });
 
   return descriptionParagraphs.join('\n');
@@ -56,6 +66,7 @@ const docActionCreator = ({ name, params, examples }) => {
     .join(', ');
 
   const example = examples.map(({ description }) => `
+### Example
 \`\`\`javascript
 ${description.split('\n').map(l => l.trim()).join('\n')}
 \`\`\`
