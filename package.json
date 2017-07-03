@@ -12,9 +12,9 @@
     "url": "https://github.com/matthewspivey/warcode-core/issues"
   },
   "homepage": "https://github.com/matthewspivey/warcode-core#readme",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "scripts": {
-    "build": "./node_modules/babel-cli/bin/babel.js src --out-dir dist",
+    "build": "./node_modules/webpack/bin/webpack.js --optimize-minimize",
     "document": "./node_modules/babel-cli/bin/babel-node.js scripts/docs/index.js",
     "test": "./node_modules/jest-cli/bin/jest.js",
     "eslint": "./node_modules/eslint/bin/eslint.js src",
@@ -43,7 +43,7 @@
     "eslint-plugin-jsx-a11y": "^5.0.1",
     "eslint-plugin-react": "^7.1.0",
     "expect": "^1.20.2",
-    "flow-bin": "^0.48.0",
+    "flow-bin": "^0.49.1",
     "flow-typed": "^2.1.2",
     "jest": "^20.0.4",
     "jest-cli": "^20.0.4",
