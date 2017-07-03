@@ -53,7 +53,7 @@ The ${name} actions must contain the following:
 
 Field        | Type       | Description
 ------------ | ---------- | -----------
-\`type\`     | \`string\` | "${name}"
+\`type\`     | \`string\` | "\`${name}\`"
 ${rows.join('\n')}
 `
 };

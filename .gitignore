@@ -4,4 +4,7 @@ coverage/
 npm-debug.log
 yarn-error.log
 dist
+index.md
+actions/
+*.svg
 out
