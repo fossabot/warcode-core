@@ -50,7 +50,7 @@ var matchExtendedState = {
 };
 
 test('guard checks capture parameters', function () {
-  var transition = new _DrawRandomCard2.default(matchConfig, matchExtendedState);
+  var transition = (0, _DrawRandomCard2.default)(matchConfig, matchExtendedState);
   var actions = [[_actionCreators2.default.drawRandomCard(-1), false], [_actionCreators2.default.drawRandomCard(0), true], [_actionCreators2.default.drawRandomCard(1), true], [_actionCreators2.default.drawRandomCard(2), true], [_actionCreators2.default.drawRandomCard(3), true], [_actionCreators2.default.drawRandomCard(4), true], [_actionCreators2.default.drawRandomCard(5), true], [_actionCreators2.default.drawRandomCard(6), false]];
   actions.forEach(function (_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
@@ -62,7 +62,7 @@ test('guard checks capture parameters', function () {
 });
 
 test('reduce updates state', function () {
-  var transition = new _DrawRandomCard2.default(matchConfig, matchExtendedState);
+  var transition = (0, _DrawRandomCard2.default)(matchConfig, matchExtendedState);
   var cardIndex = 1;
   var action = _actionCreators2.default.drawRandomCard(cardIndex);
   var n = transition.reduce(action);

@@ -33,7 +33,7 @@ var matchExtendedState = {
 
 test('guard validates first player index', function () {
   var tryValue = function tryValue(firstPlayerIndex) {
-    var transition = new _SelectFirstPlayer2.default(matchConfig, matchExtendedState, _constants.ACTIONS.SELECT_FIRST_PLAYER);
+    var transition = (0, _SelectFirstPlayer2.default)(matchConfig, matchExtendedState, _constants.ACTIONS.SELECT_FIRST_PLAYER);
     var action = _actionCreators2.default.selectFirstPlayer(firstPlayerIndex);
     return transition.guard(action);
   };
@@ -48,7 +48,7 @@ test('guard validates first player index', function () {
 });
 
 test('reduce creates valid initial state', function () {
-  var transition = new _SelectFirstPlayer2.default(matchConfig, matchExtendedState, _constants.ACTIONS.SELECT_FIRST_PLAYER);
+  var transition = (0, _SelectFirstPlayer2.default)(matchConfig, matchExtendedState, _constants.ACTIONS.SELECT_FIRST_PLAYER);
   var firstPlayerIndex = 0;
   var action = _actionCreators2.default.selectFirstPlayer(firstPlayerIndex);
   var n = transition.reduce(action);

@@ -48,7 +48,7 @@ var matchExtendedState = {
 };
 
 test('guard checks capture parameters', function () {
-  var transition = new _Fortify2.default(matchConfig, matchExtendedState, _constants.ACTIONS.FORTIFY);
+  var transition = (0, _Fortify2.default)(matchConfig, matchExtendedState, _constants.ACTIONS.FORTIFY);
   var actions = [[_actionCreators2.default.fortify(1, 2, 1), true], [_actionCreators2.default.fortify(1, 2, 0), false], [_actionCreators2.default.fortify(1, 2, 6), false], [_actionCreators2.default.fortify(2, 1, 1), true], [_actionCreators2.default.fortify(0, 1, 1), false], [_actionCreators2.default.fortify(1, 0, 1), false]];
   actions.forEach(function (_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
@@ -60,7 +60,7 @@ test('guard checks capture parameters', function () {
 });
 
 test('reduce updates state', function () {
-  var transition = new _Fortify2.default(matchConfig, matchExtendedState, _constants.ACTIONS.FORTIFY);
+  var transition = (0, _Fortify2.default)(matchConfig, matchExtendedState, _constants.ACTIONS.FORTIFY);
   var armiesToMove = 3;
   var from = 1;
   var to = 2;

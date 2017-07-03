@@ -4,15 +4,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (matchConfig, extendedState, action) {
+/**
+ * You may stop attacking opponent's territories at anytime.
+ */
+exports.default = function () {
   return {
-    action: action,
-    guard: function guard(_ref) {
-      var type = _ref.type;
-      return type === action;
+    guard: function guard() {
+      return true;
     },
-    reduce: function reduce() {
-      return extendedState;
-    }
+    reduce: function reduce() {}
   };
 };

@@ -4,22 +4,22 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (matchConfig, extendedState, action) {
-  var players = extendedState.players;
-
-
+/**
+ * Select player to take first move, similarly to each player rolling
+ * a die to determine the first player at the beginning the game.
+ */
+exports.default = function (matchConfig, _ref) {
+  var players = _ref.players;
   return {
-    action: action,
-    guard: function guard(_ref) {
-      var type = _ref.type,
-          firstPlayerIndex = _ref.firstPlayerIndex;
-      return type === action && Number.isInteger(firstPlayerIndex) && firstPlayerIndex >= 0 && firstPlayerIndex < players.length;
-    },
-    reduce: function reduce(_ref2) {
+    guard: function guard(_ref2) {
       var firstPlayerIndex = _ref2.firstPlayerIndex;
-      return Object.assign({}, extendedState, {
+      return Number.isInteger(firstPlayerIndex) && firstPlayerIndex >= 0 && firstPlayerIndex < players.length;
+    },
+    reduce: function reduce(_ref3) {
+      var firstPlayerIndex = _ref3.firstPlayerIndex;
+      return {
         currentPlayerIndex: firstPlayerIndex
-      });
+      };
     }
   };
 };

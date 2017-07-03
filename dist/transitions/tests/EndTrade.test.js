@@ -51,15 +51,15 @@ var matchExtendedState = {
 };
 
 test('guard checks card count', function () {
-  var transition = new _EndTrade2.default(matchConfig, matchExtendedState, _constants.ACTIONS.END_TRADE);
+  var transition = (0, _EndTrade2.default)(matchConfig, matchExtendedState, _constants.ACTIONS.END_TRADE);
   var action = _actionCreators2.default.endTrade();
   (0, _expect2.default)(transition.guard(action)).toEqual(false);
 });
 
 test('reduce updates state', function () {
-  var transition = new _EndTrade2.default(matchConfig, matchExtendedState, _constants.ACTIONS.END_TRADE);
+  var transition = (0, _EndTrade2.default)(matchConfig, matchExtendedState, _constants.ACTIONS.END_TRADE);
   var action = _actionCreators2.default.endTrade();
-  var n = transition.reduce(action);
+  var n = Object.assign({}, matchExtendedState, transition.reduce(action));
 
   (0, _expect2.default)(n.stateKey).toBe(_constants.STATES.BATTLING);
 });

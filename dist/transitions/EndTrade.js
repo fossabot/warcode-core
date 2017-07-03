@@ -4,21 +4,18 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (matchConfig, extendedState, action) {
-  var cardOwner = extendedState.cardOwner,
-      currentPlayerIndex = extendedState.currentPlayerIndex;
-
-
+/**
+ * You may end trading as long as you hold four or fewer cards.
+ */
+exports.default = function (matchConfig, _ref) {
+  var cardOwner = _ref.cardOwner,
+      currentPlayerIndex = _ref.currentPlayerIndex;
   return {
-    action: action,
-    guard: function guard(_ref) {
-      var type = _ref.type;
-      return type === action && cardOwner.filter(function (c) {
+    guard: function guard() {
+      return cardOwner.filter(function (c) {
         return c === currentPlayerIndex;
       }).length < 5;
     },
-    reduce: function reduce() {
-      return extendedState;
-    }
+    reduce: function reduce() {}
   };
 };

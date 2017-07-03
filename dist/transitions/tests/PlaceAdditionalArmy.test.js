@@ -44,7 +44,7 @@ var matchExtendedState = {
 
 test('guard validates player and territory', function () {
   var tryValue = function tryValue(territoryIndex) {
-    var transition = new _PlaceAdditionalArmy2.default(matchConfig, matchExtendedState, _constants.ACTIONS.PLACE_ADDITIONAL_ARMY);
+    var transition = (0, _PlaceAdditionalArmy2.default)(matchConfig, matchExtendedState, _constants.ACTIONS.PLACE_ADDITIONAL_ARMY);
     var action = _actionCreators2.default.placeAdditionalArmy(territoryIndex);
     return transition.guard(action);
   };
@@ -59,7 +59,7 @@ test('guard validates player and territory', function () {
 
 test('reduce updates player and territory', function () {
   var territoryIndex = 0;
-  var transition = new _PlaceAdditionalArmy2.default(matchConfig, matchExtendedState, _constants.ACTIONS.PLACE_ADDITIONAL_ARMY);
+  var transition = (0, _PlaceAdditionalArmy2.default)(matchConfig, matchExtendedState, _constants.ACTIONS.PLACE_ADDITIONAL_ARMY);
   var action = _actionCreators2.default.placeAdditionalArmy(territoryIndex);
   var n = transition.reduce(action);
 

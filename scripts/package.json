@@ -1,0 +1,21 @@
+{
+  "name": "warcode-core-docs",
+  "description": "Documentation generator for WarCode-core",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthewspivey/warcode-core.git"
+  },
+  "license": "GPL-3.0",
+  "homepage": "https://matthewspivey.com/warcode-core",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "scripts": {
+    "start": "node ./docs/index.js"
+  },
+  "dependencies": {
+    "documentation": "4.0.0-rc.1",
+    "viz.js": "^1.7.1"
+  }
+}

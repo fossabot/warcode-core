@@ -4,21 +4,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (matchConfig, extendedState) {
-  var cardOwner = extendedState.cardOwner,
-      capturedTerritories = extendedState.capturedTerritories;
-
+exports.default = function (matchConfig, _ref) {
+  var cardOwner = _ref.cardOwner,
+      capturedTerritories = _ref.capturedTerritories;
   return {
-    guard: function guard(_ref) {
-      var type = _ref.type;
-      return (type === _constants.ACTIONS.FORTIFY || type === _constants.ACTIONS.END_TURN) && capturedTerritories > 0 && cardOwner.some(function (owner) {
+    guard: function guard() {
+      return capturedTerritories > 0 && cardOwner.some(function (owner) {
         return owner !== undefined;
       });
     },
-    reduce: function reduce() {
-      return extendedState;
-    }
+    reduce: function reduce() {}
   };
 };
-
-var _constants = require('../constants');

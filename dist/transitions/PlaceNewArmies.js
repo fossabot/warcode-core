@@ -4,36 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (matchConfig, extendedState, action) {
-  var territories = extendedState.territories,
-      players = extendedState.players,
-      currentPlayerIndex = extendedState.currentPlayerIndex;
-
-
-  return {
-    action: action,
-    guard: function guard(_ref) {
-      var type = _ref.type,
-          territoryIndex = _ref.territoryIndex,
-          armies = _ref.armies;
-      return type === action && Number.isInteger(territoryIndex) && territoryIndex >= 0 && territoryIndex < territories.length && territories[territoryIndex].owner === currentPlayerIndex && players[currentPlayerIndex].undeployedArmies >= armies;
-    },
-    reduce: function reduce(_ref2) {
-      var territoryIndex = _ref2.territoryIndex,
-          armies = _ref2.armies;
-      return Object.assign({}, extendedState, {
-        territories: (0, _replaceElements4.default)(extendedState.territories, _defineProperty({}, territoryIndex, {
-          owner: currentPlayerIndex,
-          armies: extendedState.territories[territoryIndex].armies + armies
-        })),
-        players: (0, _replaceElements4.default)(extendedState.players, _defineProperty({}, currentPlayerIndex, {
-          undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies - armies
-        }))
-      });
-    }
-  };
-};
-
 var _replaceElements3 = require('./replaceElements');
 
 var _replaceElements4 = _interopRequireDefault(_replaceElements3);
@@ -46,3 +16,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
  * You must place all new armies earned during the beginning of the turn
  * and from trading cards.and
  */
+exports.default = function (matchConfig, _ref) {
+  var territories = _ref.territories,
+      players = _ref.players,
+      currentPlayerIndex = _ref.currentPlayerIndex;
+  return {
+    guard: function guard(_ref2) {
+      var territoryIndex = _ref2.territoryIndex,
+          armies = _ref2.armies;
+      return Number.isInteger(territoryIndex) && territoryIndex >= 0 && territoryIndex < territories.length && territories[territoryIndex].owner === currentPlayerIndex && players[currentPlayerIndex].undeployedArmies >= armies;
+    },
+    reduce: function reduce(_ref3) {
+      var territoryIndex = _ref3.territoryIndex,
+          armies = _ref3.armies;
+      return {
+        territories: (0, _replaceElements4.default)(territories, _defineProperty({}, territoryIndex, {
+          owner: currentPlayerIndex,
+          armies: territories[territoryIndex].armies + armies
+        })),
+        players: (0, _replaceElements4.default)(players, _defineProperty({}, currentPlayerIndex, {
+          undeployedArmies: players[currentPlayerIndex].undeployedArmies - armies
+        }))
+      };
+    }
+  };
+};

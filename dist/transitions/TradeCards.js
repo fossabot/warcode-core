@@ -4,85 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (_ref, extendedState, action) {
-  var cards = _ref.cards,
-      cardOccupiedTerritoryReward = _ref.cardOccupiedTerritoryReward;
-  var cardOwner = extendedState.cardOwner,
-      territories = extendedState.territories,
-      currentPlayerIndex = extendedState.currentPlayerIndex,
-      tradeCount = extendedState.tradeCount;
-
-
-  return {
-    action: action,
-    guard: function guard(_ref2) {
-      var type = _ref2.type,
-          i = _ref2.i,
-          j = _ref2.j,
-          k = _ref2.k;
-
-      if (type !== action) {
-        return false;
-      }
-      var isValidIndices = function isValidIndices(x) {
-        return x >= 0 && x < cards.length;
-      };
-      var areValidIndices = isValidIndices(i) && isValidIndices(j) && isValidIndices(k);
-      var areUniqueCards = i !== j && j !== k && i !== k;
-      var isOwner = cardOwner[i] === currentPlayerIndex && cardOwner[j] === currentPlayerIndex && cardOwner[k] === currentPlayerIndex;
-      if (!areValidIndices || !areUniqueCards || !isOwner) {
-        return false;
-      }
-      var isWild = function isWild(index) {
-        return cards[index][1] === null;
-      };
-      var containsWildCard = isWild(i) || isWild(j) || isWild(k);
-      var a = cards[i][0];
-      var b = cards[j][0];
-      var c = cards[k][0];
-      var isSameType = a === b && b === c;
-      var areDifferentTypes = a !== b && a !== c && b !== c;
-      return isSameType || areDifferentTypes || containsWildCard;
-    },
-    reduce: function reduce(_ref3) {
-      var _replaceElements2;
-
-      var i = _ref3.i,
-          j = _ref3.j,
-          k = _ref3.k;
-
-      var count = tradeCount + 1;
-      var tradeAward = count <= 5 ? (count + 1) * 2 : (count - 3) * 5;
-
-      var territoryUpdate = function () {
-        if (cards[i][1] === undefined || cards[i][1] < 0) {
-          return {};
-        }
-
-        var firstCardTerritoryIndex = cards[i][1];
-        if (territories[firstCardTerritoryIndex].owner !== currentPlayerIndex) {
-          return {};
-        }
-
-        var card = extendedState.territories[firstCardTerritoryIndex];
-        return _defineProperty({}, firstCardTerritoryIndex, {
-          owner: card.owner,
-          armies: card.armies + cardOccupiedTerritoryReward
-        });
-      }();
-
-      return Object.assign({}, extendedState, {
-        tradeCount: count,
-        players: (0, _replaceElements4.default)(extendedState.players, _defineProperty({}, currentPlayerIndex, {
-          undeployedArmies: extendedState.players[currentPlayerIndex].undeployedArmies + tradeAward
-        })),
-        cardOwner: (0, _replaceElements4.default)(extendedState.cardOwner, (_replaceElements2 = {}, _defineProperty(_replaceElements2, i, null), _defineProperty(_replaceElements2, j, null), _defineProperty(_replaceElements2, k, null), _replaceElements2)),
-        territories: (0, _replaceElements4.default)(extendedState.territories, territoryUpdate)
-      });
-    }
-  };
-};
-
 var _replaceElements3 = require('./replaceElements');
 
 var _replaceElements4 = _interopRequireDefault(_replaceElements3);
@@ -117,3 +38,75 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
  *   cards[i].type != cards[k].type AND cards[j].type != cards[k].type
  * * one is wild: cards[i].type == WILD OR cards[j].type == WILD OR cards[k].type == WILD
  */
+exports.default = function (_ref, _ref2) {
+  var cards = _ref.cards,
+      cardOccupiedTerritoryReward = _ref.cardOccupiedTerritoryReward;
+  var cardOwner = _ref2.cardOwner,
+      territories = _ref2.territories,
+      currentPlayerIndex = _ref2.currentPlayerIndex,
+      players = _ref2.players,
+      tradeCount = _ref2.tradeCount;
+  return {
+    guard: function guard(_ref3) {
+      var i = _ref3.i,
+          j = _ref3.j,
+          k = _ref3.k;
+
+      var isValidIndices = function isValidIndices(x) {
+        return x >= 0 && x < cards.length;
+      };
+      var areValidIndices = isValidIndices(i) && isValidIndices(j) && isValidIndices(k);
+      var areUniqueCards = i !== j && j !== k && i !== k;
+      var isOwner = cardOwner[i] === currentPlayerIndex && cardOwner[j] === currentPlayerIndex && cardOwner[k] === currentPlayerIndex;
+      if (!areValidIndices || !areUniqueCards || !isOwner) {
+        return false;
+      }
+      var isWild = function isWild(index) {
+        return cards[index][1] === null;
+      };
+      var containsWildCard = isWild(i) || isWild(j) || isWild(k);
+      var a = cards[i][0];
+      var b = cards[j][0];
+      var c = cards[k][0];
+      var isSameType = a === b && b === c;
+      var areDifferentTypes = a !== b && a !== c && b !== c;
+      return isSameType || areDifferentTypes || containsWildCard;
+    },
+    reduce: function reduce(_ref4) {
+      var _replaceElements2;
+
+      var i = _ref4.i,
+          j = _ref4.j,
+          k = _ref4.k;
+
+      var count = tradeCount + 1;
+      var tradeAward = count <= 5 ? (count + 1) * 2 : (count - 3) * 5;
+
+      var territoryUpdate = function () {
+        if (cards[i][1] === undefined || cards[i][1] < 0) {
+          return {};
+        }
+
+        var firstCardTerritoryIndex = cards[i][1];
+        if (territories[firstCardTerritoryIndex].owner !== currentPlayerIndex) {
+          return {};
+        }
+
+        var card = territories[firstCardTerritoryIndex];
+        return _defineProperty({}, firstCardTerritoryIndex, {
+          owner: card.owner,
+          armies: card.armies + cardOccupiedTerritoryReward
+        });
+      }();
+
+      return {
+        tradeCount: count,
+        players: (0, _replaceElements4.default)(players, _defineProperty({}, currentPlayerIndex, {
+          undeployedArmies: players[currentPlayerIndex].undeployedArmies + tradeAward
+        })),
+        cardOwner: (0, _replaceElements4.default)(cardOwner, (_replaceElements2 = {}, _defineProperty(_replaceElements2, i, null), _defineProperty(_replaceElements2, j, null), _defineProperty(_replaceElements2, k, null), _replaceElements2)),
+        territories: (0, _replaceElements4.default)(territories, territoryUpdate)
+      };
+    }
+  };
+};

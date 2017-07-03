@@ -4,11 +4,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _ = require('../');
 
-var _2 = _interopRequireDefault(_);
-
 var _constants = require('../../constants');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -17,12 +13,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 // import parseMatchConfig from '../../MatchConfig';
 
 // array contiain unqiue entries for each unique state and pseudostate value in game
-var stateKeys = Array.from(new Set([].concat(_toConsumableArray(_2.default.map(function (_ref) {
+var stateKeys = Array.from(new Set([].concat(_toConsumableArray(_.transitions.map(function (_ref) {
   var _ref2 = _slicedToArray(_ref, 1),
       from = _ref2[0];
 
   return from;
-})), _toConsumableArray(_2.default.map(function (_ref3) {
+})), _toConsumableArray(_.transitions.map(function (_ref3) {
   var _ref4 = _slicedToArray(_ref3, 2),
       to = _ref4[1];
 
@@ -38,7 +34,7 @@ test('transition states are valid and cover all states', function () {
 });
 
 test('single initial state for state machine', function () {
-  var stateHasInbound = new Set(_2.default.map(function (_ref5) {
+  var stateHasInbound = new Set(_.transitions.map(function (_ref5) {
     var _ref6 = _slicedToArray(_ref5, 2),
         to = _ref6[1];
 
@@ -52,7 +48,7 @@ test('single initial state for state machine', function () {
 
 test('single final state', function () {
   // final states no outbound transitions
-  var statesWithOutbound = new Set(_2.default.map(function (_ref7) {
+  var statesWithOutbound = new Set(_.transitions.map(function (_ref7) {
     var _ref8 = _slicedToArray(_ref7, 1),
         from = _ref8[0];
 
@@ -64,7 +60,7 @@ test('single final state', function () {
 
 test('actions are string or optional', function () {
   var actions = Object.values(_constants.ACTIONS);
-  _2.default.forEach(function (_ref9) {
+  _.transitions.forEach(function (_ref9) {
     var _ref10 = _slicedToArray(_ref9, 4),
         action = _ref10[3];
 
@@ -83,3 +79,5 @@ test('actions are string or optional', function () {
 //
 //   expect(elseTransitionDesitinations.length).toEqual(new Set(elseTransitionDesitinations).size);
 // });
+
+// TODO test getTransition

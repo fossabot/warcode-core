@@ -4,11 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (matchConfig, extendedState) {
+exports.default = function () {
   return {
     guard: undefined,
-    reduce: function reduce() {
-      return extendedState;
-    }
+    reduce: function reduce() {}
   };
 };

@@ -28,7 +28,7 @@ var matchExtendedState = {
 
 test('guard validates player count', function () {
   var tryValue = function tryValue(playerCount) {
-    var transition = new _StartMatch2.default(matchConfig, matchExtendedState, _constants.ACTIONS.START_MATCH);
+    var transition = (0, _StartMatch2.default)(matchConfig, matchExtendedState, _constants.ACTIONS.START_MATCH);
     var action = _actionCreators2.default.startMatch(playerCount);
     return transition.guard(action);
   };

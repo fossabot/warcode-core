@@ -48,7 +48,7 @@ var matchExtendedState = {
 };
 
 test('guard checks player and territory', function () {
-  var transition = new _Battle2.default(matchConfig, matchExtendedState, _constants.ACTIONS.BATTLE);
+  var transition = (0, _Battle2.default)(matchConfig, matchExtendedState, _constants.ACTIONS.BATTLE);
 
   [[_actionCreators2.default.battle(1, 0, 3), true], [_actionCreators2.default.battle(1, 0, 4), false], [_actionCreators2.default.battle(0, 1, 3), false], [_actionCreators2.default.battle(1, 2, 0), false], [_actionCreators2.default.battle(1, 2, 1), true], [_actionCreators2.default.battle(1, 2, 2), true], [_actionCreators2.default.battle(1, 2, 3), true], [_actionCreators2.default.battle(1, 2, 4), false]].forEach(function (_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
@@ -63,9 +63,9 @@ test('reduce updates state', function () {
   var attackingTerritoryIndex = 1;
   var defendingTerritoryIndex = 0;
   var attackingDiceCount = 3;
-  var transition = new _Battle2.default(matchConfig, matchExtendedState, _constants.ACTIONS.BATTLE);
+  var transition = (0, _Battle2.default)(matchConfig, matchExtendedState, _constants.ACTIONS.BATTLE);
   var action = _actionCreators2.default.battle(attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount);
-  var n = transition.reduce(action);
+  var n = Object.assign({}, matchExtendedState, transition.reduce(action));
 
   (0, _expect2.default)(n.activeBattle).toExist().toInclude({ attackingTerritoryIndex: attackingTerritoryIndex, defendingTerritoryIndex: defendingTerritoryIndex, attackingDiceCount: attackingDiceCount });
   (0, _expect2.default)(n.territories[attackingTerritoryIndex]).toInclude(matchExtendedState.territories[attackingTerritoryIndex]);

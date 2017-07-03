@@ -4,15 +4,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (matchConfig, extendedState, action) {
+/**
+
+ * You end the turn, ending fortification.
+ */
+exports.default = function () {
   return {
-    action: action,
-    guard: function guard(_ref) {
-      var type = _ref.type;
-      return type === action;
+    guard: function guard() {
+      return true;
     },
-    reduce: function reduce() {
-      return extendedState;
-    }
+    reduce: function reduce() {}
   };
 };

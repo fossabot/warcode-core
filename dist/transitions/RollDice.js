@@ -4,50 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (matchConfig, extendedState, action) {
-  var territories = extendedState.territories,
-      activeBattle = extendedState.activeBattle;
-
-
-  return {
-    action: action,
-    guard: function guard(_ref) {
-      var type = _ref.type,
-          attackerDice = _ref.attackerDice,
-          defenderDice = _ref.defenderDice;
-      return type === action && !!activeBattle && Array.isArray(attackerDice) && attackerDice.length === activeBattle.attackingDiceCount && attackerDice.every(function (d) {
-        return d >= 1 && d <= 6;
-      }) && Array.isArray(defenderDice) && defenderDice.length >= 1 && defenderDice.length <= Math.min(2, territories[activeBattle.defendingTerritoryIndex].armies) && defenderDice.every(function (d) {
-        return d >= 1 && d <= 6;
-      });
-    },
-    reduce: function reduce(_ref2) {
-      var _replaceElements;
-
-      var attackerDice = _ref2.attackerDice,
-          defenderDice = _ref2.defenderDice;
-
-      if (!activeBattle) {
-        return extendedState;
-      }
-
-      var attackingTerritoryIndex = activeBattle.attackingTerritoryIndex;
-      var defendingTerritoryIndex = activeBattle.defendingTerritoryIndex;
-      var loses = getLoses(attackerDice, defenderDice);
-
-      return Object.assign({}, extendedState, {
-        territories: (0, _replaceElements3.default)(extendedState.territories, (_replaceElements = {}, _defineProperty(_replaceElements, attackingTerritoryIndex, {
-          owner: extendedState.territories[attackingTerritoryIndex].owner,
-          armies: extendedState.territories[attackingTerritoryIndex].armies - loses.attacker
-        }), _defineProperty(_replaceElements, defendingTerritoryIndex, {
-          owner: extendedState.territories[defendingTerritoryIndex].owner,
-          armies: extendedState.territories[defendingTerritoryIndex].armies - loses.defender
-        }), _replaceElements))
-      });
-    }
-  };
-};
-
 var _replaceElements2 = require('./replaceElements');
 
 var _replaceElements3 = _interopRequireDefault(_replaceElements2);
@@ -77,7 +33,7 @@ var getLoses = function getLoses(attackerDice, defenderDice) {
 };
 
 /**
- * Simulate players rolling dice.
+ * Simulate player rolling dice.
  *
  * The attacker and defender may loose armies based on the random outcome of the
  * dice rolled. Compare the highest die rolled by the attacker and defender -
@@ -91,3 +47,43 @@ var getLoses = function getLoses(attackerDice, defenderDice) {
  * territory contains a single army. When the territory contains multiple
  * armies, the defender may roll either one or two dice.
  */
+
+exports.default = function (matchConfig, _ref) {
+  var territories = _ref.territories,
+      activeBattle = _ref.activeBattle;
+  return {
+    guard: function guard(_ref2) {
+      var attackerDice = _ref2.attackerDice,
+          defenderDice = _ref2.defenderDice;
+      return !!activeBattle && Array.isArray(attackerDice) && attackerDice.length === activeBattle.attackingDiceCount && attackerDice.every(function (d) {
+        return d >= 1 && d <= 6;
+      }) && Array.isArray(defenderDice) && defenderDice.length >= 1 && defenderDice.length <= Math.min(2, territories[activeBattle.defendingTerritoryIndex].armies) && defenderDice.every(function (d) {
+        return d >= 1 && d <= 6;
+      });
+    },
+    reduce: function reduce(_ref3) {
+      var _replaceElements;
+
+      var attackerDice = _ref3.attackerDice,
+          defenderDice = _ref3.defenderDice;
+
+      if (!activeBattle) {
+        return {};
+      }
+
+      var attackingTerritoryIndex = activeBattle.attackingTerritoryIndex;
+      var defendingTerritoryIndex = activeBattle.defendingTerritoryIndex;
+      var loses = getLoses(attackerDice, defenderDice);
+
+      return {
+        territories: (0, _replaceElements3.default)(territories, (_replaceElements = {}, _defineProperty(_replaceElements, attackingTerritoryIndex, {
+          owner: territories[attackingTerritoryIndex].owner,
+          armies: territories[attackingTerritoryIndex].armies - loses.attacker
+        }), _defineProperty(_replaceElements, defendingTerritoryIndex, {
+          owner: territories[defendingTerritoryIndex].owner,
+          armies: territories[defendingTerritoryIndex].armies - loses.defender
+        }), _replaceElements))
+      };
+    }
+  };
+};

@@ -4,21 +4,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (matchConfig, extendedState) {
-  var territories = extendedState.territories;
-
-
+exports.default = function (matchConfig, _ref) {
+  var territories = _ref.territories;
   return {
-    guard: function guard(_ref) {
-      var type = _ref.type;
-      return (type === _constants.ACTIONS.SELECT_FIRST_PLAYER || _constants.ACTIONS.OCCUPY_TERRITORY) && territories.some(function (t) {
+    guard: function guard() {
+      return territories.some(function (t) {
         return t.armies === 0;
       });
     },
-    reduce: function reduce() {
-      return extendedState;
-    }
+    reduce: function reduce() {}
   };
 };
-
-var _constants = require('../constants');

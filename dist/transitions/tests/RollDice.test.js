@@ -53,7 +53,7 @@ var matchExtendedState = {
 };
 
 test('guard checks player and territory', function () {
-  var transition = new _RollDice2.default(matchConfig, matchExtendedState, _constants.ACTIONS.ROLL_DICE);
+  var transition = (0, _RollDice2.default)(matchConfig, matchExtendedState, _constants.ACTIONS.ROLL_DICE);
   var actions = [[_actionCreators2.default.rollDice([1, 2, 3], [1]), true], [_actionCreators2.default.rollDice([1, 2, 3], [1, 2]), true], [_actionCreators2.default.rollDice([0, 2, 3], [1, 2]), false], [_actionCreators2.default.rollDice([1, 2, 7], [1, 2]), false], [_actionCreators2.default.rollDice([1, 2, 3], [0, 2]), false], [_actionCreators2.default.rollDice([1, 2, 3], [1, 7]), false], [_actionCreators2.default.rollDice([1, 2, 3], [1, 2, 3]), false], [_actionCreators2.default.rollDice([1, 2, 3, 4], [1, 2]), false], [_actionCreators2.default.rollDice([1, 2], [1, 2]), false]];
   actions.forEach(function (_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
@@ -69,9 +69,9 @@ test('reduce updates state', function () {
       attackingTerritoryIndex = _matchExtendedState$a.attackingTerritoryIndex,
       defendingTerritoryIndex = _matchExtendedState$a.defendingTerritoryIndex;
 
-  var transition = new _RollDice2.default(matchConfig, matchExtendedState, _constants.ACTIONS.ROLL_DICE);
+  var transition = (0, _RollDice2.default)(matchConfig, matchExtendedState, _constants.ACTIONS.ROLL_DICE);
   var action = _actionCreators2.default.rollDice([1, 3, 4], [2, 4]);
-  var n = transition.reduce(action);
+  var n = Object.assign({}, matchExtendedState, transition.reduce(action));
   var attackingArmies = matchExtendedState.territories[attackingTerritoryIndex].armies;
   var defendingArmies = matchExtendedState.territories[defendingTerritoryIndex].armies;
 
