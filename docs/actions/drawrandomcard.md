@@ -2,7 +2,7 @@
 
 # DrawRandomCard
 Select "random" card for player to draw from the deck.
-![DrawRandomCard state diagram](actions/drawrandomcard.svg)
+![DrawRandomCard state diagram](drawrandomcard.svg)
   
 
 ## Action Object Format

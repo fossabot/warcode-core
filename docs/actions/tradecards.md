@@ -2,7 +2,7 @@
 
 # TradeCards
 Select three cards to trade for armies.
-![TradeCards state diagram](actions/tradecards.svg)
+![TradeCards state diagram](tradecards.svg)
   
 
 ## Action Object Format

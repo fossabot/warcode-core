@@ -2,7 +2,7 @@
 
 # RollDice
 Simulate attacker and defender rolling dice.
-![RollDice state diagram](actions/rolldice.svg)
+![RollDice state diagram](rolldice.svg)
   
 
 ## Action Object Format

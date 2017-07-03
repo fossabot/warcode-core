@@ -2,7 +2,7 @@
 
 # OccupyTerritory
 Select territory to occupy.
-![OccupyTerritory state diagram](actions/occupyterritory.svg)
+![OccupyTerritory state diagram](occupyterritory.svg)
   
 
 ## Action Object Format
