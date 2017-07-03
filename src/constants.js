@@ -3,7 +3,7 @@ export const ACTIONS = Object.freeze({
   START_MATCH: 'StartMatch',
   SELECT_FIRST_PLAYER: 'SelectFirstPlayer',
   OCCUPY_TERRITORY: 'OccupyTerritory',
-  PLACE_ADDITIONAL_ARMY: 'PlaceAddtionalArmy',
+  PLACE_ADDITIONAL_ARMY: 'PlaceAdditionalArmy',
   TRADE_CARDS: 'TradeCards',
   END_TRADE: 'EndTrade',
   PLACE_NEW_ARMIES: 'PlaceNewArmies',

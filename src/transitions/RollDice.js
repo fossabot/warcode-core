@@ -19,7 +19,7 @@ const getLoses = (attackerDice: number[], defenderDice: number[]) => {
 };
 
 /**
- * Simulate players rolling dice.
+ * Simulate player rolling dice.
  *
  * The attacker and defender may loose armies based on the random outcome of the
  * dice rolled. Compare the highest die rolled by the attacker and defender -
