@@ -1,8 +1,10 @@
-# warcode-core
+# WarCode Core
 
 [![Build Status](https://travis-ci.org/matthewspivey/warcode-core.svg?branch=master)](https://travis-ci.org/matthewspivey/warcode-core)
 [![Code Climate](https://codeclimate.com/github/matthewspivey/warcode-core/badges/gpa.svg)](https://codeclimate.com/github/matthewspivey/warcode-core)
 [![Test Coverage](https://codeclimate.com/github/matthewspivey/warcode-core/badges/coverage.svg)](https://codeclimate.com/github/matthewspivey/warcode-core/coverage)
+
+![Documentation](http://matthewspivey.com/warcode-core/)
 
 Game state manager for WarCode. You can use it to easily build standalone
 browser games, bots, history analyzers, and multiplayer game services.
@@ -20,7 +22,3 @@ All player actions are captured as simple, serializable objects. This allows
 implementations to easily communicate over a message bus or websocket. It allows
 us to implement the event sourcing pattern, meaning we can reliably recreate the
 game state from player actions.
-
-## Learn more
-* [Gameplay](./docs/mechanics.md) - gameplay diagram and documentation
-* [Documentation for action creators](./docs/action-creators.md) - API docs for action creators

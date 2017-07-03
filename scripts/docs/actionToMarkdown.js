@@ -2,7 +2,9 @@ const appendDescriptions = (description) => {
   const descriptionParagraphs = [];
   description.children.forEach(c1 => {
     c1.children.forEach(c2 => {
-      descriptionParagraphs.push(c2.value.replace(/(\r\n|\n|\r\w)/gm,''));
+      descriptionParagraphs.push(c2.value
+        .replace(/(\r\n|\n|\r\w)/gm,' ')
+        .replace(/\s\s+/g, ' '));
     });
   });
 
@@ -13,6 +15,7 @@ const docAction = (name, { description }, diagramURL) => {
   return `
 # ${name}
 ${appendDescriptions(description)}
+
 ![${name} state diagram](${diagramURL})
   `;
 };
@@ -48,7 +51,9 @@ ${description.split('\n').map(l => l.trim()).join('\n')}
   `).join('\n');
 
   return `
-## Action creator: \`${name}(${paramSignature})\`
+## Action creator
+\`${name}(${paramSignature})\`
+
 ${example}
   `;
 };
