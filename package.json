@@ -15,7 +15,7 @@
   "version": "0.0.2",
   "scripts": {
     "build": "./node_modules/babel-cli/bin/babel.js src --out-dir dist",
-    "document": "node ./scripts/docs/index.js",
+    "document": "./node_modules/babel-cli/bin/babel-node.js scripts/docs/index.js",
     "test": "./node_modules/jest-cli/bin/jest.js",
     "eslint": "./node_modules/eslint/bin/eslint.js src",
     "flow": "./node_modules/.bin/flow; test $? -eq 0 -o $? -eq 2",

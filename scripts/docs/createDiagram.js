@@ -1,6 +1,6 @@
 const Viz = require('viz.js');
-const { transitions } = require('../../dist/transitions');
-const { ACTIONS, STATES,  PSEUDOSTATES } = require('../../dist/constants');
+const { transitions } = require('../../src/transitions');
+const { ACTIONS, STATES,  PSEUDOSTATES } = require('../../src/constants');
 
 process.setMaxListeners(0);
 
@@ -15,13 +15,8 @@ transitions.forEach(([from, to,, action]) => {
 });
 
 const states = new Set(Object.values(STATES));
-const actionToState = {};
-transitions
-  .filter(([from,,, action]) => !!action)
-  .forEach(([from, to, t, action]) => actionToState[action] = from);
 
-const traverse = action => {
-  const state = actionToState[action];
+const traverse = state => {
   const seen = new Set();
   const seenStates = new Set();
   const queue = [];

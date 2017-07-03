@@ -80,7 +80,19 @@ ${example}
   `;
 };
 
-module.exports = (actionName, doc, diagramURL) => `
+// Displays guard function. Disabled due to ugly transpiled version.
+// const docActionGuard = t => {
+//   const f = t({}, {}).guard.toString();
+//   const guardBlock = f.slice(f.indexOf('{') + 1, f.lastIndexOf('}'));
+//   return `
+// ## Guard
+// \`\`\`javascript
+// ${guardBlock}
+// \`\`\`
+//   `;
+// };
+
+module.exports = (actionName, doc, t, diagramURL) => `
 ${docAction(actionName, doc, diagramURL)}
 ${docActionFormat(actionName, doc)}
 ${docActionCreator(doc)}
