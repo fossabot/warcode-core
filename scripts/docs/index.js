@@ -6,8 +6,8 @@ const { createCompleteDiagram, diagramState } = require('./createDiagram');
 const { ACTIONS, STATES, PSEUDOSTATES } = require('../../dist/constants');
 const { transitions } = require ('../../dist/transitions/');
 
-const actionCreatorsFilename = '../src/actionCreators.js';
-const outDirectory = '../docs';
+const actionCreatorsFilename = 'src/actionCreators.js';
+const outDirectory = 'docs';
 const indexFilename = `${outDirectory}/index.md`;
 const stateDiagramFilename = `${outDirectory}/state-machine.svg`;
 const stateDiagramURL = 'state-machine.svg';
