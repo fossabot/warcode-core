@@ -4,8 +4,6 @@
 [![Code Climate](https://codeclimate.com/github/matthewspivey/warcode-core/badges/gpa.svg)](https://codeclimate.com/github/matthewspivey/warcode-core)
 [![Test Coverage](https://codeclimate.com/github/matthewspivey/warcode-core/badges/coverage.svg)](https://codeclimate.com/github/matthewspivey/warcode-core/coverage)
 
-[Documentation](http://matthewspivey.com/warcode-core/)
-
 Game state manager for WarCode. You can use it to easily build standalone
 browser games, bots, history analyzers, and multiplayer game services.
 To accomplish this, it
