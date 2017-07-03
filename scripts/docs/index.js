@@ -9,10 +9,10 @@ const { transitions } = require ('../../dist/transitions/');
 // TODO - document to gh-pages branch in version numbered directory
 
 const actionCreatorsFilename = '../src/actionCreators.js';
-const outDirectory = '../out';
+const outDirectory = '../docs';
 const indexFilename = `${outDirectory}/index.md`;
 const stateDiagramFilename = `${outDirectory}/state-machine.svg`;
-const stateDiagramURL = `state-machine.svg`;
+const stateDiagramURL = 'state-machine.svg';
 const actionsDir = `${outDirectory}/actions`;
 
 if (!fs.existsSync(outDirectory)) fs.mkdirSync(outDirectory);
