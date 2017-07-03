@@ -28,7 +28,7 @@ documentation.build(actionCreatorsFilename, { extension: 'es6' })
       markdownFilename: `${actionsDir}/${name.toLowerCase()}.md`,
       markdownURL: `actions/${name.toLowerCase()}.html`,
       diagramFilename: `${actionsDir}/${name.toLowerCase()}.svg`,
-      diagramURL: `actions/${name.toLowerCase()}.svg`,
+      diagramURL: `${name.toLowerCase()}.svg`,
     }));
 
     actions.forEach(({ doc, markdownFilename, name, diagramURL }) => {
