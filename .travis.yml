@@ -18,7 +18,8 @@ deploy:
 - provider: releases
   api_key:
     secure: t2zgiU9/3btp+axNH6gcr/J9jG4bK67Y4d/dW+q+U+piim7ojM8SGnl4fdoaSDRjYXuxuis+Ye0g1nyPQV29N+0vFEKS0gxZw1TApCqD72BU/+MBt5O82/BsQvQkqCgUwEdy1t0YKKJn5tIBRpqfpqHSQu9V6YRkh2UVlx4ZN2azschCZUd/oOnxh/xLcQtNreZyRpbeZ4T08eoENotFC301jdI9Y3rOxC2wW3GxzIEzJV/Pn5I8LH0ULe86qByCuwf0BMXqKZ4Qb7hGZZR2EYvR7znAcmz6rakMTRMLWUJK/mToNrHkX1mTqxyTYFCQZrt2LO+ezhu078m72yPN+ao2dgMpnwwgs46Z0/pVrbnBf73Z2BcpCDgXOk6zHBdAMZ4EG+F/Tl9rledt5p3Qs/dnvVSPB7zZvf1RlPGJZ8kX0s5/huPUs6goY8lCt1LXqXRPv9FD+J956eVO5pdqw9eIT3RI6VBi8+PSbhiYoCGK0JfwzYzaaHt1CGwRXYJdcr1NJbf6UpgoVLpeurMBBs4pf7WRO2juF1xd3by9Yzz5AiUhjpmucXHYJ0Uf9MISJEdI7Z73gm2PehC+xler1VwvhKgfAxFwl7CJhH/2aO+7tzeEa3rX8ldwd2swEA1J7QLR/Qmq3G2Gucl7ri+Oj6sC6tmOiMpgCdNkiHswFcs=
-  file: warcode-core.min.js
+  file: dist/warcode-core.min.js
+  skip_cleanup: true
   on:
     repo: matthewspivey/warcode-core
     tags: true
