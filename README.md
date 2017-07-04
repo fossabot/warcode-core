@@ -13,4 +13,4 @@ Notable characteristics
 * 🎲 caller controls randomness of dice and cards
 * λ functional JavaScript using an immutable data structure
 
-It borrows from both [event sourcing](https://martinfowler.com/eaaDev/EventSourcing.html)  and [State-Action-Model](http://sam.js.org/) patterns. It captures player actions and returns the state of the game as a single data structure.
+It borrows from both the [event sourcing](https://martinfowler.com/eaaDev/EventSourcing.html)  and [State-Action-Model](http://sam.js.org/) patterns. It captures player actions and returns the state of the game as a single data structure.
