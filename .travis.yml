@@ -8,6 +8,7 @@ script:
 - npm run build
 - npm run test
 - npm run document
+- cp package.json dist/
 addons:
   code_climate:
     repo_token: c9d8a61877ca13e5985385d4f84d906fdb7638920ec9d0cfc624fa6312f9f1aa
