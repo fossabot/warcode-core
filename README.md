@@ -12,4 +12,4 @@ Core package used by Risk browser games, bots, and multiplayer game services.
 * _Small_ ~6 KB gzipped
 
 Send it the curreng game state and a player's move, and it returns the updated game state. 
-Game rules are modeled as a state diagram. Its design borrows from both the [event sourcing](https://martinfowler.com/eaaDev/EventSourcing.html)  and [State-Action-Model](http://sam.js.org/) patterns. 
+Game rules are modeled as a state diagram ([docs](http://matthewspivey.com/warcode-core/)). Its design borrows from both the [event sourcing](https://martinfowler.com/eaaDev/EventSourcing.html)  and [State-Action-Model](http://sam.js.org/) patterns. 
