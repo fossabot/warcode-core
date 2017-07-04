@@ -1,5 +1,5 @@
 const { ACTIONS, STATES, PSEUDOSTATES } = require('../src/constants');
-import traditionalConfig from '../data/traditional.json';
+const fs = require('fs');
 
 const toRow = ({ name, markdownURL, doc }) => {
   const summary = !doc.summary ? '' : doc.summary.children[0].children[0].value.replace(/(\r\n|\n|\r\w)/gm, ' ').replace(/\s\s+/g, ' ');
@@ -8,7 +8,6 @@ const toRow = ({ name, markdownURL, doc }) => {
 };
 
 module.exports = (actions, stateDiagramURL) => `
-
 ## Gameplay State machine
 
 Gameplay includes many phases. These are illustrated in the following state diagram.
@@ -37,6 +36,6 @@ pseudostate.
 To setup a game match, we need some configuration to define game board and cards.
 
 \`\`\` javascript
-${traditionalConfig}
+${fs.readFileSync('data/traditional.json', 'utf-8')}
 \`\`\`
   `;

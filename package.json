@@ -4,6 +4,7 @@
   "main": "./dist/index.js",
   "author": "Matt Spivey <spivey.matthew@gmail.com>",
   "license": "GPL-3.0",
+  "main": "warcode-core.min.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/matthewspivey/warcode-core.git"
