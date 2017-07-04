@@ -15,7 +15,7 @@ const stateDiagramURL = 'state-machine.svg';
 
 const configYml = `# GitHub Pages config
 theme: jekyll-theme-cayman
-title: WarCode
+title: WarCode Core
 `;
 
 if (!fs.existsSync('dist')) fs.mkdirSync('dist');
