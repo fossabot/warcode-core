@@ -4,6 +4,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     filename: 'warcode-core.min.js',
+    libraryTarget: 'umd',
     path: path.resolve(__dirname, 'dist')
   },
   module: {
