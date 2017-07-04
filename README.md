@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/matthewspivey/warcode-core.svg?branch=master)](https://travis-ci.org/matthewspivey/warcode-core)
 [![Code Climate](https://codeclimate.com/github/matthewspivey/warcode-core/badges/gpa.svg)](https://codeclimate.com/github/matthewspivey/warcode-core)
 [![Test Coverage](https://codeclimate.com/github/matthewspivey/warcode-core/badges/coverage.svg)](https://codeclimate.com/github/matthewspivey/warcode-core/coverage)
+[![Dependency Status](https://gemnasium.com/badges/github.com/matthewspivey/warcode-core.svg)](https://gemnasium.com/github.com/matthewspivey/warcode-core)
 
 JavaScript rules engine for WarCode apps.
 
@@ -10,7 +11,7 @@ It is being used for standalone browser games, bots, and multiplayer game servic
 
 Notable characteristics
 * ♿ ES5 - transpiled code works in old browser and Node versions
-* 🚫 small package with no runtime dependencies
+* 🚫 small package
 * 🎲 caller controls randomness of dice and cards
 * λ functional JavaScript operating on an immutable data structure
 
