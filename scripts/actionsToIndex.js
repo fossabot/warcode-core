@@ -9,7 +9,7 @@ npm init
 npm install --save matthewspivey/warcode-core#gh-pages
 \`\`\`
 
-#### index.js
+#### Create an index.js file
 \`\`\` javascript
 const { actionCreators, reduce } = require('warcode-core');
 
@@ -21,7 +21,7 @@ state = reduce(state, actionCreators.selectFirstPlayer(0));
 console.log(state.stateKey);
 \`\`\`
 
-#### Run the filew
+#### Run it
 \`\`\` shell
 node index.js
 \`\`\`
@@ -44,7 +44,7 @@ module.exports = (actions, stateDiagramURL) => `Core package used by Risk browse
 
 ${gettingStared()}
 
-## Gameplay State machine
+## Gameplay State Machine
 
 Gameplay includes many phases. These are illustrated in the following state diagram.
 

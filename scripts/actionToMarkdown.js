@@ -34,8 +34,6 @@ const docAction = (name, { description, summary }, diagramURL) => `
 
 ${appendSummary(summary)}
 
-${appendDescriptions(description)}
-
 ![${name} state diagram](${diagramURL})
   `;
 
@@ -48,8 +46,10 @@ const docActionFormat = (name, { params }) => {
     );
 
   return `
-## Action Object Format
-The ${name} actions must contain the following:
+
+${appendDescriptions(description)}
+
+${name} actions must contain the following:
 
 Field        | Type       | Description
 ------------ | ---------- | -----------
@@ -78,7 +78,7 @@ ${description.split('\n').map(l => l.trim()).join('\n')}
 
   return `
 ## Action creator
-\`${name}(${paramSignature})\`
+\`actionCreators.${name}(${paramSignature})\`
 
 ${example}
   `;
