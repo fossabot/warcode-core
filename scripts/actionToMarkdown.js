@@ -29,7 +29,7 @@ const appendSummary = summary => {
   return `*${summary.children[0].children[0].value}*`;
 };
 
-const docAction = (name, { description, summary }, diagramURL) => `
+const docAction = (name, { summary }, diagramURL) => `
 # ${name}
 
 ${appendSummary(summary)}
@@ -37,7 +37,7 @@ ${appendSummary(summary)}
 ![${name} state diagram](${diagramURL})
   `;
 
-const docActionFormat = (name, { params }) => {
+const docActionFormat = (name, { description, params }) => {
   const rows = params
     .filter(({ title }) => title === 'param')
     .map(
