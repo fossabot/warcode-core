@@ -3,13 +3,13 @@ const fs = require('fs');
 
 const gettingStared = () => `## Getting Started
 
-### Install the package
+#### Install the package
 \`\`\` shell
 npm init
 npm install --save matthewspivey/warcode-core#gh-pages
 \`\`\`
 
-### index.js
+#### index.js
 \`\`\` javascript
 const { actionCreators, reduce } = require('warcode-core');
 
@@ -21,7 +21,7 @@ state = reduce(state, actionCreators.selectFirstPlayer(0));
 console.log(state.stateKey);
 \`\`\`
 
-### Run the filew
+#### Run the filew
 \`\`\` shell
 node index.js
 \`\`\`
@@ -40,7 +40,8 @@ const toRow = ({ name, markdownURL, doc }) => {
   return `| [${name}](${markdownURL}) | ${summary} |`;
 };
 
-module.exports = (actions, stateDiagramURL) => `
+module.exports = (actions, stateDiagramURL) => `Core package used by Risk browser games, bots, and multi-player game services.
+
 ${gettingStared()}
 
 ## Gameplay State machine
