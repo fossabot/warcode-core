@@ -16,7 +16,6 @@ after_success:
 - npm install -g codeclimate-test-reporter
 - codeclimate-test-reporter < coverage/lcov.info
 deploy:
-
 - provider: releases
   api_key:
     secure: t2zgiU9/3btp+axNH6gcr/J9jG4bK67Y4d/dW+q+U+piim7ojM8SGnl4fdoaSDRjYXuxuis+Ye0g1nyPQV29N+0vFEKS0gxZw1TApCqD72BU/+MBt5O82/BsQvQkqCgUwEdy1t0YKKJn5tIBRpqfpqHSQu9V6YRkh2UVlx4ZN2azschCZUd/oOnxh/xLcQtNreZyRpbeZ4T08eoENotFC301jdI9Y3rOxC2wW3GxzIEzJV/Pn5I8LH0ULe86qByCuwf0BMXqKZ4Qb7hGZZR2EYvR7znAcmz6rakMTRMLWUJK/mToNrHkX1mTqxyTYFCQZrt2LO+ezhu078m72yPN+ao2dgMpnwwgs46Z0/pVrbnBf73Z2BcpCDgXOk6zHBdAMZ4EG+F/Tl9rledt5p3Qs/dnvVSPB7zZvf1RlPGJZ8kX0s5/huPUs6goY8lCt1LXqXRPv9FD+J956eVO5pdqw9eIT3RI6VBi8+PSbhiYoCGK0JfwzYzaaHt1CGwRXYJdcr1NJbf6UpgoVLpeurMBBs4pf7WRO2juF1xd3by9Yzz5AiUhjpmucXHYJ0Uf9MISJEdI7Z73gm2PehC+xler1VwvhKgfAxFwl7CJhH/2aO+7tzeEa3rX8ldwd2swEA1J7QLR/Qmq3G2Gucl7ri+Oj6sC6tmOiMpgCdNkiHswFcs=
@@ -33,10 +32,9 @@ deploy:
     branch: master
 - provider: npm
   skip_cleanup: true
-  local_dir: dist
   email: spivey.matthew@gmail.com
   api_key:
     secure: MkBeXv1CxFNZCNH+7yMTM7U0oib3QuTkQSKDWSyjMAjm/sdwoONc1YTs8ABZ1tc6kOTaazItObGCJ7oHv5tzbiWTS3z0je/KJH0R/co577YckaBJP6HY9EqkGpdlbssz9m9ZNmSgigSP+a2kQ2Rxnd7nMog7xipq7UKV2LxJyOtF/vxbpqswZ47UD9wCY6xgU05SI+PfpBlUp8Z9lqDwwQCtzUulYIL04z72tuDwleAMdX8T/FGJrhELGS+98Bs/p7zReb+kaOR0hxqNapDqFmAl7fWFDtoqjuXhvvDm/H7W++ruPZRwu5swJ7HqhTaeQmwfH23+llx17lO5z1S/+wwxz23nXPl8RxPGwmqIXmEhXuiBtKNu4zIk0cWjQ4/V52hTM9bNdJEr9v9jRd9rG6KhphArd0EYiTWOKkv5kbYu40K0LJ9zPZgYyBFjRR7kJY8C4thKe55tRPx/NyrjxqpBIKss1J9LS16W1emP85xGTM9afIcj5mOZinHgKDgj8wImxJoS0XcMkOvz26ERnk4mAD4oNRAuRMyOIARNzlzs4ZA495yb6QMDHYqUIdnSiwsufX3bj8D2ePN0JbTXSi0I7uk1AbgFILb35ID3QkSrLRMkTb4AgTCj/ina6iTaBq3fvqwsarjN1SxUpeU6Scv7PhY4nqDP8eg2LpX82qc=
   on:
-    tags: true
+    branch: master
     repo: matthewspivey/warcode-core
