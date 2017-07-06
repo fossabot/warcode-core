@@ -1,10 +1,6 @@
 import fs from 'fs';
 
 module.exports = () => `
----
-title: WarCode Core Documentation
----
-
 * _Easy to use_ - send play move and state, receive new state
 * _Customizable_ - caller controls randomness, game board, and rules
 * _ES5_ - transpiled code works in older browser and Node versions
