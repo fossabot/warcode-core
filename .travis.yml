@@ -32,6 +32,8 @@ deploy:
   on:
     branch: master
 - provider: npm
+  skip_cleanup: true
+  local_dir: dist
   email: spivey.matthew@gmail.com
   api_key:
     secure: MkBeXv1CxFNZCNH+7yMTM7U0oib3QuTkQSKDWSyjMAjm/sdwoONc1YTs8ABZ1tc6kOTaazItObGCJ7oHv5tzbiWTS3z0je/KJH0R/co577YckaBJP6HY9EqkGpdlbssz9m9ZNmSgigSP+a2kQ2Rxnd7nMog7xipq7UKV2LxJyOtF/vxbpqswZ47UD9wCY6xgU05SI+PfpBlUp8Z9lqDwwQCtzUulYIL04z72tuDwleAMdX8T/FGJrhELGS+98Bs/p7zReb+kaOR0hxqNapDqFmAl7fWFDtoqjuXhvvDm/H7W++ruPZRwu5swJ7HqhTaeQmwfH23+llx17lO5z1S/+wwxz23nXPl8RxPGwmqIXmEhXuiBtKNu4zIk0cWjQ4/V52hTM9bNdJEr9v9jRd9rG6KhphArd0EYiTWOKkv5kbYu40K0LJ9zPZgYyBFjRR7kJY8C4thKe55tRPx/NyrjxqpBIKss1J9LS16W1emP85xGTM9afIcj5mOZinHgKDgj8wImxJoS0XcMkOvz26ERnk4mAD4oNRAuRMyOIARNzlzs4ZA495yb6QMDHYqUIdnSiwsufX3bj8D2ePN0JbTXSi0I7uk1AbgFILb35ID3QkSrLRMkTb4AgTCj/ina6iTaBq3fvqwsarjN1SxUpeU6Scv7PhY4nqDP8eg2LpX82qc=
