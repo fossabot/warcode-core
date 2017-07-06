@@ -3,7 +3,7 @@ module.exports = () => `# Getting Started
 #### Install the package
 \`\`\` shell
 npm init
-npm install --save matthewspivey/warcode-core#gh-pages
+npm install --save /warcode-core
 \`\`\`
 
 #### Create an index.js file
