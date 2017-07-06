@@ -1,6 +1,6 @@
-const Viz = require('viz.js');
-const { transitions } = require('../src/transitions');
-const { ACTIONS, STATES, PSEUDOSTATES } = require('../src/constants');
+import Viz from 'viz.js';
+const { transitions } = require('../../src/transitions');
+const { ACTIONS, STATES, PSEUDOSTATES } = require('../../src/constants');
 
 process.setMaxListeners(0);
 
@@ -34,7 +34,7 @@ const traverse = state => {
   return Array.from(seen);
 };
 
-const toDot = (transitions, docPath) => {
+const toDot = (transitions) => {
   const vertices = new Set();
   transitions.forEach(([from, to]) => {
     vertices.add(from);
@@ -45,12 +45,8 @@ const toDot = (transitions, docPath) => {
   vertices.forEach(v => (states.has(v) ? foundStates.push(v) : foundPseudostates.push(v)));
 
   const edge = ([from, to, , action]) => {
-    const attributes = [`label="${action || ''}"`];
     const filename = action ? `${action.toLowerCase()}.html` : undefined;
-    if (docPath) {
-      attributes.push(`href="${docPath}/${filename}"`);
-    }
-    return `    ${from} -> ${to}[${attributes.join(', ')}];`;
+    return `    ${from} -> ${to}[label="${action || ''}"];`;
   };
 
   return [
@@ -63,6 +59,6 @@ const toDot = (transitions, docPath) => {
 };
 
 module.exports = {
-  createCompleteDiagram: () => dotToSvg(toDot(transitions, './actions')),
+  createCompleteDiagram: () => dotToSvg(toDot(transitions)),
   diagramState: state => dotToSvg(toDot(traverse(state))),
 };

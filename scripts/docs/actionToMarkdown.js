@@ -29,12 +29,12 @@ const appendSummary = summary => {
   return `*${summary.children[0].children[0].value}*`;
 };
 
-const docAction = (name, { summary }, diagramURL) => `
+const docAction = (name, { summary }) => `
 # ${name}
 
 ${appendSummary(summary)}
 
-![${name} state diagram](${diagramURL})
+![${name} state diagram](./diagram.svg)
   `;
 
 const docActionFormat = (name, { description, params }) => {
@@ -46,7 +46,6 @@ const docActionFormat = (name, { description, params }) => {
     );
 
   return `
-
 ${appendDescriptions(description)}
 
 ${name} actions must contain the following:
@@ -96,8 +95,8 @@ ${example}
 //   `;
 // };
 
-module.exports = (actionName, doc, t, diagramURL) => `
-${docAction(actionName, doc, diagramURL)}
+module.exports = (actionName, doc) => `
+${docAction(actionName, doc)}
 ${docActionFormat(actionName, doc)}
 ${docActionCreator(doc)}
   `;
