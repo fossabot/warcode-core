@@ -19,5 +19,3 @@ updated game state. The design borrows from both the
 The game rules are implemented as a state machine, and the
 [docs](http://matthewspivey.com/warcode-core/) illustrate this using a state diagram.
 These diagrams make the docs easier to read, even though they are generated from the code.
-
-http://matthewspivey.com/warcode-core

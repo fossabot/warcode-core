@@ -6,7 +6,7 @@ const toRow = ({ name, doc }) => {
   return `| [${name}](./${name.toLowerCase()}) | ${summary} |`;
 };
 
-module.exports = (actions) => `# Gameplay State Machine
+module.exports = (actions) => `# Gameplay
 
 Gameplay includes many phases. These are illustrated in the following state diagram.
 

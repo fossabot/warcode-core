@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-module.exports = (actions, stateDiagramURL) => `# Match Config
+module.exports = () => `# Match Config
 To setup a game match, we need some configuration to define game board and cards.
 
 \`\`\` javascript

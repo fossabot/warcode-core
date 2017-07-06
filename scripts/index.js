@@ -4,6 +4,7 @@ import actionToMarkdown from './docs/actionToMarkdown';
 import pseudoToMarkdown from './docs/pseduoToMarkdown';
 import actionsToStateMachine from './docs/actionsToStateMachine';
 import gettingStarted from './docs/gettingStarted';
+import home from './docs/home';
 import matchConfig from './docs/matchConfig';
 import { createCompleteDiagram, diagramState } from './docs/createDiagram';
 import { ACTIONS, STATES, PSEUDOSTATES } from '../src/constants';
@@ -31,7 +32,7 @@ const writePage = (directory, md, svg) => {
 }
 
 // Write static pages
-writePage('dist', `# nav`);
+writePage('dist', home());
 writePage('dist/getting-started', gettingStarted());
 writePage('dist/match-config', matchConfig());
 
@@ -44,11 +45,11 @@ documentation
       to,
       name,
       doc: docs.find(d => d.name.toLowerCase() === name.toLowerCase()),
-      directory: `dist/machine/${name.toLowerCase()}`
+      directory: `dist/gameplay/${name.toLowerCase()}`
     }));
 
     // Mardown & SVG for complete state diagram
-    writePage('dist/machine', actionsToStateMachine(actions), createCompleteDiagram());
+    writePage('dist/gameplay', actionsToStateMachine(actions), createCompleteDiagram());
 
     // Markdown & SVG for actions
     actions.forEach(({ directory, doc, from, name }) =>
@@ -60,7 +61,7 @@ documentation
     const setupNextTurnDocs = docs.find(
       d => d.name.toLowerCase() === key.toLowerCase()
     );
-    writePage(`dist/machine/${key.toLowerCase()}`, pseudoToMarkdown(key, setupNextTurnDocs));
+    writePage(`dist/gameplay/${key.toLowerCase()}`, pseudoToMarkdown(key, setupNextTurnDocs));
   })
   .catch(err => {
     console.error(err);
