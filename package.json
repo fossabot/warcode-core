@@ -13,7 +13,7 @@
     "url": "https://github.com/matthewspivey/warcode-core/issues"
   },
   "homepage": "https://github.com/matthewspivey/warcode-core#readme",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "scripts": {
     "build": "./node_modules/webpack/bin/webpack.js --optimize-minimize",
     "document": "./node_modules/babel-cli/bin/babel-node.js scripts/index.js",
