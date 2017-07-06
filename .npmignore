@@ -1,4 +1,8 @@
-*.md
-*.svg
-*.yml
+.*
 **/docs/
+/coverage
+/data
+/dist/package.json
+/scripts
+/src
+webpack.config.js
