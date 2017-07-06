@@ -7,6 +7,7 @@ Core package used by Risk browser games, bots, and multi-player game services.
 [![Test Coverage](https://codeclimate.com/github/matthewspivey/warcode-core/badges/coverage.svg)](https://codeclimate.com/github/matthewspivey/warcode-core/coverage)
 [![Dependency Status](https://gemnasium.com/badges/github.com/matthewspivey/warcode-core.svg)](https://gemnasium.com/github.com/matthewspivey/warcode-core)
 
+* _Easy to use_ - send play move and state, receive new state
 * _Customizable_ - caller controls randomness, game board, and rules
 * _ES5_ - transpiled code works in older browser and Node versions
 * _Small_ - less than 6 KB compressed
