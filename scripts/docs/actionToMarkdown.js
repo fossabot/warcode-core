@@ -14,7 +14,7 @@ const appendDescriptions = description => {
         const values = cells.map(cell => (cell && cell.value ? cell.value : ''));
         descriptionParagraphs.push(values.join(' | '));
         if (i === 0) {
-          descriptionParagraphs.push(values.map(v => '----').join(' | '));
+          descriptionParagraphs.push(values.map(v => ':----').join(' | '));
         }
       });
     }
@@ -23,80 +23,48 @@ const appendDescriptions = description => {
   return descriptionParagraphs.join('\n');
 };
 
-const appendSummary = summary => {
-  if (!summary) return;
+const paramsToRows = params => params
+  .filter(({ title }) => title === 'param')
+  .map(
+    ({ name, description, type }) =>
+      `\`${name}\` | \`${type.name}\` | ${appendDescriptions(description)}`
+  );
 
-  return `*${summary.children[0].children[0].value}*`;
-};
+const paramSignature = params => params
+  .filter(({ title }) => title === 'param')
+  .map(({ name, type }) => `${name}: ${type.name}`)
+  .join(', ');
 
-const docAction = (name, { summary }) => `
-# ${name}
-
-${appendSummary(summary)}
-
-![${name} state diagram](./diagram.svg)
-  `;
-
-const docActionFormat = (name, { description, params }) => {
-  const rows = params
-    .filter(({ title }) => title === 'param')
-    .map(
-      ({ name, description, type }) =>
-        `\`${name}\` | \`${type.name}\` | ${appendDescriptions(description)}`
-    );
+const docActionCreatorExample = examples => {
+  if (examples.length < 1) {
+    return;
+  }
 
   return `
-${appendDescriptions(description)}
+##### Example
+\`\`\` javascript
+${examples.map(example => example.description.split('\n').map(l => l.trim()).join('\n'))}
+\`\`\`
+  `
+}
+
+module.exports = (name, doc) => `### ${name}<a name="${name.toLowerCase()}"></a>
+
+*${doc.summary.children ? doc.summary.children[0].children[0].value : ''}*
+
+![${name} state diagram](./${name.toLowerCase()}.svg)
+
+${appendDescriptions(doc.description)}
 
 ${name} actions must contain the following:
 
 Field        | Type       | Description
------------- | ---------- | -----------
+:----------- | :--------- | :----------
 \`type\`     | \`string\` | "\`${name}\`"
-${rows.join('\n')}
-`;
-};
+${paramsToRows(doc.params).join('\n')}
 
-const docActionCreator = ({ name, params, examples }) => {
-  // TODO - how do we know if the parameters are in the correct order?
-  const paramSignature = params
-    .filter(({ title }) => title === 'param')
-    .map(({ name, type }) => `${name}: ${type.name}`)
-    .join(', ');
+#### Action creator
+\`actionCreators.${name}(${paramSignature(doc.params)})\`
 
-  const example = examples
-    .map(
-      ({ description }) => `
-### Example
-\`\`\`javascript
-${description.split('\n').map(l => l.trim()).join('\n')}
-\`\`\`
-  `
-    )
-    .join('\n');
-
-  return `
-## Action creator
-\`actionCreators.${name}(${paramSignature})\`
-
-${example}
-  `;
-};
-
-// Displays guard function. Disabled due to ugly transpiled version.
-// const docActionGuard = t => {
-//   const f = t({}, {}).guard.toString();
-//   const guardBlock = f.slice(f.indexOf('{') + 1, f.lastIndexOf('}'));
-//   return `
-// ## Guard
-// \`\`\`javascript
-// ${guardBlock}
-// \`\`\`
-//   `;
-// };
-
-module.exports = (actionName, doc) => `
-${docAction(actionName, doc)}
-${docActionFormat(actionName, doc)}
-${docActionCreator(doc)}
+${docActionCreatorExample(doc.examples)}
   `;

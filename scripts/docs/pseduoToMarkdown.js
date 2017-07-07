@@ -23,7 +23,7 @@ const appendDescriptions = description => {
   return descriptionParagraphs.join('\n');
 };
 
-module.exports = (name, { description }) => `# ${name}
+module.exports = (from, to, { description }) => `### ${from} ⇒ ${to}
 
 ${appendDescriptions(description)}
   `;

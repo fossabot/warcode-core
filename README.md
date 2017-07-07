@@ -13,10 +13,27 @@ Core package used by Risk browser games, bots, and multi-player game services.
 * _Small_ - less than 6 KB compressed
 
 Send WarCode Core the current game state and a player's move, and it returns the
-updated game state. The design borrows from both the
-[event sourcing](https://martinfowler.com/eaaDev/EventSourcing.html) and
-[State-Action-Model](http://sam.js.org/) patterns.
+updated game state.
 
 The game rules are implemented as a state machine, and the
 [docs](http://matthewspivey.com/warcode-core/) illustrate this using a state diagram.
 These diagrams make the docs easier to read, even though they are generated from the code.
+
+## Contributing
+Pull requests encouraged
+
+### Style
+Various tools are used to enforce the following
+* Functional
+* Static types
+* Airbnb JavaScript Style Guide
+* Prettier
+* ESLint recommended
+
+### Patterns
+The design is inspired by the
+[event sourcing](https://martinfowler.com/eaaDev/EventSourcing.html) and
+[State-Action-Model](http://sam.js.org/) patterns.
+
+### Testing
+Targeting 100% coverage.

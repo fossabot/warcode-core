@@ -1,6 +1,6 @@
 import Viz from 'viz.js';
-const { transitions } = require('../../src/transitions');
-const { ACTIONS, STATES, PSEUDOSTATES } = require('../../src/constants');
+import { transitions } from '../../src/transitions';
+import { ACTIONS, STATES, PSEUDOSTATES } from '../../src/constants';
 
 process.setMaxListeners(0);
 
