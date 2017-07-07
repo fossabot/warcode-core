@@ -2,7 +2,7 @@
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
-import replaceElements from './replaceElements';
+import replaceElements from './utils/replaceElements';
 
 const getLoses = (attackerDice: number[], defenderDice: number[]) => {
   const diceToCompare = Math.min(attackerDice.length, defenderDice.length);

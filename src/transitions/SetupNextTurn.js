@@ -2,8 +2,8 @@
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
-import nextPlayerIndex from './nextPlayerIndex';
-import replaceElements from './replaceElements';
+import nextPlayerIndex from './utils/nextPlayerIndex';
+import replaceElements from './utils/replaceElements';
 
 function calcTerrtitoryAward(extendedState, matchConfig, playerIndex) {
   const territoryOwnedCount = extendedState.territories.filter(t => t.owner === playerIndex).length;

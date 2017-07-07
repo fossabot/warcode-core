@@ -1,5 +1,5 @@
 // @flow
-import type { MatchState } from '../MatchState';
+import type { MatchState } from '../../MatchState';
 
 const activePlayerIndicies = ({ players, territories }) => {
   const indicies = new Set();
