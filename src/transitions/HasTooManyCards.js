@@ -3,6 +3,9 @@ import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
 
+/**
+ * Player holds six or more cards, so must trade a set of three now.
+ */
 export default (
   matchConfig: MatchConfig,
   { cardOwner, territories, currentPlayerIndex }: MatchState

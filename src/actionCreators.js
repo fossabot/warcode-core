@@ -2,14 +2,12 @@
 import { ACTIONS } from './constants';
 
 /**
- * Start match
- *
- * The number of players determines the number of armies each player receive.
- * The traditional rules award each player the number shown in this table.
- * However, this may vary based on the match settings.
+ * Start the match by selecting the number of players. Each player will receive
+ * the same number of armies to deploy. This number depends on the number of players.
+ * The default match config awards players the following:
  *
  * | Players | Armies |
- * |---------|--------|
+ * | :------ | -----: |
  * | 3       | 35     |
  * | 4       | 30     |
  * | 5       | 25     |

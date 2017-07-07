@@ -2,7 +2,7 @@
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
-import replaceElements from './replaceElements';
+import replaceElements from './utils/replaceElements';
 
 export default (
   { cards, cardOccupiedTerritoryReward }: MatchConfig,

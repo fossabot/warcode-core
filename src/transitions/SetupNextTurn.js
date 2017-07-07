@@ -2,8 +2,8 @@
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
 import type { TransitionType } from './TransitionType';
-import nextPlayerIndex from './nextPlayerIndex';
-import replaceElements from './replaceElements';
+import nextPlayerIndex from './utils/nextPlayerIndex';
+import replaceElements from './utils/replaceElements';
 
 function calcTerrtitoryAward(extendedState, matchConfig, playerIndex) {
   const territoryOwnedCount = extendedState.territories.filter(t => t.owner === playerIndex).length;
@@ -44,7 +44,7 @@ function countUndeployedArmies(matchConfig, extendedState, playerIndex) {
  * the traditional rules use the following awards.
  *
  * | Continent      | Award |
- * |----------------|-------|
+ * | :------------- | ----- |
  * | Asia           | 7     |
  * | North America  | 5     |
  * | Europe         | 5     |

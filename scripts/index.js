@@ -3,8 +3,6 @@ import fs from 'fs';
 import SVGO from 'svgo';
 import actionToMarkdown from './docs/actionToMarkdown';
 import pseudoToMarkdown from './docs/pseduoToMarkdown';
-import actionsToStateMachine from './docs/actionsToStateMachine';
-import gettingStarted from './docs/gettingStarted';
 import home from './docs/home';
 import matchConfig from './docs/matchConfig';
 import { createCompleteDiagram, diagramState } from './docs/createDiagram';
@@ -56,8 +54,6 @@ documentation
 
     const md = [
       home(),
-      gettingStarted(),
-      actionsToStateMachine(actions),
       ...actions.map(({ action, doc }) => actionToMarkdown(action, doc)),
       '## Other Transitions',
       setupNextTurnMarkdown,
@@ -65,7 +61,7 @@ documentation
     ];
 
     // SVGs for actions
-    actions.forEach(({ from }) => writeSVG(from, diagramState(from)));
+    actions.forEach(({ action, from }) => writeSVG(action, diagramState(from)));
 
     // write markdown
     fs.writeFile('dist/index.md', md.join('\n'), handleWriteError);
