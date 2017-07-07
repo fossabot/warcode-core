@@ -29,7 +29,7 @@ fs.writeFile('dist/_config.yml', configYml, handleWriteError);
 
 const writeSVG = (filename, svg) => {
   svgo.optimize(svg).then(compressed =>
-    fs.writeFile(`${filename.toLowerCase()}.svg`, compressed.data, handleWriteError)
+    fs.writeFile(`dist/${filename.toLowerCase()}.svg`, compressed.data, handleWriteError)
   );
 }
 
