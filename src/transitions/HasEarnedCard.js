@@ -7,7 +7,7 @@ import type { TransitionType } from '../TransitionType';
  * Player has earned a card from capturing territories and is one or more card
  * that can be drawn.
  */
-export default function HasPlayerEarnedCard(
+export default function HasEarnedCard(
   config: MatchConfig,
   { cardOwner, capturedTerritories }: MatchState
 ): TransitionType {

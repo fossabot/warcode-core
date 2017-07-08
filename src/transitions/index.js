@@ -18,7 +18,7 @@ import HasPlacedArmies from './HasPlacedArmies';
 import HasNoCards from './HasNoCards';
 import HasDefeatedTerritory from './HasDefeatedTerritory';
 import IsGameOver from './IsGameOver';
-import HasPlayerEarnedCard from './HasPlayerEarnedCard';
+import HasEarnedCard from './HasEarnedCard';
 import HasTooManyCards from './HasTooManyCards';
 import IsUnoccupiedTerritory from './IsUnoccupiedTerritory';
 import HasUndeployedArmies from './HasUndeployedArmies';
@@ -57,7 +57,7 @@ export const transitions = [
   [P.HAS_DEFEATED_OPPONENT, S.BATTLING, Else],
   [S.FORTIFYING, P.HAS_EARNED_CARD, Fortify, A.FORTIFY],
   [S.FORTIFYING, P.HAS_EARNED_CARD, EndTurn, A.END_TURN],
-  [P.HAS_EARNED_CARD, S.DRAWING_RANDOM_CARD, HasPlayerEarnedCard],
+  [P.HAS_EARNED_CARD, S.DRAWING_RANDOM_CARD, HasEarnedCard],
   [P.HAS_EARNED_CARD, P.SETUP_NEXT_TURN, Else],
   [S.DRAWING_RANDOM_CARD, P.SETUP_NEXT_TURN, DrawRandomCard, A.DRAW_RANDOM_CARD],
 ];
