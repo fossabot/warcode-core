@@ -48,9 +48,19 @@ const toDot = (transitions, highlight) => {
   const foundPseudostates = [];
   vertices.forEach(v => (states.has(v) ? foundStates.push(v) : foundPseudostates.push(v)));
 
+  const isEdgeHighlighted = (from, to, action) => {
+    if (!from && !to && !action) {
+      return;
+    }
+    const isAction = highlight && action && action === highlight.action;
+    const isEdge = highlight && from && from === highlight.from && to === highlight.to;
+    return isAction || isEdge;
+  }
+
   const edgeAttributes = (from, to, action) =>
     [
-      (highlight && from === highlight.from && to === highlight.to) ? 'penwidth="2"' : undefined,
+      (isEdgeHighlighted(from, to, action) === true) ? 'penwidth="2"' : undefined,
+      (isEdgeHighlighted(from, to, action) === false) ? 'color="#888888"' : undefined,
       action ? `label="${action}"` : undefined,
     ].filter(a => a).join(',');
 

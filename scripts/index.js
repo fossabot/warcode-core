@@ -23,7 +23,7 @@ writeSVG('dist/diagram.svg');
 const transitionsWithActions = transitions.filter(([, , , a]) => !!a);
 
 // SVGs for actions
-transitionsWithActions.forEach(([from, to,, action]) => writeSVG(`dist/${action.toLowerCase()}.svg`, from, { from, to }));
+transitionsWithActions.forEach(([from, to,, action]) => writeSVG(`dist/${action.toLowerCase()}.svg`, from, { action }));
 
 const top = `
 * _Easy to use_ - send play move and state, receive new state
