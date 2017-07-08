@@ -83,7 +83,7 @@ Every play you make during a match is modeled by one of the following actions.
 const bottom = `# Match Config
 To setup a game match, we need some configuration to define game board and cards.
 
-\`\`\` javascript
+\`\`\` json
 ${fs.readFileSync('data/traditional.json', 'utf-8')}
 \`\`\`
   `;
@@ -112,7 +112,7 @@ Promise.all([
       .filter(({ text }) => !!text);
 
     const otherTransitionMD = otherTransitions.map(({ from, id, text, title }) =>
-        `### ${title}<a name="${id}"></a>\n![${title}](./${id}.svg)]\n\n${text}\n`);
+        `### ${title}<a name="${id}"></a>\n![${title}](./${id}.svg)\n\n${text}\n`);
 
     otherTransitions.forEach(({ from, to, id }) => writeSVG(`dist/${id}.svg`, from, { from, to }));
 
