@@ -17,9 +17,10 @@ import { ACTIONS } from './constants';
  * @param playerCount - Number of players. The match settings determine
  *   the minimum and maximum number of players.
  * @example
- * let state = stateMachine.reduce();
+ * const { actionCreators, reduce } = require('warcode-core');
+ * let state = reduce();
  * let action = actionCreators.startMatch(3);
- * state = stateMachine.reduce(state, action);
+ * state = reduce(state, action);
  */
 function startMatch(playerCount: number): { type: string, playerCount: number } {
   return {
@@ -36,11 +37,12 @@ function startMatch(playerCount: number): { type: string, playerCount: number } 
  * to begin the game.
  * @param firstPlayerIndex - Index of the first player.
  * @example
- * let state = stateMachine.reduce();
+ * const { actionCreators, reduce } = require('warcode-core');
+ * let state = reduce();
  * let action = actionCreators.startMatch(3);
- * state = stateMachine.reduce(state, action);
+ * state = reduce(state, action);
  * action = actionCreators.selectFirstPlayer(0);
- * state = stateMachine.reduce(state, action);
+ * state = reduce(state, action);
  */
 function selectFirstPlayer(firstPlayerIndex: number): { type: string, firstPlayerIndex: number } {
   return {
@@ -64,6 +66,12 @@ function selectFirstPlayer(firstPlayerIndex: number): { type: string, firstPlaye
  *
  * @summary Select territory to occupy.
  * @param territoryIndex - Index of territory to occupy. It must be unoccupied.
+ * @example
+ * const { actionCreators, reduce } = require('warcode-core');
+ * let state = reduce();
+ * state = reduce(state, actionCreators.startMatch(3));
+ * state = reduce(state, actionCreators.selectFirstPlayer(0));
+ * state = reduce(state, actionCreators.occupyTerritory(0));
  */
 function occupyTerritory(territoryIndex: number): { type: string, territoryIndex: number } {
   return {
@@ -83,6 +91,15 @@ function occupyTerritory(territoryIndex: number): { type: string, territoryIndex
  * @summary Select a territory you own to place an additional army.
  * @param territoryIndex - Index of territory to place an additional army. You must occupy it.
  * @return {{ type: string; territoryIndex; } }
+ * @example
+ * const { actionCreators, reduce } = require('warcode-core');
+ * let state = reduce();
+ * state = reduce(state, actionCreators.startMatch(3));
+ * state = reduce(state, actionCreators.selectFirstPlayer(0));
+ * state = reduce(state, actionCreators.occupyTerritory(0));
+ * state = reduce(state, actionCreators.occupyTerritory(1));
+ * // ...
+ * state = reduce(state, actionCreators.placeAdditionalArmy(0));
  */
 function placeAdditionalArmy(territoryIndex: number): { type: string, territoryIndex: number } {
   return {
@@ -121,6 +138,13 @@ function placeAdditionalArmy(territoryIndex: number): { type: string, territoryI
  * @param i - Index of first card to trade. This card will receive a territory bonus.
  * @param j - Index of card to trade
  * @param k - Index of card to trade
+ * @example
+ * const { actionCreators, reduce } = require('warcode-core');
+ * let state = reduce();
+ * state = reduce(state, actionCreators.startMatch(3));
+ * state = reduce(state, actionCreators.selectFirstPlayer(0));
+ * // conquer territories for a few turns, be awesome, collect cards, and then ...
+ * state = reduce(state, actionCreators.tradeCards(0, 1, 2));
  */
 function tradeCards(
   i: number,
@@ -320,7 +344,7 @@ function endTurn(): { type: string } {
 }
 
 /**
- * Simulate player drawing a random card from the deck.
+ * Select a random index of a card for the player to draw from the deck.
  *
  * @summary Select "random" card for player to draw from the deck.
  * @param cardIndex - Index of the card to assign. Card owner must be currently undefined.
