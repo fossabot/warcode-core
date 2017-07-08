@@ -1,13 +1,10 @@
 import documentation from 'documentation';
 import fs from 'fs';
-import SVGO from 'svgo';
 import actionToMarkdown from './docs/actionToMarkdown';
 import getDescription from './docs/getDescription';
-import { createCompleteDiagram, diagramState } from './docs/createDiagram';
+import writeSVG from './docs/createDiagram';
 import { ACTIONS, STATES, PSEUDOSTATES } from '../src/constants';
 import { transitions } from '../src/transitions/'; // must be raw source
-
-const svgo = new SVGO();
 
 if (!fs.existsSync('dist')) fs.mkdirSync('dist');
 
@@ -21,18 +18,12 @@ title: WarCode Core
 `;
 fs.writeFile('dist/_config.yml', configYml, handleWriteError);
 
-const writeSVG = (filename, svg) => {
-  svgo.optimize(svg).then(compressed =>
-    fs.writeFile(`dist/${filename.toLowerCase()}.svg`, compressed.data, handleWriteError)
-  );
-}
-
-writeSVG('diagram', createCompleteDiagram());
+writeSVG('dist/diagram.svg');
 
 const transitionsWithActions = transitions.filter(([, , , a]) => !!a);
 
 // SVGs for actions
-transitionsWithActions.forEach(([from,,, action]) => writeSVG(action, diagramState(from)));
+transitionsWithActions.forEach(([from, to,, action]) => writeSVG(`dist/${action.toLowerCase()}.svg`, from, { from, to }));
 
 const top = `
 * _Easy to use_ - send play move and state, receive new state
@@ -113,6 +104,7 @@ Promise.all([
       .filter(([,,t]) => !!t.name)
       .map(([from, to, t]) => ({
         from,
+        to,
         title: `${from} ⇒ ${to}`,
         id: `${from.toLowerCase()}-${to.toLowerCase()}`,
         text: getDescription(transitionDocs.find(d => d.name.toLowerCase() === t.name.toLowerCase()).description),
@@ -120,9 +112,9 @@ Promise.all([
       .filter(({ text }) => !!text);
 
     const otherTransitionMD = otherTransitions.map(({ from, id, text, title }) =>
-        `### ${title}<a name="${id}"></a>\n![${title}](./${id}.svg)\n${text}\n`);
+        `### ${title}<a name="${id}"></a>\n![${title}](./${id}.svg)]\n\n${text}\n`);
 
-    otherTransitions.forEach(({ from, id }) => writeSVG(id, diagramState(from)));
+    otherTransitions.forEach(({ from, to, id }) => writeSVG(`dist/${id}.svg`, from, { from, to }));
 
     const md = [
       top,
