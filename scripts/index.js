@@ -120,7 +120,7 @@ Promise.all([
       .filter(({ text }) => !!text);
 
     const otherTransitionMD = otherTransitions.map(({ from, id, text, title }) =>
-        `### ${title}<a name="${id}"></a>\n![${title}](./${id}.svg)\n${text}`);
+        `### ${title}<a name="${id}"></a>\n![${title}](./${id}.svg)\n${text}\n`);
 
     otherTransitions.forEach(({ from, id }) => writeSVG(id, diagramState(from)));
 
