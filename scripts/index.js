@@ -34,6 +34,8 @@ const top = `
 
 # Getting Started
 
+<script type="text/javascript" src="https://asciinema.org/a/Hw6Oay8FeLXz8ygVcKwvYFJzC.js" id="asciicast-Hw6Oay8FeLXz8ygVcKwvYFJzC" data-t="03" data-autoplay="true" data-loop="true" data-speed="1.5" data-theme="solarized-light" async></script>
+
 Install the package
 \`\`\` shell
 npm init

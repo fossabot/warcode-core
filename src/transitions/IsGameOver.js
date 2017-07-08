@@ -3,10 +3,15 @@ import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
 import type { TransitionType } from '../TransitionType';
 
-export default (
+/**
+ * The game ends when the current player owns every territory.
+ */
+export default function IsGameOver(
   config: MatchConfig,
   { territories, currentPlayerIndex }: MatchState
-): TransitionType => ({
-  guard: () => territories.every(t => t.owner === currentPlayerIndex),
-  reduce: () => {},
-});
+): TransitionType {
+  return {
+    guard: () => territories.every(t => t.owner === currentPlayerIndex),
+    reduce: () => {},
+  };
+}
