@@ -1,11 +1,11 @@
 // @flow
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
-import type { TransitionType } from './TransitionType';
+import type { TransitionType } from '../TransitionType';
 import replaceElements from './utils/replaceElements';
 
 export default (
-  matchConfig: MatchConfig,
+  config: MatchConfig,
   { territories, capturedTerritories, activeBattle, currentPlayerIndex }: MatchState
 ): TransitionType => ({
   guard: ({ armies }) =>

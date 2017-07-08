@@ -62,12 +62,12 @@ export const transitions = [
   [S.DRAWING_RANDOM_CARD, P.SETUP_NEXT_TURN, DrawRandomCard, A.DRAW_RANDOM_CARD],
 ];
 
-export const getTransition = (matchConfig, extendedState, action) => {
+export const getTransition = (config, extendedState, action) => {
   // get all transitions leaving the current state
   const fromCurrentState = transitions
     .filter(([from]) => from === extendedState.stateKey)
     .map(([from, to, t, actionType]) => {
-      const { guard, reduce } = t(matchConfig, extendedState, action);
+      const { guard, reduce } = t(config, extendedState, action);
       return { from, to, actionType, guard, reduce };
     });
 

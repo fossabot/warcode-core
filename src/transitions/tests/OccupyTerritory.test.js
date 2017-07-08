@@ -2,11 +2,11 @@
 import expect from 'expect';
 import { ACTIONS, STATES } from '../../constants';
 import OccupyTerritory from '../OccupyTerritory';
-import type TransitionType from '../TransitionType';
+import type TransitionType from '../../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 
-const matchConfig = parseMatchConfig();
+const config = parseMatchConfig();
 const matchExtendedState = {
   stateKey: STATES.OCCUPYING,
   currentPlayerIndex: 0,
@@ -37,7 +37,7 @@ const matchExtendedState = {
 test('guard validates territory index', () => {
   const tryValue = territoryIndex => {
     const transition: TransitionType = OccupyTerritory(
-      matchConfig,
+      config,
       matchExtendedState,
       ACTIONS.OCCUPY_TERRITORY
     );
@@ -56,7 +56,7 @@ test('guard validates territory index', () => {
 test('reduce updates player and territory', () => {
   const territoryIndex = 0;
   const transition: TransitionType = OccupyTerritory(
-    matchConfig,
+    config,
     matchExtendedState,
     ACTIONS.OCCUPY_TERRITORY
   );

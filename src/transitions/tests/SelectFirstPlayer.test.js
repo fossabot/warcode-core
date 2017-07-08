@@ -2,11 +2,11 @@
 import expect from 'expect';
 import { ACTIONS, STATES } from '../../constants';
 import SelectFirstPlayer from '../SelectFirstPlayer';
-import type TransitionType from '../TransitionType';
+import type TransitionType from '../../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 
-const matchConfig = parseMatchConfig();
+const config = parseMatchConfig();
 const matchExtendedState = {
   stateKey: STATES.SELECT_FIRST_PLAYER,
   players: [
@@ -22,7 +22,7 @@ const matchExtendedState = {
 test('guard validates first player index', () => {
   const tryValue = firstPlayerIndex => {
     const transition: TransitionType = SelectFirstPlayer(
-      matchConfig,
+      config,
       matchExtendedState,
       ACTIONS.SELECT_FIRST_PLAYER
     );
@@ -30,7 +30,7 @@ test('guard validates first player index', () => {
     return transition.guard(action);
   };
 
-  const maxPlayerIndex = matchConfig.maxPlayers - matchConfig.minPlayers - 1;
+  const maxPlayerIndex = config.maxPlayers - config.minPlayers - 1;
 
   expect(tryValue(undefined)).toBe(false);
   expect(tryValue(-1)).toBe(false);
@@ -41,7 +41,7 @@ test('guard validates first player index', () => {
 
 test('reduce creates valid initial state', () => {
   const transition: TransitionType = SelectFirstPlayer(
-    matchConfig,
+    config,
     matchExtendedState,
     ACTIONS.SELECT_FIRST_PLAYER
   );

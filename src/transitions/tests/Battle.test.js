@@ -2,12 +2,12 @@
 import expect from 'expect';
 import { ACTIONS, STATES } from '../../constants';
 import Battle from '../Battle';
-import type TransitionType from '../TransitionType';
+import type TransitionType from '../../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 import testConfig from './config.json';
 
-const matchConfig = parseMatchConfig(testConfig);
+const config = parseMatchConfig(testConfig);
 const matchExtendedState = {
   stateKey: STATES.BATTLING,
   currentPlayerIndex: 0,
@@ -36,7 +36,7 @@ const matchExtendedState = {
 };
 
 test('guard checks player and territory', () => {
-  const transition: TransitionType = Battle(matchConfig, matchExtendedState, ACTIONS.BATTLE);
+  const transition: TransitionType = Battle(config, matchExtendedState, ACTIONS.BATTLE);
 
   [
     [actionCreators.battle(1, 0, 3), true],
@@ -54,7 +54,7 @@ test('reduce updates state', () => {
   const attackingTerritoryIndex = 1;
   const defendingTerritoryIndex = 0;
   const attackingDiceCount = 3;
-  const transition: TransitionType = Battle(matchConfig, matchExtendedState, ACTIONS.BATTLE);
+  const transition: TransitionType = Battle(config, matchExtendedState, ACTIONS.BATTLE);
   const action = actionCreators.battle(
     attackingTerritoryIndex,
     defendingTerritoryIndex,

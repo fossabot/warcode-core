@@ -1,12 +1,17 @@
 // @flow
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
-import type { TransitionType } from './TransitionType';
+import type { TransitionType } from '../TransitionType';
 
-export default (
-  matchConfig: MatchConfig,
+/**
+ * Player holds no cards, so skip trading.
+ */
+export default function HasNoCards(
+  config: MatchConfig,
   { cardOwner, currentPlayerIndex }: MatchState
-): TransitionType => ({
-  guard: () => cardOwner.every(o => o !== currentPlayerIndex),
-  reduce: () => {},
-});
+): TransitionType {
+  return {
+    guard: () => cardOwner.every(o => o !== currentPlayerIndex),
+    reduce: () => {},
+  };
+}

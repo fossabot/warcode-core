@@ -1,4 +1,4 @@
-const appendDescriptions = description => {
+module.exports = description => {
   const descriptionParagraphs = [];
   description.children.forEach(c1 => {
     if (c1.type === 'paragraph') {
@@ -14,7 +14,7 @@ const appendDescriptions = description => {
         const values = cells.map(cell => (cell && cell.value ? cell.value : ''));
         descriptionParagraphs.push(values.join(' | '));
         if (i === 0) {
-          descriptionParagraphs.push(values.map(v => '----').join(' | '));
+          descriptionParagraphs.push(values.map(v => ':----').join(' | '));
         }
       });
     }
@@ -22,8 +22,3 @@ const appendDescriptions = description => {
 
   return descriptionParagraphs.join('\n');
 };
-
-module.exports = (from, to, { description }) => `### ${from} ⇒ ${to}
-
-${appendDescriptions(description)}
-  `;

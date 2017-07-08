@@ -1,5 +1,5 @@
 // @flow
-import type { TransitionType } from './TransitionType';
+import type { TransitionType } from '../TransitionType';
 
 export default (): TransitionType => ({
   guard: () => true,

@@ -2,15 +2,12 @@ import documentation from 'documentation';
 import fs from 'fs';
 import SVGO from 'svgo';
 import actionToMarkdown from './docs/actionToMarkdown';
-import pseudoToMarkdown from './docs/pseduoToMarkdown';
-import home from './docs/home';
-import matchConfig from './docs/matchConfig';
+import getDescription from './docs/getDescription';
 import { createCompleteDiagram, diagramState } from './docs/createDiagram';
 import { ACTIONS, STATES, PSEUDOSTATES } from '../src/constants';
 import { transitions } from '../src/transitions/'; // must be raw source
 
 const svgo = new SVGO();
-const jsdocFilenames = ['src/actionCreators.js', 'src/transitions/SetupNextTurn.js'];
 const indexFilename = 'dist/index.md';
 
 if (!fs.existsSync('dist')) fs.mkdirSync('dist');
@@ -33,35 +30,106 @@ const writeSVG = (filename, svg) => {
 
 writeSVG('diagram', createCompleteDiagram());
 
-documentation
-  .build(jsdocFilenames, { extension: 'es6' })
-  .then(docs => {
-    const transitionsWithActions = transitions.filter(([, , , a]) => !!a);
-    const actions = transitionsWithActions.map(([from, to, t, action]) => ({
-      from,
-      to,
+const transitionsWithActions = transitions.filter(([, , , a]) => !!a);
+
+// SVGs for actions
+transitionsWithActions.forEach(([from,,, action]) => writeSVG(action, diagramState(from)));
+
+const top = `
+* _Easy to use_ - send play move and state, receive new state
+* _Stateless_ - easily reply each player move
+* _Customizable_ - caller controls randomness, game board, and rules
+* _ES5_ - transpiled to run in older browser and Node versions
+* _Small_ - less than 6 KB compressed
+
+# Getting Started
+
+Install the package
+\`\`\` shell
+npm init
+npm install --save warcode-core
+\`\`\`
+
+Create an index.js file
+\`\`\` javascript
+const { actionCreators, reduce } = require('warcode-core');
+
+let state = reduce();
+console.log(state.stateKey);
+state = reduce(state, actionCreators.startMatch(3));
+console.log(state.stateKey);
+state = reduce(state, actionCreators.selectFirstPlayer(0));
+console.log(state.stateKey);
+\`\`\`
+
+Run it
+\`\`\` shell
+node index.js
+\`\`\`
+
+Expected output
+\`\`\`
+Initializing
+SelectingFirstPlayer
+OccupyingTerritorygettingStared
+\`\`\`
+
+# Gameplay
+
+Gameplay includes many phases. These are illustrated in the following state diagram.
+
+![State Machine](./diagram.svg)
+
+This state diagram contains the following
+* □ _States_ are moments in the game waiting on a player's move, such as rolling the dice.
+* ◇ _Pseudostates_ are temporary states that allow for conditional behavior while the processing a player's move.
+* ｜ _Transitions_ have guards that control the flow. Their reducers compute the new game state, computing the new game state for cards and the board at each transition.
+* 𝐀 _Labels_ identify player actions, such as a selecting a territory
+
+## Actions
+Every play you make during a match is modeled by one of the following actions.
+  `;
+
+const bottom = `# Match Config
+To setup a game match, we need some configuration to define game board and cards.
+
+\`\`\` javascript
+${fs.readFileSync('data/traditional.json', 'utf-8')}
+\`\`\`
+  `;
+
+const formatTransition = ({ from, to, id, text }) => `
+### ${from} ⇒ ${to}<a name="${id}"></a>
+${text}
+  `;
+
+Promise.all([
+  documentation.build('src/actionCreators.js', { extension: 'es6' }),
+  documentation.build('src/transitions/*.js', { extension: 'es6' }),
+])
+  .then(([createrDocs, transitionDocs]) => {
+    const actions = transitionsWithActions.map(([,,, action]) => ({
       action,
-      doc: docs.find(d => d.name.toLowerCase() === action.toLowerCase()),
+      doc: createrDocs.find(d => d.name.toLowerCase() === action.toLowerCase()),
     }));
 
-    // Document SetupNextTurn markdown
-    // TODO run jsdoc on transitions, and capture those with docs
-    const key = PSEUDOSTATES.SETUP_NEXT_TURN;
-    const setupNextTurnDocs = docs.find(
-      d => d.name.toLowerCase() === key.toLowerCase()
-    );
-    const setupNextTurnMarkdown = pseudoToMarkdown(PSEUDOSTATES.SETUP_NEXT_TURN, PSEUDOSTATES.HAS_CARDS, setupNextTurnDocs);
+    const otherTransitions = transitions
+      .filter(([,,t]) => !!t.name)
+      .map(([from, to, t]) => ({
+        from,
+        to,
+        id: `${from.toLowerCase()}_${to.toLowerCase()}`,
+        text: getDescription(transitionDocs.find(d => d.name.toLowerCase() === t.name.toLowerCase()).description),
+      }))
+      .map(formatTransition);
 
     const md = [
-      home(),
+      top,
       ...actions.map(({ action, doc }) => actionToMarkdown(action, doc)),
       '## Other Transitions',
-      setupNextTurnMarkdown,
-      matchConfig(),
+      ...otherTransitions,
+      bottom,
     ];
-
-    // SVGs for actions
-    actions.forEach(({ action, from }) => writeSVG(action, diagramState(from)));
 
     // write markdown
     fs.writeFile('dist/index.md', md.join('\n'), handleWriteError);

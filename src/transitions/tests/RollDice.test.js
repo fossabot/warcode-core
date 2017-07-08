@@ -2,12 +2,12 @@
 import expect from 'expect';
 import { ACTIONS, STATES } from '../../constants';
 import RollDice from '../RollDice';
-import type TransitionType from '../TransitionType';
+import type TransitionType from '../../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 import testConfig from './config.json';
 
-const matchConfig = parseMatchConfig(testConfig);
+const config = parseMatchConfig(testConfig);
 const matchExtendedState = {
   stateKey: STATES.BATTLING,
   currentPlayerIndex: 0,
@@ -41,7 +41,7 @@ const matchExtendedState = {
 };
 
 test('guard checks player and territory', () => {
-  const transition: TransitionType = RollDice(matchConfig, matchExtendedState, ACTIONS.ROLL_DICE);
+  const transition: TransitionType = RollDice(config, matchExtendedState, ACTIONS.ROLL_DICE);
   const actions = [
     [actionCreators.rollDice([1, 2, 3], [1]), true],
     [actionCreators.rollDice([1, 2, 3], [1, 2]), true],
@@ -60,7 +60,7 @@ test('guard checks player and territory', () => {
 
 test('reduce updates state', () => {
   const { attackingTerritoryIndex, defendingTerritoryIndex } = matchExtendedState.activeBattle;
-  const transition: TransitionType = RollDice(matchConfig, matchExtendedState, ACTIONS.ROLL_DICE);
+  const transition: TransitionType = RollDice(config, matchExtendedState, ACTIONS.ROLL_DICE);
   const action = actionCreators.rollDice([1, 3, 4], [2, 4]);
   const n = { ...matchExtendedState, ...transition.reduce(action) };
   const attackingArmies = matchExtendedState.territories[attackingTerritoryIndex].armies;

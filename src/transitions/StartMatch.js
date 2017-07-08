@@ -1,6 +1,6 @@
 // @flow
 import type { MatchConfig } from '../MatchConfig';
-import type { TransitionType } from './TransitionType';
+import type { TransitionType } from '../TransitionType';
 import { STATES } from '../constants';
 
 export default ({

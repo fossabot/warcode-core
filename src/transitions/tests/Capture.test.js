@@ -2,12 +2,12 @@
 import expect from 'expect';
 import { ACTIONS, STATES } from '../../constants';
 import Capture from '../Capture';
-import type TransitionType from '../TransitionType';
+import type TransitionType from '../../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 import testConfig from './config.json';
 
-const matchConfig = parseMatchConfig(testConfig);
+const config = parseMatchConfig(testConfig);
 const matchExtendedState = {
   stateKey: STATES.BATTLING,
   currentPlayerIndex: 0,
@@ -41,7 +41,7 @@ const matchExtendedState = {
 };
 
 test('guard checks capture parameters', () => {
-  const transition: TransitionType = Capture(matchConfig, matchExtendedState, ACTIONS.CAPTURE);
+  const transition: TransitionType = Capture(config, matchExtendedState, ACTIONS.CAPTURE);
   const actions = [
     [actionCreators.capture(0), false],
     [actionCreators.capture(1), false],
@@ -58,7 +58,7 @@ test('guard checks capture parameters', () => {
 
 test('reduce updates state', () => {
   const { attackingTerritoryIndex, defendingTerritoryIndex } = matchExtendedState.activeBattle;
-  const transition: TransitionType = Capture(matchConfig, matchExtendedState, ACTIONS.CAPTURE);
+  const transition: TransitionType = Capture(config, matchExtendedState, ACTIONS.CAPTURE);
   const armiesToMove = 3;
   const action = actionCreators.capture(armiesToMove);
   const n = transition.reduce(action);

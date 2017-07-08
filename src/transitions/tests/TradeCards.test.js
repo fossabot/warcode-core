@@ -2,12 +2,12 @@
 import expect from 'expect';
 import { ACTIONS, STATES } from '../../constants';
 import TradeCards from '../TradeCards';
-import type TransitionType from '../TransitionType';
+import type TransitionType from '../../TransitionType';
 import parseMatchConfig from '../../MatchConfig';
 import actionCreators from '../../actionCreators';
 import testConfig from './config.json';
 
-const matchConfig = parseMatchConfig(testConfig);
+const config = parseMatchConfig(testConfig);
 const currentPlayerIndex = 0;
 const matchExtendedState = {
   stateKey: STATES.BATTLING,
@@ -38,11 +38,7 @@ const matchExtendedState = {
 };
 
 test('guard checks capture parameters', () => {
-  const transition: TransitionType = TradeCards(
-    matchConfig,
-    matchExtendedState,
-    ACTIONS.TRADE_CARDS
-  );
+  const transition: TransitionType = TradeCards(config, matchExtendedState, ACTIONS.TRADE_CARDS);
   const actions = [
     [actionCreators.tradeCards(0, 1, 2), true],
     [actionCreators.tradeCards(0, 1, 4), true],
@@ -58,11 +54,7 @@ test('guard checks capture parameters', () => {
 });
 
 test('reduce updates state', () => {
-  const transition: TransitionType = TradeCards(
-    matchConfig,
-    matchExtendedState,
-    ACTIONS.TRADE_CARDS
-  );
+  const transition: TransitionType = TradeCards(config, matchExtendedState, ACTIONS.TRADE_CARDS);
   const action = actionCreators.tradeCards(0, 1, 2);
   const n = transition.reduce(action);
 

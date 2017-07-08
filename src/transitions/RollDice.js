@@ -1,7 +1,7 @@
 // @flow
 import type { MatchConfig } from '../MatchConfig';
 import type { MatchState } from '../MatchState';
-import type { TransitionType } from './TransitionType';
+import type { TransitionType } from '../TransitionType';
 import replaceElements from './utils/replaceElements';
 
 const getLoses = (attackerDice: number[], defenderDice: number[]) => {
@@ -19,7 +19,7 @@ const getLoses = (attackerDice: number[], defenderDice: number[]) => {
 };
 
 export default (
-  matchConfig: MatchConfig,
+  config: MatchConfig,
   { territories, activeBattle }: MatchState
 ): TransitionType => ({
   guard: ({ attackerDice, defenderDice }) =>
@@ -32,10 +32,6 @@ export default (
     defenderDice.length <= Math.min(2, territories[activeBattle.defendingTerritoryIndex].armies) &&
     defenderDice.every(d => d >= 1 && d <= 6),
   reduce: ({ attackerDice, defenderDice }) => {
-    if (!activeBattle) {
-      return {};
-    }
-
     const attackingTerritoryIndex = activeBattle.attackingTerritoryIndex;
     const defendingTerritoryIndex = activeBattle.defendingTerritoryIndex;
     const loses = getLoses(attackerDice, defenderDice);
