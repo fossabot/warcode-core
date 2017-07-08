@@ -12,18 +12,12 @@ const paramSignature = params => params
   .map(({ name, type }) => `${name}: ${type.name}`)
   .join(', ');
 
-const docActionCreatorExample = examples => {
-  if (examples.length < 1) {
-    return;
-  }
-
-  return `
-##### Example
+const docActionCreatorExample = examples =>
+  examples.length === 0 ? '' : `##### Example
 \`\`\` javascript
 ${examples.map(example => example.description.split('\n').map(l => l.trim()).join('\n'))}
 \`\`\`
-  `
-}
+  `;
 
 module.exports = (name, doc) => `### ${name}<a name="${name.toLowerCase()}"></a>
 
@@ -42,6 +36,5 @@ ${paramsToRows(doc.params).join('\n')}
 
 #### Action creator
 \`actionCreators.${name}(${paramSignature(doc.params)})\`
-
 ${docActionCreatorExample(doc.examples)}
   `;

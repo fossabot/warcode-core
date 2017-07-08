@@ -113,17 +113,22 @@ Promise.all([
       .filter(([,,t]) => !!t.name)
       .map(([from, to, t]) => ({
         from,
-        to,
+        title: `${from} ⇒ ${to}`,
+        id: `${from.toLowerCase()}-${to.toLowerCase()}`,
         text: getDescription(transitionDocs.find(d => d.name.toLowerCase() === t.name.toLowerCase()).description),
       }))
-      .map(({ from, to, text }) =>
-        `### ${from} ⇒ ${to}<a name="${from.toLowerCase()}-${to.toLowerCase()}"></a>\n${text}`);
+      .filter(({ text }) => !!text);
+
+    const otherTransitionMD = otherTransitions.map(({ from, id, text, title }) =>
+        `### ${title}<a name="${id}"></a>\n![${title}](./${id}.svg)\n${text}`);
+
+    otherTransitions.forEach(({ from, id }) => writeSVG(id, diagramState(from)));
 
     const md = [
       top,
       ...actions,
       '## Other Transitions',
-      ...otherTransitions,
+      ...otherTransitionMD,
       bottom,
     ].join('\n');
 

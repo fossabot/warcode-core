@@ -1,6 +1,6 @@
 # WarCode Core
 
-Core package used by Risk browser games, bots, and multi-player game services.
+Risk rules engine for browser games, bots, and multi-player game services
 
 [![Build Status](https://travis-ci.org/matthewspivey/warcode-core.svg?branch=master)](https://travis-ci.org/matthewspivey/warcode-core)
 [![Code Climate](https://codeclimate.com/github/matthewspivey/warcode-core/badges/gpa.svg)](https://codeclimate.com/github/matthewspivey/warcode-core)
