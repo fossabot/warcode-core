@@ -8,7 +8,6 @@ import { ACTIONS, STATES, PSEUDOSTATES } from '../src/constants';
 import { transitions } from '../src/transitions/'; // must be raw source
 
 const svgo = new SVGO();
-const indexFilename = 'dist/index.md';
 
 if (!fs.existsSync('dist')) fs.mkdirSync('dist');
 
@@ -98,41 +97,38 @@ ${fs.readFileSync('data/traditional.json', 'utf-8')}
 \`\`\`
   `;
 
-const formatTransition = ({ from, to, id, text }) => `
-### ${from} ⇒ ${to}<a name="${id}"></a>
-${text}
-  `;
-
 Promise.all([
   documentation.build('src/actionCreators.js', { extension: 'es6' }),
   documentation.build('src/transitions/*.js', { extension: 'es6' }),
 ])
   .then(([createrDocs, transitionDocs]) => {
-    const actions = transitionsWithActions.map(([,,, action]) => ({
-      action,
-      doc: createrDocs.find(d => d.name.toLowerCase() === action.toLowerCase()),
-    }));
+    const actions = transitionsWithActions
+      .map(([,,, action]) => ({
+        action,
+        doc: createrDocs.find(d => d.name.toLowerCase() === action.toLowerCase()),
+      }))
+      .map(({ action, doc }) => actionToMarkdown(action, doc));
 
     const otherTransitions = transitions
       .filter(([,,t]) => !!t.name)
       .map(([from, to, t]) => ({
         from,
         to,
-        id: `${from.toLowerCase()}_${to.toLowerCase()}`,
         text: getDescription(transitionDocs.find(d => d.name.toLowerCase() === t.name.toLowerCase()).description),
       }))
-      .map(formatTransition);
+      .map(({ from, to, text }) =>
+        `### ${from} ⇒ ${to}<a name="${from.toLowerCase()}-${to.toLowerCase()}"></a>\n${text}`);
 
     const md = [
       top,
-      ...actions.map(({ action, doc }) => actionToMarkdown(action, doc)),
+      ...actions,
       '## Other Transitions',
       ...otherTransitions,
       bottom,
-    ];
+    ].join('\n');
 
     // write markdown
-    fs.writeFile('dist/index.md', md.join('\n'), handleWriteError);
+    fs.writeFile('dist/index.md', md, handleWriteError);
   })
   .catch(err => {
     console.error(err);
