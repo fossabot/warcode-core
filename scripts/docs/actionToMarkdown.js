@@ -19,11 +19,11 @@ ${examples.map(example => example.description.split('\n').map(l => l.trim()).joi
 \`\`\`
   `;
 
-module.exports = (name, doc) => `### ${name}<a name="${name.toLowerCase()}"></a>
+module.exports = (name, doc, svg) => `### ${name}<a name="${name.toLowerCase()}"></a>
 
 *${doc.summary.children ? doc.summary.children[0].children[0].value : ''}*
 
-![${name} state diagram](./${name.toLowerCase()}.svg)
+${svg}
 
 ${getDescription(doc.description)}
 

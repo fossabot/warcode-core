@@ -6,7 +6,7 @@ import { ACTIONS, STATES, PSEUDOSTATES } from '../../src/constants';
 
 process.setMaxListeners(0);
 
-const svgo = new SVGO();
+const svgo = new SVGO({ plugins: [{ removeViewBox: true },  { removeDimensions: true },  { removeTitle: true }] });
 
 const dotToSvg = dot => Viz(dot, { format: 'svg', engine: 'dot' });
 
@@ -76,11 +76,5 @@ const toDot = (transitions, highlight) => {
   ].join('\n');
 };
 
-const writeSVG = (filename, svg) => {
-  svgo.optimize(svg).then(compressed =>
-    fs.writeFile(filename, compressed.data, err => (err ? console.error(err) : undefined))
-  );
-}
-
-module.exports = (filename, state, highlight) =>
-  writeSVG(filename, dotToSvg(toDot(state ? traverse(state) : transitions, highlight)));
+module.exports = (state, highlight) =>
+  svgo.optimize(dotToSvg(toDot(state ? traverse(state) : transitions, highlight)));

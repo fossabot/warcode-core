@@ -1,31 +1,17 @@
 import documentation from 'documentation';
 import fs from 'fs';
+import { ncp } from 'ncp';
 import actionToMarkdown from './docs/actionToMarkdown';
 import getDescription from './docs/getDescription';
-import writeSVG from './docs/createDiagram';
+import getSVG from './docs/createDiagram';
 import { ACTIONS, STATES, PSEUDOSTATES } from '../src/constants';
 import { transitions } from '../src/transitions/'; // must be raw source
 
-if (!fs.existsSync('dist')) fs.mkdirSync('dist');
-
 const handleWriteError = err => (err ? console.error(err) : undefined);
+if (!fs.existsSync('dist')) fs.mkdirSync('dist');
+ncp('scripts/static/', 'dist/', handleWriteError);
 
-const configYml = `
----
-theme: jekyll-theme-cayman
-title: WarCode Core
----
-`;
-fs.writeFile('dist/_config.yml', configYml, handleWriteError);
-
-writeSVG('dist/diagram.svg');
-
-const transitionsWithActions = transitions.filter(([, , , a]) => !!a);
-
-// SVGs for actions
-transitionsWithActions.forEach(([from, to,, action]) => writeSVG(`dist/${action.toLowerCase()}.svg`, from, { action }));
-
-const top = `
+const top = svg => `
 * _Easy to use_ - send play move and state, receive new state
 * _Stateless_ - easily reply each player move
 * _Customizable_ - caller controls randomness, game board, and rules
@@ -70,7 +56,7 @@ OccupyingTerritorygettingStared
 
 Gameplay includes many phases. These are illustrated in the following state diagram.
 
-![State Machine](./diagram.svg)
+${svg}
 
 This state diagram contains the following
 * □ _States_ are moments in the game waiting on a player's move, such as rolling the dice.
@@ -90,44 +76,49 @@ ${fs.readFileSync('data/traditional.json', 'utf-8')}
 \`\`\`
   `;
 
+const transitionsWithActions = transitions.filter(([, , , a]) => !!a);
+
 Promise.all([
+  getSVG(),
   documentation.build('src/actionCreators.js', { extension: 'es6' }),
   documentation.build('src/transitions/*.js', { extension: 'es6' }),
+  Promise.all(transitionsWithActions.map(([from,,, action]) => getSVG(from, { action }))),
 ])
-  .then(([createrDocs, transitionDocs]) => {
+  .then(([svg, createrDocs, transitionDocs, transitionSVGs]) => {
     const actions = transitionsWithActions
       .map(([,,, action]) => ({
         action,
         doc: createrDocs.find(d => d.name.toLowerCase() === action.toLowerCase()),
       }))
-      .map(({ action, doc }) => actionToMarkdown(action, doc));
+      .map(({ action, doc }, i) => actionToMarkdown(action, doc, transitionSVGs[i].data));
 
-    const otherTransitions = transitions
-      .filter(([,,t]) => !!t.name)
-      .map(([from, to, t]) => ({
-        from,
-        to,
-        title: `${from} ⇒ ${to}`,
-        id: `${from.toLowerCase()}-${to.toLowerCase()}`,
-        text: getDescription(transitionDocs.find(d => d.name.toLowerCase() === t.name.toLowerCase()).description),
-      }))
-      .filter(({ text }) => !!text);
+    const otherTransitions = transitions.filter(([,,t]) => !!t.name);
 
-    const otherTransitionMD = otherTransitions.map(({ from, id, text, title }) =>
-        `### ${title}<a name="${id}"></a>\n![${title}](./${id}.svg)\n\n${text}\n`);
+    // SVGs for transitions
+    Promise.all(otherTransitions.map(({ from, to, id }) => getSVG(from, { from, to })))
+      .then((svgos) => {
+        const otherTransitionMD = otherTransitions.map(([from, to, t], i) => {
+          if (!t || !t.name) {
+            return '';
+          }
+          const text = getDescription(transitionDocs.find(d => d.name.toLowerCase() === t.name.toLowerCase()).description);
+          const id = `${from.toLowerCase()}-${to.toLowerCase()}`;
+          const svg = svgos[i].data;
+          return `### ${from} ⇒ ${to}<a name="${id}"></a>\n${svg}\n\n${text}\n`;
+        });
 
-    otherTransitions.forEach(({ from, to, id }) => writeSVG(`dist/${id}.svg`, from, { from, to }));
+        const md = [
+          top(svg.data),
+          ...actions,
+          '## Other Transitions',
+          ...otherTransitionMD,
+          bottom,
+        ].join('\n');
 
-    const md = [
-      top,
-      ...actions,
-      '## Other Transitions',
-      ...otherTransitionMD,
-      bottom,
-    ].join('\n');
-
-    // write markdown
-    fs.writeFile('dist/index.md', md, handleWriteError);
+        // write markdown
+        fs.writeFile('dist/index.md', md, handleWriteError);
+      })
+      .catch(err => console.error(err));
   })
   .catch(err => {
     console.error(err);
