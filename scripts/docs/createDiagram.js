@@ -6,7 +6,10 @@ import { ACTIONS, STATES, PSEUDOSTATES } from '../../src/constants';
 
 process.setMaxListeners(0);
 
-const svgo = new SVGO({ plugins: [{ removeTitle: true }] });
+const svgo = new SVGO({ plugins: [
+    { removeTitle: true },
+    { removeAttrs: { attrs: ['font-family', 'font-size'] } },
+  ] });
 
 const dotToSvg = dot => Viz(dot, { format: 'svg', engine: 'dot' });
 
