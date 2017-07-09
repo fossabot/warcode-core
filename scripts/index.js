@@ -95,7 +95,7 @@ Promise.all([
     const otherTransitions = transitions.filter(([,,t]) => !!t.name);
 
     // SVGs for transitions
-    Promise.all(otherTransitions.map(({ from, to, id }) => getSVG(from, { from, to })))
+    Promise.all(otherTransitions.map(([from, to]) => getSVG(from, { from, to })))
       .then((svgos) => {
         const otherTransitionMD = otherTransitions.map(([from, to, t], i) => {
           if (!t || !t.name) {
