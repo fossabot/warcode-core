@@ -1,10 +1,15 @@
 import { STATES } from './constants';
 import { getTransition } from './transitions/';
 
-const intialState = { stateKey: STATES.INITIALIZING };
-
-// TODO - write reducer with debug
-// MyAction: StartState->NextState->NextState
+const intialState = {
+  stateKey: STATES.INITIALIZING,
+  territories: [],
+  cardOwner: [],
+  playersUndeployedArmies: [],
+  currentPlayerIndex: -1,
+  tradeCount: 0,
+  capturedTerritories: 0,
+};
 
 const reduce = (matchConfig, extendedState = intialState, action = {}, ttl = 10) => {
   if (ttl < 1) {

@@ -17,7 +17,6 @@ export type MatchState = {
   }>,
   cardOwner: number[],
   playersUndeployedArmies: number[],
-  currentPlayerIndex: ?number,
   tradeCount: number,
   capturedTerritories: number,
   activeBattle: ?{
