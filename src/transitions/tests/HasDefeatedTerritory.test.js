@@ -23,14 +23,7 @@ const matchExtendedState = {
       armies: 3,
     },
   ],
-  players: [
-    {
-      undeployedArmies: 0,
-    },
-    {
-      undeployedArmies: 0,
-    },
-  ],
+  playersUndeployedArmies: [0, 0],
 };
 // TODO - try handling of incorrect action with deployed armies
 // TODO - try 0 undeployed armiesS

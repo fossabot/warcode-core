@@ -9,14 +9,7 @@ import actionCreators from '../../actionCreators';
 const config = parseMatchConfig();
 const matchExtendedState = {
   stateKey: STATES.SELECT_FIRST_PLAYER,
-  players: [
-    {
-      undeployedArmies: 1,
-    },
-    {
-      undeployedArmies: 0,
-    },
-  ],
+  playersUndeployedArmies: [1, 0],
 };
 
 test('guard validates first player index', () => {

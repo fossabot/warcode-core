@@ -28,14 +28,7 @@ const matchExtendedState: MatchState = {
       armies: 3,
     },
   ],
-  players: [
-    {
-      undeployedArmies: 0,
-    },
-    {
-      undeployedArmies: 0,
-    },
-  ],
+  playersUndeployedArmies: [0, 0],
   cardOwner: Array(5).fill(currentPlayerIndex),
   capturedTerritories: 0,
   tradeCount: 0,

@@ -18,9 +18,7 @@ export default ({
       armies: 0,
     }),
     cardOwner: Array(cards.length).fill(undefined),
-    players: Array(playerCount).fill({
-      undeployedArmies: startingArmiesByPlayers[playerCount],
-    }),
+    playersUndeployedArmies: Array(playerCount).fill(startingArmiesByPlayers[playerCount]),
     currentPlayerIndex: -1,
     tradeCount: 0,
     capturedTerritories: 0,

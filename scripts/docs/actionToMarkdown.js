@@ -2,9 +2,11 @@ import getDescription from './getDescription';
 
 const paramsToRows = params => params
   .filter(({ title }) => title === 'param')
-  .map(
-    ({ name, description, type }) =>
-      `\`${name}\` | \`${type.name}\` | ${getDescription(description)}`
+  .map(({ name, description, type }) => {
+      const dataType = (type.expression && type.expression.name === 'Array') ?
+        `${type.applications[0].name}[]` : type.name;
+      return `\`${name}\` | \`${dataType}\` | ${getDescription(description)}`;
+    }
   );
 
 const paramSignature = params => params

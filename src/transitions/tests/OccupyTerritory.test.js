@@ -24,14 +24,7 @@ const matchExtendedState = {
       armies: 1,
     },
   ],
-  players: [
-    {
-      undeployedArmies: 1,
-    },
-    {
-      undeployedArmies: 0,
-    },
-  ],
+  playersUndeployedArmies: [1, 0],
 };
 
 test('guard validates territory index', () => {
@@ -67,8 +60,8 @@ test('reduce updates player and territory', () => {
 
   expect(n.territories[territoryIndex].owner).toBe(matchExtendedState.currentPlayerIndex);
   expect(n.territories[territoryIndex].armies).toBe(1);
-  expect(n.players[matchExtendedState.currentPlayerIndex].undeployedArmies).toBe(
-    matchExtendedState.players[matchExtendedState.currentPlayerIndex].undeployedArmies - 1
+  expect(n.playersUndeployedArmies[matchExtendedState.currentPlayerIndex]).toBe(
+    matchExtendedState.playersUndeployedArmies[matchExtendedState.currentPlayerIndex] - 1
   );
-  expect(n.players[1].undeployedArmies).toBe(matchExtendedState.players[1].undeployedArmies);
+  expect(n.playersUndeployedArmies[1]).toBe(matchExtendedState.playersUndeployedArmies[1]);
 });

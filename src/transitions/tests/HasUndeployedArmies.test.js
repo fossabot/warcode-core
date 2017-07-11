@@ -23,14 +23,7 @@ const matchExtendedState = {
       armies: 3,
     },
   ],
-  players: [
-    {
-      undeployedArmies: 0,
-    },
-    {
-      undeployedArmies: 0,
-    },
-  ],
+  playersUndeployedArmies: [0, 0],
 };
 // TODO - try handling of incorrect action with deployed armies
 // TODO - try 0 undeployed armiesS
@@ -52,7 +45,7 @@ test('guard is true when player has undeployed armies', () => {
   const matchExtendedStateCopy = {
     ...matchExtendedState,
     ...{
-      players: [{ undeployedArmies: 1 }, { undeployedArmies: 0 }],
+      playersUndeployedArmies: [1, 0],
     },
   };
   const transition = HasUndeployedArmies(config, matchExtendedStateCopy);

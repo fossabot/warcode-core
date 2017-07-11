@@ -38,8 +38,8 @@ test('reduce creates valid initial state', () => {
   expect(n.cardOwner.length).toBe(config.cards.length, 'card length should match');
   expect(n.cardOwner[0]).toNotExist('card should be unowned');
 
-  expect(n.players.length).toBe(playerCount);
-  expect(n.players[0].undeployedArmies).toBe(config.startingArmiesByPlayers[playerCount]);
+  expect(n.playersUndeployedArmies.length).toBe(playerCount);
+  expect(n.playersUndeployedArmies[0]).toBe(config.startingArmiesByPlayers[playerCount]);
 
   expect(n.currentPlayerIndex).toBe(-1);
   expect(n.tradeCount).toBe(0);

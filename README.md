@@ -17,7 +17,7 @@ Send WarCode Core the current game state and a player's move, and it returns the
 updated game state.
 
 The game rules are implemented as a state machine, and the
-[docs](http://matthewspivey.com/warcode-core/) illustrate this using a state diagram.
+[:book: docs](http://matthewspivey.com/warcode-core/) illustrate this using a state diagram.
 These diagrams make the docs easier to read, even though they are generated from the code.
 
 ## Contributing

@@ -26,14 +26,7 @@ const matchExtendedState = {
       armies: 3,
     },
   ],
-  players: [
-    {
-      undeployedArmies: 0,
-    },
-    {
-      undeployedArmies: 0,
-    },
-  ],
+  playersUndeployedArmies: [0, 0],
   cardOwner: Array(6).fill(currentPlayerIndex),
 };
 

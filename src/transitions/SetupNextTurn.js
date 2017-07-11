@@ -26,7 +26,7 @@ function calcContinentAward(extendedState, config, playerIndex) {
 }
 
 function countUndeployedArmies(config, extendedState, playerIndex) {
-  const currentArmies = extendedState.players[playerIndex].undeployedArmies;
+  const currentArmies = extendedState.playersUndeployedArmies[playerIndex];
   const territoryAward = calcTerrtitoryAward(extendedState, config, playerIndex);
   const continentAward = calcContinentAward(extendedState, config, playerIndex);
   return currentArmies + territoryAward + continentAward;
@@ -63,10 +63,8 @@ export default function SetupNextTurn(
     guard: undefined,
     reduce: () => ({
       currentPlayerIndex: nextPlayer,
-      players: replaceElements(extendedState.players, {
-        [nextPlayer]: {
-          undeployedArmies: countUndeployedArmies(config, extendedState, nextPlayer),
-        },
+      playersUndeployedArmies: replaceElements(extendedState.playersUndeployedArmies, {
+        [nextPlayer]: countUndeployedArmies(config, extendedState, nextPlayer),
       }),
       capturedTerritories: 0,
     }),

@@ -1,13 +1,14 @@
 // @flow
 import type { MatchState } from '../../MatchState';
 
-const activePlayerIndicies = ({ players, territories }) => {
+const activePlayerIndicies = ({ playersUndeployedArmies, territories }) => {
   const indicies = new Set();
 
+  // TODO - replace with filter().map() to avoid mutation
   // set players with undeployed armies
-  if (Array.isArray(players)) {
-    players.forEach((player, i) => {
-      if (player.undeployedArmies >= 1) {
+  if (Array.isArray(playersUndeployedArmies)) {
+    playersUndeployedArmies.forEach((armies, i) => {
+      if (armies >= 1) {
         indicies.add(i);
       }
     });
@@ -27,8 +28,12 @@ const activePlayerIndicies = ({ players, territories }) => {
 };
 
 // MUST BE RUN AT END OF TURN, USING EXTENDED STATE TO BE RETURNED BY REDUCER
-export default function nextPlayerIndex({ players, territories, currentPlayerIndex }: MatchState) {
-  const activePlayers = activePlayerIndicies({ players, territories });
+export default function nextPlayerIndex({
+  playersUndeployedArmies,
+  territories,
+  currentPlayerIndex,
+}: MatchState) {
+  const activePlayers = activePlayerIndicies({ playersUndeployedArmies, territories });
 
   const i = activePlayers.indexOf(currentPlayerIndex);
   if (i + 1 < activePlayers.length) {

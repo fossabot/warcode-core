@@ -6,7 +6,7 @@ import replaceElements from './utils/replaceElements';
 
 export default (
   { cards, cardOccupiedTerritoryReward }: MatchConfig,
-  { cardOwner, territories, currentPlayerIndex, players, tradeCount }: MatchState
+  { cardOwner, territories, currentPlayerIndex, playersUndeployedArmies, tradeCount }: MatchState
 ): TransitionType => ({
   guard: ({ i, j, k }) => {
     const isValidIndices = x => x >= 0 && x < cards.length;
@@ -53,10 +53,8 @@ export default (
 
     return {
       tradeCount: count,
-      players: replaceElements(players, {
-        [currentPlayerIndex]: {
-          undeployedArmies: players[currentPlayerIndex].undeployedArmies + tradeAward,
-        },
+      playersUndeployedArmies: replaceElements(playersUndeployedArmies, {
+        [currentPlayerIndex]: playersUndeployedArmies[currentPlayerIndex] + tradeAward,
       }),
       cardOwner: replaceElements(cardOwner, {
         [i]: null,

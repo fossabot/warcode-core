@@ -8,10 +8,10 @@ import type { TransitionType } from '../TransitionType';
  */
 export default function HasUndeployedArmies(
   config: MatchConfig,
-  { players, currentPlayerIndex }: MatchState
+  { playersUndeployedArmies, currentPlayerIndex }: MatchState
 ): TransitionType {
   return {
-    guard: () => players[currentPlayerIndex].undeployedArmies >= 1,
+    guard: () => playersUndeployedArmies[currentPlayerIndex] >= 1,
     reduce: () => {},
   };
 }

@@ -6,7 +6,7 @@ import replaceElements from './utils/replaceElements';
 
 export default (
   config: MatchConfig,
-  { players, territories, currentPlayerIndex }: MatchState
+  { playersUndeployedArmies, territories, currentPlayerIndex }: MatchState
 ): TransitionType => ({
   guard: ({ territoryIndex }) =>
     Number.isInteger(territoryIndex) &&
@@ -21,10 +21,8 @@ export default (
         armies: territories[territoryIndex].armies + 1,
       },
     }),
-    players: replaceElements(players, {
-      [currentPlayerIndex]: {
-        undeployedArmies: players[currentPlayerIndex].undeployedArmies - 1,
-      },
+    playersUndeployedArmies: replaceElements(playersUndeployedArmies, {
+      [currentPlayerIndex]: playersUndeployedArmies[currentPlayerIndex] - 1,
     }),
   }),
 });
