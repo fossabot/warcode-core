@@ -33,11 +33,11 @@ Create an index.js file
 const { actionCreators, reduce } = require('warcode-core');
 
 let state = reduce();
-console.log(state.stateKey);
+console.log(state.state);
 state = reduce(state, actionCreators.startMatch(3));
-console.log(state.stateKey);
+console.log(state.state);
 state = reduce(state, actionCreators.selectFirstPlayer(0));
-console.log(state.stateKey);
+console.log(state.state);
 \`\`\`
 
 Run it
@@ -72,7 +72,7 @@ const bottom = `# Match Config
 To setup a game match, we need some configuration to define game board and cards.
 
 \`\`\` json
-${fs.readFileSync('data/traditional.json', 'utf-8')}
+${fs.readFileSync('data/default.json', 'utf-8')}
 \`\`\`
   `;
 

@@ -4,10 +4,7 @@ import type { MatchState } from '../MatchState';
 import type { TransitionType } from '../TransitionType';
 import replaceElements from './utils/replaceElements';
 
-export default (
-  config: MatchConfig,
-  { cardOwner, currentPlayerIndex }: MatchState
-): TransitionType => ({
+export default (config: MatchConfig, { cardOwner, currentPlayer }: MatchState): TransitionType => ({
   guard: ({ cardIndex }) =>
     Number.isInteger(cardIndex) &&
     cardIndex >= 0 &&
@@ -15,7 +12,7 @@ export default (
     cardOwner[cardIndex] === undefined,
   reduce: ({ cardIndex }) => ({
     cardOwner: replaceElements(cardOwner, {
-      [cardIndex]: currentPlayerIndex,
+      [cardIndex]: currentPlayer,
     }),
     capturedTerritories: undefined,
   }),

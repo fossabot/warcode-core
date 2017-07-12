@@ -19,10 +19,10 @@ export default ({
     }),
     cardOwner: Array(cards.length).fill(undefined),
     playersUndeployedArmies: Array(playerCount).fill(startingArmiesByPlayers[playerCount]),
-    currentPlayerIndex: -1,
+    currentPlayer: -1,
     tradeCount: 0,
     capturedTerritories: 0,
     activeBattle: undefined,
-    stateKey: STATES.INITIALIZING,
+    state: STATES.INITIALIZING,
   }),
 });

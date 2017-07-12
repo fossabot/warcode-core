@@ -1,5 +1,5 @@
 {
-  "name": "traditional",
+  "name": "default",
   "version": "1.0.0",
   "territories" : [
     ["Alaska",0,[1,2,37]],

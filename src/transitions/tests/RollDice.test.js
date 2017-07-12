@@ -9,8 +9,8 @@ import testConfig from './config.json';
 
 const config = parseMatchConfig(testConfig);
 const matchExtendedState = {
-  stateKey: STATES.BATTLING,
-  currentPlayerIndex: 0,
+  state: STATES.BATTLING,
+  currentPlayer: 0,
   territories: [
     {
       owner: 1,
@@ -27,8 +27,8 @@ const matchExtendedState = {
   ],
   playersUndeployedArmies: [0, 0],
   activeBattle: {
-    attackingTerritoryIndex: 1,
-    defendingTerritoryIndex: 0,
+    attackingTerritory: 1,
+    defendingTerritory: 0,
     attackingDiceCount: 3,
   },
 };
@@ -52,14 +52,14 @@ test('guard checks player and territory', () => {
 });
 
 test('reduce updates state', () => {
-  const { attackingTerritoryIndex, defendingTerritoryIndex } = matchExtendedState.activeBattle;
+  const { attackingTerritory, defendingTerritory } = matchExtendedState.activeBattle;
   const transition: TransitionType = RollDice(config, matchExtendedState, ACTIONS.ROLL_DICE);
   const action = actionCreators.rollDice([1, 3, 4], [2, 4]);
   const n = { ...matchExtendedState, ...transition.reduce(action) };
-  const attackingArmies = matchExtendedState.territories[attackingTerritoryIndex].armies;
-  const defendingArmies = matchExtendedState.territories[defendingTerritoryIndex].armies;
+  const attackingArmies = matchExtendedState.territories[attackingTerritory].armies;
+  const defendingArmies = matchExtendedState.territories[defendingTerritory].armies;
 
   expect(n.activeBattle).toInclude(matchExtendedState.activeBattle);
-  expect(n.territories[attackingTerritoryIndex].armies).toBe(attackingArmies - 1);
-  expect(n.territories[defendingTerritoryIndex].armies).toBe(defendingArmies - 1);
+  expect(n.territories[attackingTerritory].armies).toBe(attackingArmies - 1);
+  expect(n.territories[defendingTerritory].armies).toBe(defendingArmies - 1);
 });

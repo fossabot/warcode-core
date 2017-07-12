@@ -9,6 +9,6 @@ export default (config: MatchConfig, { playersUndeployedArmies }: MatchState): T
     firstPlayerIndex >= 0 &&
     firstPlayerIndex < playersUndeployedArmies.length,
   reduce: ({ firstPlayerIndex }) => ({
-    currentPlayerIndex: firstPlayerIndex,
+    currentPlayer: firstPlayerIndex,
   }),
 });

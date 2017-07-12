@@ -8,10 +8,10 @@ import actionCreators from '../../actionCreators';
 import testConfig from './config.json';
 
 const config = parseMatchConfig(testConfig);
-const currentPlayerIndex = 0;
+const currentPlayer = 0;
 const matchExtendedState = {
-  stateKey: STATES.BATTLING,
-  currentPlayerIndex,
+  state: STATES.BATTLING,
+  currentPlayer,
   territories: [
     {
       owner: 1,
@@ -27,7 +27,7 @@ const matchExtendedState = {
     },
   ],
   playersUndeployedArmies: [0, 0],
-  cardOwner: Array(6).fill(currentPlayerIndex),
+  cardOwner: Array(6).fill(currentPlayer),
 };
 
 test('guard checks capture parameters', () => {
@@ -54,5 +54,5 @@ test('reduce updates state', () => {
   expect(n.cardOwner[0]).toBe(null);
   expect(n.cardOwner[1]).toBe(null);
   expect(n.cardOwner[2]).toBe(null);
-  expect(n.cardOwner[3]).toBe(matchExtendedState.currentPlayerIndex);
+  expect(n.cardOwner[3]).toBe(matchExtendedState.currentPlayer);
 });

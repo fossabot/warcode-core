@@ -8,7 +8,7 @@ import actionCreators from '../../actionCreators';
 
 const config = parseMatchConfig();
 const matchExtendedState = {
-  stateKey: STATES.INITIALIZING,
+  state: STATES.INITIALIZING,
 };
 
 test('guard validates player count', () => {
@@ -41,7 +41,7 @@ test('reduce creates valid initial state', () => {
   expect(n.playersUndeployedArmies.length).toBe(playerCount);
   expect(n.playersUndeployedArmies[0]).toBe(config.startingArmiesByPlayers[playerCount]);
 
-  expect(n.currentPlayerIndex).toBe(-1);
+  expect(n.currentPlayer).toBe(-1);
   expect(n.tradeCount).toBe(0);
   expect(n.capturedTerritories).toBe(0);
 });

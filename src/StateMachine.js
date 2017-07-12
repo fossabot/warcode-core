@@ -2,18 +2,18 @@ import { STATES } from './constants';
 import { getTransition } from './transitions/';
 
 const intialState = {
-  stateKey: STATES.INITIALIZING,
+  state: STATES.INITIALIZING,
   territories: [],
   cardOwner: [],
   playersUndeployedArmies: [],
-  currentPlayerIndex: -1,
+  currentPlayer: -1,
   tradeCount: 0,
   capturedTerritories: 0,
 };
 
 const reduce = (matchConfig, extendedState = intialState, action = {}, ttl = 10) => {
   if (ttl < 1) {
-    // console.error(`state machine entered a loop ${extendedState.stateKey}`);
+    // console.error(`state machine entered a loop ${extendedState.state}`);
     return extendedState;
   }
 
@@ -28,7 +28,7 @@ const reduce = (matchConfig, extendedState = intialState, action = {}, ttl = 10)
   const nextState = {
     ...extendedState, // start with base state
     ...transition.reduce(action), // apply transition updates
-    ...{ stateKey: transition.to }, // set the stateKey
+    ...{ state: transition.to }, // set the state
   };
 
   return reduce(matchConfig, nextState, action, ttl - 1);

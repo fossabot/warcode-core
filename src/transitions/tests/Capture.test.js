@@ -9,8 +9,8 @@ import testConfig from './config.json';
 
 const config = parseMatchConfig(testConfig);
 const matchExtendedState = {
-  stateKey: STATES.BATTLING,
-  currentPlayerIndex: 0,
+  state: STATES.BATTLING,
+  currentPlayer: 0,
   territories: [
     {
       owner: 1,
@@ -27,8 +27,8 @@ const matchExtendedState = {
   ],
   playersUndeployedArmies: [0, 0],
   activeBattle: {
-    attackingTerritoryIndex: 1,
-    defendingTerritoryIndex: 0,
+    attackingTerritory: 1,
+    defendingTerritory: 0,
     attackingDiceCount: 3,
   },
 };
@@ -50,14 +50,14 @@ test('guard checks capture parameters', () => {
 });
 
 test('reduce updates state', () => {
-  const { attackingTerritoryIndex, defendingTerritoryIndex } = matchExtendedState.activeBattle;
+  const { attackingTerritory, defendingTerritory } = matchExtendedState.activeBattle;
   const transition: TransitionType = Capture(config, matchExtendedState, ACTIONS.CAPTURE);
   const armiesToMove = 3;
   const action = actionCreators.capture(armiesToMove);
   const n = transition.reduce(action);
-  const attackingArmies = matchExtendedState.territories[attackingTerritoryIndex].armies;
+  const attackingArmies = matchExtendedState.territories[attackingTerritory].armies;
 
   expect(n.activeBattle).toNotExist();
-  expect(n.territories[attackingTerritoryIndex].armies).toBe(attackingArmies - armiesToMove);
-  expect(n.territories[defendingTerritoryIndex].armies).toBe(armiesToMove);
+  expect(n.territories[attackingTerritory].armies).toBe(attackingArmies - armiesToMove);
+  expect(n.territories[defendingTerritory].armies).toBe(armiesToMove);
 });

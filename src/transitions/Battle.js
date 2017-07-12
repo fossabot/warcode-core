@@ -5,25 +5,25 @@ import type { TransitionType } from '../TransitionType';
 
 export default (
   { edges }: MatchConfig,
-  { territories, currentPlayerIndex }: MatchState
+  { territories, currentPlayer }: MatchState
 ): TransitionType => ({
-  guard: ({ attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount }) =>
-    Number.isInteger(attackingTerritoryIndex) &&
-    attackingTerritoryIndex >= 0 &&
-    attackingTerritoryIndex < territories.length &&
-    territories[attackingTerritoryIndex].owner === currentPlayerIndex &&
-    territories[attackingTerritoryIndex].armies > 1 &&
-    Number.isInteger(defendingTerritoryIndex) &&
-    defendingTerritoryIndex >= 0 &&
-    defendingTerritoryIndex < territories.length &&
-    territories[defendingTerritoryIndex].owner !== currentPlayerIndex &&
-    edges.some(([a, d]) => a === attackingTerritoryIndex && d === defendingTerritoryIndex) &&
+  guard: ({ attackingTerritory, defendingTerritory, attackingDiceCount }) =>
+    Number.isInteger(attackingTerritory) &&
+    attackingTerritory >= 0 &&
+    attackingTerritory < territories.length &&
+    territories[attackingTerritory].owner === currentPlayer &&
+    territories[attackingTerritory].armies > 1 &&
+    Number.isInteger(defendingTerritory) &&
+    defendingTerritory >= 0 &&
+    defendingTerritory < territories.length &&
+    territories[defendingTerritory].owner !== currentPlayer &&
+    edges.some(([a, d]) => a === attackingTerritory && d === defendingTerritory) &&
     attackingDiceCount >= 1 &&
-    attackingDiceCount <= Math.min(3, territories[attackingTerritoryIndex].armies - 1),
-  reduce: ({ attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount }) => ({
+    attackingDiceCount <= Math.min(3, territories[attackingTerritory].armies - 1),
+  reduce: ({ attackingTerritory, defendingTerritory, attackingDiceCount }) => ({
     activeBattle: {
-      attackingTerritoryIndex,
-      defendingTerritoryIndex,
+      attackingTerritory,
+      defendingTerritory,
       attackingDiceCount,
     },
   }),

@@ -213,24 +213,24 @@ function placeNewArmies(
  * may only roll two dice.
  *
  * @summary Select a territory to attack, neighboring defending territory, and dice to roll
- * @param attackingTerritoryIndex - index of attacking territory
- * @param defendingTerritoryIndex - index of defending territory
+ * @param attackingTerritory - index of attacking territory
+ * @param defendingTerritory - index of defending territory
  * @param attackingDiceCount - number of dice to be rolled by attacker
  */
 function battle(
-  attackingTerritoryIndex: number,
-  defendingTerritoryIndex: number,
+  attackingTerritory: number,
+  defendingTerritory: number,
   attackingDiceCount: number
 ): {
   type: string,
-  attackingTerritoryIndex: number,
-  defendingTerritoryIndex: number,
+  attackingTerritory: number,
+  defendingTerritory: number,
   attackingDiceCount: number,
 } {
   return {
     type: ACTIONS.BATTLE,
-    attackingTerritoryIndex,
-    defendingTerritoryIndex,
+    attackingTerritory,
+    defendingTerritory,
     attackingDiceCount,
   };
 }

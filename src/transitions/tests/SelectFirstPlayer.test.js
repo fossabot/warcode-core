@@ -8,7 +8,7 @@ import actionCreators from '../../actionCreators';
 
 const config = parseMatchConfig();
 const matchExtendedState = {
-  stateKey: STATES.SELECT_FIRST_PLAYER,
+  state: STATES.SELECT_FIRST_PLAYER,
   playersUndeployedArmies: [1, 0],
 };
 
@@ -42,5 +42,5 @@ test('reduce creates valid initial state', () => {
   const action = actionCreators.selectFirstPlayer(firstPlayerIndex);
   const n = transition.reduce(action);
 
-  expect(n.currentPlayerIndex).toBe(firstPlayerIndex);
+  expect(n.currentPlayer).toBe(firstPlayerIndex);
 });

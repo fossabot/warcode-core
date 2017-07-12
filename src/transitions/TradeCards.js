@@ -6,16 +6,16 @@ import replaceElements from './utils/replaceElements';
 
 export default (
   { cards, cardOccupiedTerritoryReward }: MatchConfig,
-  { cardOwner, territories, currentPlayerIndex, playersUndeployedArmies, tradeCount }: MatchState
+  { cardOwner, territories, currentPlayer, playersUndeployedArmies, tradeCount }: MatchState
 ): TransitionType => ({
   guard: ({ i, j, k }) => {
     const isValidIndices = x => x >= 0 && x < cards.length;
     const areValidIndices = isValidIndices(i) && isValidIndices(j) && isValidIndices(k);
     const areUniqueCards = i !== j && j !== k && i !== k;
     const isOwner =
-      cardOwner[i] === currentPlayerIndex &&
-      cardOwner[j] === currentPlayerIndex &&
-      cardOwner[k] === currentPlayerIndex;
+      cardOwner[i] === currentPlayer &&
+      cardOwner[j] === currentPlayer &&
+      cardOwner[k] === currentPlayer;
     if (!areValidIndices || !areUniqueCards || !isOwner) {
       return false;
     }
@@ -38,7 +38,7 @@ export default (
       }
 
       const firstCardTerritoryIndex: number = cards[i][1];
-      if (territories[firstCardTerritoryIndex].owner !== currentPlayerIndex) {
+      if (territories[firstCardTerritoryIndex].owner !== currentPlayer) {
         return {};
       }
 
@@ -54,7 +54,7 @@ export default (
     return {
       tradeCount: count,
       playersUndeployedArmies: replaceElements(playersUndeployedArmies, {
-        [currentPlayerIndex]: playersUndeployedArmies[currentPlayerIndex] + tradeAward,
+        [currentPlayer]: playersUndeployedArmies[currentPlayer] + tradeAward,
       }),
       cardOwner: replaceElements(cardOwner, {
         [i]: null,

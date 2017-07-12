@@ -29,22 +29,22 @@ export default (
     attackerDice.every(d => d >= 1 && d <= 6) &&
     Array.isArray(defenderDice) &&
     defenderDice.length >= 1 &&
-    defenderDice.length <= Math.min(2, territories[activeBattle.defendingTerritoryIndex].armies) &&
+    defenderDice.length <= Math.min(2, territories[activeBattle.defendingTerritory].armies) &&
     defenderDice.every(d => d >= 1 && d <= 6),
   reduce: ({ attackerDice, defenderDice }) => {
-    const attackingTerritoryIndex = activeBattle.attackingTerritoryIndex;
-    const defendingTerritoryIndex = activeBattle.defendingTerritoryIndex;
+    const attackingTerritory = activeBattle.attackingTerritory;
+    const defendingTerritory = activeBattle.defendingTerritory;
     const loses = getLoses(attackerDice, defenderDice);
 
     return {
       territories: replaceElements(territories, {
-        [attackingTerritoryIndex]: {
-          owner: territories[attackingTerritoryIndex].owner,
-          armies: territories[attackingTerritoryIndex].armies - loses.attacker,
+        [attackingTerritory]: {
+          owner: territories[attackingTerritory].owner,
+          armies: territories[attackingTerritory].armies - loses.attacker,
         },
-        [defendingTerritoryIndex]: {
-          owner: territories[defendingTerritoryIndex].owner,
-          armies: territories[defendingTerritoryIndex].armies - loses.defender,
+        [defendingTerritory]: {
+          owner: territories[defendingTerritory].owner,
+          armies: territories[defendingTerritory].armies - loses.defender,
         },
       }),
     };

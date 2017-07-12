@@ -6,18 +6,18 @@ import replaceElements from './utils/replaceElements';
 
 export default (
   { edges }: MatchConfig,
-  { territories, currentPlayerIndex }: MatchState
+  { territories, currentPlayer }: MatchState
 ): TransitionType => ({
   guard: ({ fromTerritoryIndex, toTerritoryIndex, armies }) =>
     Number.isInteger(fromTerritoryIndex) &&
     fromTerritoryIndex >= 0 &&
     fromTerritoryIndex < territories.length &&
-    territories[fromTerritoryIndex].owner === currentPlayerIndex &&
+    territories[fromTerritoryIndex].owner === currentPlayer &&
     territories[fromTerritoryIndex].armies > 1 &&
     Number.isInteger(toTerritoryIndex) &&
     toTerritoryIndex >= 0 &&
     toTerritoryIndex < territories.length &&
-    territories[toTerritoryIndex].owner === currentPlayerIndex &&
+    territories[toTerritoryIndex].owner === currentPlayer &&
     edges.some(([a, b]) => a === fromTerritoryIndex && b === toTerritoryIndex) &&
     armies >= 1 &&
     armies < territories[fromTerritoryIndex].armies,

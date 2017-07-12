@@ -28,11 +28,11 @@ test('test transitions through initial games setup moves', () => {
     // TODO - foritify
   ];
 
-  actionsAndExpectations.reduce((state, [action, expectedStateKey, currentPlayerIndex]) => {
+  actionsAndExpectations.reduce((state, [action, expectedStateKey, currentPlayer]) => {
     const nextState = stateMachine.reduce(state, action);
-    expect(nextState.stateKey).toEqual(expectedStateKey);
-    if (Number.isInteger(currentPlayerIndex)) {
-      expect(nextState.currentPlayerIndex).toEqual(currentPlayerIndex);
+    expect(nextState.state).toEqual(expectedStateKey);
+    if (Number.isInteger(currentPlayer)) {
+      expect(nextState.currentPlayer).toEqual(currentPlayer);
     }
     return nextState;
   }, stateMachine.reduce());
@@ -46,7 +46,7 @@ test('reducer ignores invalid actions', () => {
 
   actionsAndExpectations.reduce((state, [action, expectedStateKey]) => {
     const nextState = stateMachine.reduce(state, action);
-    expect(nextState.stateKey).toEqual(expectedStateKey);
+    expect(nextState.state).toEqual(expectedStateKey);
     return nextState;
   }, stateMachine.reduce());
 });

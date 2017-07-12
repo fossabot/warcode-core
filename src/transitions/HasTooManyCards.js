@@ -8,12 +8,12 @@ import type { TransitionType } from '../TransitionType';
  */
 export default function HasTooManyCards(
   config: MatchConfig,
-  { cardOwner, territories, currentPlayerIndex }: MatchState
+  { cardOwner, territories, currentPlayer }: MatchState
 ): TransitionType {
   return {
     guard: () =>
-      cardOwner.filter(c => c === currentPlayerIndex).length > 5 &&
-      territories.some(t => t.owner !== currentPlayerIndex), // hasn't won
+      cardOwner.filter(c => c === currentPlayer).length > 5 &&
+      territories.some(t => t.owner !== currentPlayer), // hasn't won
     reduce: () => {},
   };
 }

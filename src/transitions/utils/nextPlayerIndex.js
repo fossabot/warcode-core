@@ -17,9 +17,9 @@ const activePlayerIndicies = ({ playersUndeployedArmies, territories }) =>
 export default function nextPlayerIndex({
   playersUndeployedArmies,
   territories,
-  currentPlayerIndex,
+  currentPlayer,
 }: MatchState) {
   const activePlayers = activePlayerIndicies({ playersUndeployedArmies, territories });
-  const i = activePlayers.indexOf(currentPlayerIndex);
+  const i = activePlayers.indexOf(currentPlayer);
   return activePlayers[i + 1 < activePlayers.length ? i + 1 : 0];
 }

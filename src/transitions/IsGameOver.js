@@ -8,10 +8,10 @@ import type { TransitionType } from '../TransitionType';
  */
 export default function IsGameOver(
   config: MatchConfig,
-  { territories, currentPlayerIndex }: MatchState
+  { territories, currentPlayer }: MatchState
 ): TransitionType {
   return {
-    guard: () => territories.every(t => t.owner === currentPlayerIndex),
+    guard: () => territories.every(t => t.owner === currentPlayer),
     reduce: () => {},
   };
 }

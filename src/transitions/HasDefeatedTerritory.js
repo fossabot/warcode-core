@@ -11,7 +11,7 @@ export default function HasDefeatedTerritory(
   { territories, activeBattle }: MatchState
 ): TransitionType {
   return {
-    guard: () => !!activeBattle && territories[activeBattle.defendingTerritoryIndex].armies === 0,
+    guard: () => !!activeBattle && territories[activeBattle.defendingTerritory].armies === 0,
     reduce: () => {},
   };
 }

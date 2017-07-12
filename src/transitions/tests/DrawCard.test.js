@@ -8,10 +8,10 @@ import actionCreators from '../../actionCreators';
 import testConfig from './config.json';
 
 const config = parseMatchConfig(testConfig);
-const currentPlayerIndex = 0;
+const currentPlayer = 0;
 const matchExtendedState = {
-  stateKey: STATES.BATTLING,
-  currentPlayerIndex,
+  state: STATES.BATTLING,
+  currentPlayer,
   territories: [
     {
       owner: 1,
@@ -53,6 +53,6 @@ test('reduce updates state', () => {
   const action = actionCreators.drawRandomCard(cardIndex);
   const n = transition.reduce(action);
 
-  expect(n.cardOwner[cardIndex]).toBe(matchExtendedState.currentPlayerIndex);
+  expect(n.cardOwner[cardIndex]).toBe(matchExtendedState.currentPlayer);
   expect(n.cardOwner[0]).toBe(undefined);
 });

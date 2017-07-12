@@ -8,8 +8,8 @@ import actionCreators from '../../actionCreators';
 
 const config = parseMatchConfig();
 const matchExtendedState = {
-  stateKey: STATES.PLACING_NEW_ARMIES,
-  currentPlayerIndex: 0,
+  state: STATES.PLACING_NEW_ARMIES,
+  currentPlayer: 0,
   territories: [
     {
       owner: 1,
@@ -56,13 +56,13 @@ test('reduce updates player and territory', () => {
   );
   const action = actionCreators.placeNewArmies(territoryIndex, armies);
   const n = transition.reduce(action);
-  const currentPlayerIndex = matchExtendedState.currentPlayerIndex;
+  const currentPlayer = matchExtendedState.currentPlayer;
 
   expect(n.territories[territoryIndex].armies).toBe(
     matchExtendedState.territories[territoryIndex].armies + armies
   );
-  expect(n.playersUndeployedArmies[currentPlayerIndex]).toBe(
-    matchExtendedState.playersUndeployedArmies[currentPlayerIndex] - armies
+  expect(n.playersUndeployedArmies[currentPlayer]).toBe(
+    matchExtendedState.playersUndeployedArmies[currentPlayer] - armies
   );
   expect(n.playersUndeployedArmies[1]).toBe(matchExtendedState.playersUndeployedArmies[1]);
 });

@@ -10,10 +10,10 @@ import actionCreators from '../../actionCreators';
 import testConfig from './config.json';
 
 const config: MatchConfig = parseMatchConfig(testConfig);
-const currentPlayerIndex = 0;
+const currentPlayer = 0;
 const matchExtendedState: MatchState = {
-  stateKey: STATES.BATTLING,
-  currentPlayerIndex,
+  state: STATES.BATTLING,
+  currentPlayer,
   territories: [
     {
       owner: 1,
@@ -29,7 +29,7 @@ const matchExtendedState: MatchState = {
     },
   ],
   playersUndeployedArmies: [0, 0],
-  cardOwner: Array(5).fill(currentPlayerIndex),
+  cardOwner: Array(5).fill(currentPlayer),
   capturedTerritories: 0,
   tradeCount: 0,
   activeBattle: undefined,
@@ -46,5 +46,5 @@ test('reduce updates state', () => {
   const action = actionCreators.endTrade();
   const n: MatchState = { ...matchExtendedState, ...transition.reduce(action) };
 
-  expect(n.stateKey).toBe(STATES.BATTLING);
+  expect(n.state).toBe(STATES.BATTLING);
 });

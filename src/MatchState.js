@@ -10,7 +10,7 @@
  * @property capturedTerritories - number of territories captured by player this turn
  */
 export type MatchState = {
-  stateKey: string,
+  state: string,
   territories: Array<{
     owner: ?number,
     armies: number,
@@ -20,9 +20,9 @@ export type MatchState = {
   tradeCount: number,
   capturedTerritories: number,
   activeBattle: ?{
-    attackingTerritoryIndex: number,
-    defendingTerritoryIndex: number,
+    attackingTerritory: number,
+    defendingTerritory: number,
     attackingDiceCount: number,
   },
-  currentPlayerIndex: number,
+  currentPlayer: number,
 };

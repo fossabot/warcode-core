@@ -6,27 +6,27 @@ import replaceElements from './utils/replaceElements';
 
 export default (
   config: MatchConfig,
-  { territories, capturedTerritories, activeBattle, currentPlayerIndex }: MatchState
+  { territories, capturedTerritories, activeBattle, currentPlayer }: MatchState
 ): TransitionType => ({
   guard: ({ armies }) =>
     !!activeBattle &&
     Number.isInteger(armies) &&
     armies >= activeBattle.attackingDiceCount &&
-    armies < territories[activeBattle.attackingTerritoryIndex].armies,
+    armies < territories[activeBattle.attackingTerritory].armies,
   reduce: ({ armies }) => {
     if (!activeBattle) {
       return {};
     }
-    const { attackingTerritoryIndex, defendingTerritoryIndex } = activeBattle;
+    const { attackingTerritory, defendingTerritory } = activeBattle;
 
     return {
       territories: replaceElements(territories, {
-        [attackingTerritoryIndex]: {
-          owner: territories[attackingTerritoryIndex].owner,
-          armies: territories[attackingTerritoryIndex].armies - armies,
+        [attackingTerritory]: {
+          owner: territories[attackingTerritory].owner,
+          armies: territories[attackingTerritory].armies - armies,
         },
-        [defendingTerritoryIndex]: {
-          owner: currentPlayerIndex,
+        [defendingTerritory]: {
+          owner: currentPlayer,
           armies,
         },
       }),

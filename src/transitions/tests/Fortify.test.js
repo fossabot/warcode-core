@@ -9,8 +9,8 @@ import testConfig from './config.json';
 
 const config = parseMatchConfig(testConfig);
 const matchExtendedState = {
-  stateKey: STATES.BATTLING,
-  currentPlayerIndex: 0,
+  state: STATES.BATTLING,
+  currentPlayer: 0,
   territories: [
     {
       owner: 1,

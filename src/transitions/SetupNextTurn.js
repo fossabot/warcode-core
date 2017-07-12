@@ -41,7 +41,7 @@ function countUndeployedArmies(config, extendedState, playerIndex) {
  * * The sum of armies awarded for each continent the player controls
  *
  * The match configuration defines the awards for each continent. For example,
- * the traditional rules use the following awards.
+ * the default rules use the following awards.
  *
  * | Continent      | Award |
  * | :------------- | ----- |
@@ -62,7 +62,7 @@ export default function SetupNextTurn(
   return {
     guard: undefined,
     reduce: () => ({
-      currentPlayerIndex: nextPlayer,
+      currentPlayer: nextPlayer,
       playersUndeployedArmies: replaceElements(extendedState.playersUndeployedArmies, {
         [nextPlayer]: countUndeployedArmies(config, extendedState, nextPlayer),
       }),

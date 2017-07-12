@@ -5,7 +5,7 @@ import { ACTIONS, STATES, PSEUDOSTATES } from '../../constants';
 // import parseMatchConfig from '../../MatchConfig';
 
 // array contiain unqiue entries for each unique state and pseudostate value in game
-const stateKeys = Array.from(
+const states = Array.from(
   new Set([...transitions.map(([from]) => from), ...transitions.map(([, to]) => to)])
 );
 
@@ -15,20 +15,20 @@ test('transition states are valid and cover all states', () => {
   );
 
   // Arrays of state keys from graph and contsants should have same values, though order may vary
-  expect(stateKeys).toEqual(expect.arrayContaining(expectedStateKeys));
-  expect(expectedStateKeys).toEqual(expect.arrayContaining(stateKeys));
+  expect(states).toEqual(expect.arrayContaining(expectedStateKeys));
+  expect(expectedStateKeys).toEqual(expect.arrayContaining(states));
 });
 
 test('single initial state for state machine', () => {
   const stateHasInbound = new Set(transitions.map(([, to]) => to));
-  const difference = new Set([...stateKeys].filter(x => !stateHasInbound.has(x)));
+  const difference = new Set([...states].filter(x => !stateHasInbound.has(x)));
   expect(difference.size).toBe(1);
 });
 
 test('single final state', () => {
   // final states no outbound transitions
   const statesWithOutbound = new Set(transitions.map(([from]) => from)).size;
-  const allStates = stateKeys.length;
+  const allStates = states.length;
   expect(allStates - statesWithOutbound).toBe(1);
 });
 

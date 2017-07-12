@@ -1,5 +1,5 @@
 // @flow
-import traditionalConfig from '../data/traditional.json';
+import defaultConfig from '../data/default.json';
 
 export type MatchConfig = {
   name: string,
@@ -16,7 +16,7 @@ export type MatchConfig = {
   edges: Array<[number, number]>,
 };
 
-export default (config: MatchConfig = traditionalConfig): MatchConfig => {
+export default (config: MatchConfig = defaultConfig): MatchConfig => {
   // TODO: validate the configs graph, cards, etc
   // TODO: document this reducer
   const reduce = (acc, [name, continentIndex, neighborIndicies], territoryIndex) =>

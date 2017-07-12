@@ -8,10 +8,10 @@ import type { TransitionType } from '../TransitionType';
  */
 export default function HasNoCards(
   config: MatchConfig,
-  { cardOwner, currentPlayerIndex }: MatchState
+  { cardOwner, currentPlayer }: MatchState
 ): TransitionType {
   return {
-    guard: () => cardOwner.every(o => o !== currentPlayerIndex),
+    guard: () => cardOwner.every(o => o !== currentPlayer),
     reduce: () => {},
   };
 }

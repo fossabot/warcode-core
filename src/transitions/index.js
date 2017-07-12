@@ -65,7 +65,7 @@ export const transitions = [
 export const getTransition = (config, extendedState, action) => {
   // get all transitions leaving the current state
   const fromCurrentState = transitions
-    .filter(([from]) => from === extendedState.stateKey)
+    .filter(([from]) => from === extendedState.state)
     .map(([from, to, t, actionType]) => {
       const { guard, reduce } = t(config, extendedState, action);
       return { from, to, actionType, guard, reduce };

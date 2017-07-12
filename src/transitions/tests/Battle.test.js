@@ -9,8 +9,8 @@ import testConfig from './config.json';
 
 const config = parseMatchConfig(testConfig);
 const matchExtendedState = {
-  stateKey: STATES.BATTLING,
-  currentPlayerIndex: 0,
+  state: STATES.BATTLING,
+  currentPlayer: 0,
   territories: [
     {
       owner: 1,
@@ -44,24 +44,20 @@ test('guard checks player and territory', () => {
 });
 
 test('reduce updates state', () => {
-  const attackingTerritoryIndex = 1;
-  const defendingTerritoryIndex = 0;
+  const attackingTerritory = 1;
+  const defendingTerritory = 0;
   const attackingDiceCount = 3;
   const transition: TransitionType = Battle(config, matchExtendedState, ACTIONS.BATTLE);
-  const action = actionCreators.battle(
-    attackingTerritoryIndex,
-    defendingTerritoryIndex,
-    attackingDiceCount
-  );
+  const action = actionCreators.battle(attackingTerritory, defendingTerritory, attackingDiceCount);
   const n = { ...matchExtendedState, ...transition.reduce(action) };
 
   expect(n.activeBattle)
     .toExist()
-    .toInclude({ attackingTerritoryIndex, defendingTerritoryIndex, attackingDiceCount });
-  expect(n.territories[attackingTerritoryIndex]).toInclude(
-    matchExtendedState.territories[attackingTerritoryIndex]
+    .toInclude({ attackingTerritory, defendingTerritory, attackingDiceCount });
+  expect(n.territories[attackingTerritory]).toInclude(
+    matchExtendedState.territories[attackingTerritory]
   );
-  expect(n.territories[defendingTerritoryIndex]).toInclude(
-    matchExtendedState.territories[defendingTerritoryIndex]
+  expect(n.territories[defendingTerritory]).toInclude(
+    matchExtendedState.territories[defendingTerritory]
   );
 });
