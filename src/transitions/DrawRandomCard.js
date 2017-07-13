@@ -14,6 +14,6 @@ export default (config: MatchConfig, { cardOwner, currentPlayer }: MatchState): 
     cardOwner: replaceElements(cardOwner, {
       [cardIndex]: currentPlayer,
     }),
-    capturedTerritories: undefined,
+    captured: undefined,
   }),
 });

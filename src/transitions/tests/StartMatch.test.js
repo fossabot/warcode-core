@@ -42,6 +42,6 @@ test('reduce creates valid initial state', () => {
   expect(n.playersUndeployedArmies[0]).toBe(config.startingArmiesByPlayers[playerCount]);
 
   expect(n.currentPlayer).toBe(-1);
-  expect(n.tradeCount).toBe(0);
-  expect(n.capturedTerritories).toBe(0);
+  expect(n.trades).toBe(0);
+  expect(n.captured).toBe(0);
 });

@@ -9,10 +9,10 @@ import type { TransitionType } from '../TransitionType';
  */
 export default function HasEarnedCard(
   config: MatchConfig,
-  { cardOwner, capturedTerritories }: MatchState
+  { cardOwner, captured }: MatchState
 ): TransitionType {
   return {
-    guard: () => capturedTerritories > 0 && cardOwner.some(owner => owner !== undefined),
+    guard: () => captured > 0 && cardOwner.some(owner => owner !== undefined),
     reduce: () => {},
   };
 }

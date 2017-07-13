@@ -6,7 +6,7 @@ import replaceElements from './utils/replaceElements';
 
 export default (
   { cards, cardOccupiedTerritoryReward }: MatchConfig,
-  { cardOwner, territories, currentPlayer, playersUndeployedArmies, tradeCount }: MatchState
+  { cardOwner, territories, currentPlayer, playersUndeployedArmies, trades }: MatchState
 ): TransitionType => ({
   guard: ({ i, j, k }) => {
     const isValidIndices = x => x >= 0 && x < cards.length;
@@ -29,7 +29,7 @@ export default (
     return isSameType || areDifferentTypes || containsWildCard;
   },
   reduce: ({ i, j, k }) => {
-    const count = tradeCount + 1;
+    const count = trades + 1;
     const tradeAward = count <= 5 ? (count + 1) * 2 : (count - 3) * 5;
 
     const territoryUpdate = (() => {
@@ -52,7 +52,7 @@ export default (
     })();
 
     return {
-      tradeCount: count,
+      trades: count,
       playersUndeployedArmies: replaceElements(playersUndeployedArmies, {
         [currentPlayer]: playersUndeployedArmies[currentPlayer] + tradeAward,
       }),

@@ -6,7 +6,7 @@ import replaceElements from './utils/replaceElements';
 
 export default (
   config: MatchConfig,
-  { territories, capturedTerritories, activeBattle, currentPlayer }: MatchState
+  { territories, captured, activeBattle, currentPlayer }: MatchState
 ): TransitionType => ({
   guard: ({ armies }) =>
     !!activeBattle &&
@@ -30,7 +30,7 @@ export default (
           armies,
         },
       }),
-      capturedTerritories: capturedTerritories + 1,
+      captured: captured + 1,
       activeBattle: undefined,
     };
   },

@@ -7,8 +7,8 @@ const intialState = {
   cardOwner: [],
   playersUndeployedArmies: [],
   currentPlayer: -1,
-  tradeCount: 0,
-  capturedTerritories: 0,
+  trades: 0,
+  captured: 0,
 };
 
 const reduce = (matchConfig, extendedState = intialState, action = {}, ttl = 10) => {

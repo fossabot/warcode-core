@@ -30,8 +30,8 @@ const matchExtendedState: MatchState = {
   ],
   playersUndeployedArmies: [0, 0],
   cardOwner: Array(5).fill(currentPlayer),
-  capturedTerritories: 0,
-  tradeCount: 0,
+  captured: 0,
+  trades: 0,
   activeBattle: undefined,
 };
 

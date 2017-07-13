@@ -66,7 +66,7 @@ export default function SetupNextTurn(
       playersUndeployedArmies: replaceElements(extendedState.playersUndeployedArmies, {
         [nextPlayer]: countUndeployedArmies(config, extendedState, nextPlayer),
       }),
-      capturedTerritories: 0,
+      captured: 0,
     }),
   };
 }
