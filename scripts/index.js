@@ -76,15 +76,21 @@ ${fs.readFileSync('data/default.json', 'utf-8')}
 \`\`\`
   `;
 
+const matchState = matchState => {
+  console.log(matchState);
+  return '';
+}
+
 const transitionsWithActions = transitions.filter(([, , , a]) => !!a);
 
 Promise.all([
   getSVG(),
   documentation.build('src/actionCreators.js', { extension: 'es6' }),
   documentation.build('src/transitions/*.js', { extension: 'es6' }),
+  documentation.build('src/MatchState.js', { extension: 'es6' }),
   Promise.all(transitionsWithActions.map(([from,,, action]) => getSVG(from, { action }))),
 ])
-  .then(([svg, createrDocs, transitionDocs, transitionSVGs]) => {
+  .then(([svg, createrDocs, transitionDocs, matchState, transitionSVGs]) => {
     const actions = transitionsWithActions
       .map(([,,, action]) => ({
         action,
@@ -112,6 +118,8 @@ Promise.all([
           ...actions,
           '## Other Transitions',
           ...otherTransitionMD,
+          '## State',
+          matchState(matchState),
           bottom,
         ].join('\n');
 
