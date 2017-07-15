@@ -78,13 +78,36 @@ ${fs.readFileSync('data/default.json', 'utf-8')}
 
 const transitionsWithActions = transitions.filter(([, , , a]) => !!a);
 
+const readMatchState = state => {
+  const fields = state.properties.map(p => p.name);
+  const rows = state.tags
+    .filter(t => fields.includes(t.name))
+    .map(t => `| ${t.name} | ${t.description} |`);
+  const startLine = state.context.loc.start.line;
+  const endLine = state.context.loc.end.line;
+
+  return `## Match State
+${getDescription(state.description)}
+
+| Field | Description |
+| :---- | :---------- |
+${rows.join('\n')}
+
+\`\`\` json
+{
+${fs.readFileSync('src/MatchState.js', 'utf-8').split('\n').slice(startLine, endLine).join('\n')}
+\`\`\`
+`;
+};
+
 Promise.all([
   getSVG(),
   documentation.build('src/actionCreators.js', { extension: 'es6' }),
   documentation.build('src/transitions/*.js', { extension: 'es6' }),
   Promise.all(transitionsWithActions.map(([from,,, action]) => getSVG(from, { action }))),
+  documentation.build('src/MatchState.js', { extension: 'es6' }),
 ])
-  .then(([svg, createrDocs, transitionDocs, transitionSVGs]) => {
+  .then(([svg, createrDocs, transitionDocs, transitionSVGs, [state]]) => {
     const actions = transitionsWithActions
       .map(([,,, action]) => ({
         action,
@@ -112,6 +135,7 @@ Promise.all([
           ...actions,
           '## Other Transitions',
           ...otherTransitionMD,
+          readMatchState(state),
           bottom,
         ].join('\n');
 

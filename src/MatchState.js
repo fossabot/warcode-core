@@ -4,7 +4,7 @@
  * Game state including who is the current player, the armies on each territory,
  * and the cards each player holds.
  *
- * Flat data structure containing mostly integers representing counts and indices.
+ * The flat data structure contains mostly integers representing counts and indices.
  *
  * @property state - the state of the game, such as "Battling"
  * @property territories - array with an entry for each territory on the board
