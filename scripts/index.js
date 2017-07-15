@@ -93,7 +93,7 @@ ${getDescription(state.description)}
 | :---- | :---------- |
 ${rows.join('\n')}
 
-
+ 
 \`\`\`
 {
 ${fs.readFileSync('src/MatchState.js', 'utf-8').split('\n').slice(startLine, endLine).join('\n')}
