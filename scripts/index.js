@@ -84,7 +84,7 @@ const readMatchState = state => {
     .filter(t => fields.includes(t.name))
     .map(t => `| ${t.name} | ${t.description} |`);
   const startLine = state.context.loc.start.line;
-  const endLine = state.context.loc.end.line;
+  const endLine = state.context.loc.end.line - 1;
 
   return `## Match State
 ${getDescription(state.description)}
@@ -93,9 +93,11 @@ ${getDescription(state.description)}
 | :---- | :---------- |
 ${rows.join('\n')}
 
-\`\`\` json
+
+\`\`\`
 {
 ${fs.readFileSync('src/MatchState.js', 'utf-8').split('\n').slice(startLine, endLine).join('\n')}
+}
 \`\`\`
 `;
 };
@@ -104,27 +106,29 @@ Promise.all([
   getSVG(),
   documentation.build('src/actionCreators.js', { extension: 'es6' }),
   documentation.build('src/transitions/*.js', { extension: 'es6' }),
-  Promise.all(transitionsWithActions.map(([from,,, action]) => getSVG(from, { action }))),
+  Promise.all(transitionsWithActions.map(([from, , , action]) => getSVG(from, { action }))),
   documentation.build('src/MatchState.js', { extension: 'es6' }),
 ])
   .then(([svg, createrDocs, transitionDocs, transitionSVGs, [state]]) => {
     const actions = transitionsWithActions
-      .map(([,,, action]) => ({
+      .map(([, , , action]) => ({
         action,
         doc: createrDocs.find(d => d.name.toLowerCase() === action.toLowerCase()),
       }))
       .map(({ action, doc }, i) => actionToMarkdown(action, doc, transitionSVGs[i].data));
 
-    const otherTransitions = transitions.filter(([,,t]) => !!t.name);
+    const otherTransitions = transitions.filter(([, , t]) => !!t.name);
 
     // SVGs for transitions
     Promise.all(otherTransitions.map(([from, to]) => getSVG(from, { from, to })))
-      .then((svgos) => {
+      .then(svgos => {
         const otherTransitionMD = otherTransitions.map(([from, to, t], i) => {
           if (!t || !t.name) {
             return '';
           }
-          const text = getDescription(transitionDocs.find(d => d.name.toLowerCase() === t.name.toLowerCase()).description);
+          const text = getDescription(
+            transitionDocs.find(d => d.name.toLowerCase() === t.name.toLowerCase()).description
+          );
           const id = `${from.toLowerCase()}-${to.toLowerCase()}`;
           const svg = svgos[i].data;
           return `### ${from} ⇒ ${to}<a name="${id}"></a>\n${svg}\n\n${text}\n`;
