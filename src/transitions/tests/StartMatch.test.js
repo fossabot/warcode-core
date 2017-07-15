@@ -12,9 +12,9 @@ const matchExtendedState = {
 };
 
 test('guard validates player count', () => {
-  const tryValue = playerCount => {
+  const tryValue = players => {
     const transition: TransitionType = StartMatch(config, matchExtendedState, ACTIONS.START_MATCH);
-    const action = actionCreators.startMatch(playerCount);
+    const action = actionCreators.startMatch(players);
     return transition.guard(action);
   };
 
@@ -26,9 +26,9 @@ test('guard validates player count', () => {
 });
 
 test('reduce creates valid initial state', () => {
-  const playerCount = 5;
+  const players = 5;
   const transtion = new StartMatch(config, matchExtendedState, ACTIONS.START_MATCH);
-  const action = actionCreators.startMatch(playerCount);
+  const action = actionCreators.startMatch(players);
   const n = transtion.reduce(action);
 
   expect(n.territories.length).toBe(config.territories.length);
@@ -38,8 +38,8 @@ test('reduce creates valid initial state', () => {
   expect(n.cardOwner.length).toBe(config.cards.length, 'card length should match');
   expect(n.cardOwner[0]).toNotExist('card should be unowned');
 
-  expect(n.playersUndeployedArmies.length).toBe(playerCount);
-  expect(n.playersUndeployedArmies[0]).toBe(config.startingArmiesByPlayers[playerCount]);
+  expect(n.playersUndeployedArmies.length).toBe(players);
+  expect(n.playersUndeployedArmies[0]).toBe(config.startingArmiesByPlayers[players]);
 
   expect(n.currentPlayer).toBe(-1);
   expect(n.trades).toBe(0);

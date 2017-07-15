@@ -13,13 +13,13 @@ const matchExtendedState = {
 };
 
 test('guard validates first player index', () => {
-  const tryValue = firstPlayerIndex => {
+  const tryValue = firstPlayer => {
     const transition: TransitionType = SelectFirstPlayer(
       config,
       matchExtendedState,
       ACTIONS.SELECT_FIRST_PLAYER
     );
-    const action = actionCreators.selectFirstPlayer(firstPlayerIndex);
+    const action = actionCreators.selectFirstPlayer(firstPlayer);
     return transition.guard(action);
   };
 
@@ -38,9 +38,9 @@ test('reduce creates valid initial state', () => {
     matchExtendedState,
     ACTIONS.SELECT_FIRST_PLAYER
   );
-  const firstPlayerIndex = 0;
-  const action = actionCreators.selectFirstPlayer(firstPlayerIndex);
+  const firstPlayer = 0;
+  const action = actionCreators.selectFirstPlayer(firstPlayer);
   const n = transition.reduce(action);
 
-  expect(n.currentPlayer).toBe(firstPlayerIndex);
+  expect(n.currentPlayer).toBe(firstPlayer);
 });

@@ -28,13 +28,13 @@ const matchExtendedState = {
 };
 
 test('guard validates territory index', () => {
-  const tryValue = territoryIndex => {
+  const tryValue = territory => {
     const transition: TransitionType = OccupyTerritory(
       config,
       matchExtendedState,
       ACTIONS.OCCUPY_TERRITORY
     );
-    const action = actionCreators.occupyTerritory(territoryIndex);
+    const action = actionCreators.occupyTerritory(territory);
     return transition.guard(action);
   };
 
@@ -47,19 +47,19 @@ test('guard validates territory index', () => {
 });
 
 test('reduce updates player and territory', () => {
-  const territoryIndex = 0;
+  const territory = 0;
   const transition: TransitionType = OccupyTerritory(
     config,
     matchExtendedState,
     ACTIONS.OCCUPY_TERRITORY
   );
-  const action = actionCreators.occupyTerritory(territoryIndex);
+  const action = actionCreators.occupyTerritory(territory);
   const n = transition.reduce(action);
   // console.log('matchExtendedState', JSON.stringify(matchExtendedState));
   // console.log('n', JSON.stringify(n));
 
-  expect(n.territories[territoryIndex].owner).toBe(matchExtendedState.currentPlayer);
-  expect(n.territories[territoryIndex].armies).toBe(1);
+  expect(n.territories[territory].owner).toBe(matchExtendedState.currentPlayer);
+  expect(n.territories[territory].armies).toBe(1);
   expect(n.playersUndeployedArmies[matchExtendedState.currentPlayer]).toBe(
     matchExtendedState.playersUndeployedArmies[matchExtendedState.currentPlayer] - 1
   );

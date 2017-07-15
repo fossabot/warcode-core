@@ -10,15 +10,15 @@ export default ({
   cards,
   startingArmiesByPlayers,
 }: MatchConfig): TransitionType => ({
-  guard: ({ playerCount }) =>
-    Number.isInteger(playerCount) && playerCount >= minPlayers && playerCount <= maxPlayers,
-  reduce: ({ playerCount }) => ({
+  guard: ({ players }) =>
+    Number.isInteger(players) && players >= minPlayers && players <= maxPlayers,
+  reduce: ({ players }) => ({
     territories: Array(territories.length).fill({
       owner: undefined,
       armies: 0,
     }),
     cardOwner: Array(cards.length).fill(undefined),
-    playersUndeployedArmies: Array(playerCount).fill(startingArmiesByPlayers[playerCount]),
+    playersUndeployedArmies: Array(players).fill(startingArmiesByPlayers[players]),
     currentPlayer: -1,
     trades: 0,
     captured: 0,

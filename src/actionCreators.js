@@ -14,7 +14,7 @@ import { ACTIONS } from './constants';
  * | 6       | 20     |
  *
  * @summary Start the match.
- * @param playerCount - Number of players. The match settings determine
+ * @param players - Number of players. The match settings determine
  *   the minimum and maximum number of players.
  * @example
  * const { actionCreators, reduce } = require('warcode-core');
@@ -22,10 +22,10 @@ import { ACTIONS } from './constants';
  * let action = actionCreators.startMatch(3);
  * state = reduce(state, action);
  */
-function startMatch(playerCount: number): { type: string, playerCount: number } {
+function startMatch(players: number): { type: string, players: number } {
   return {
     type: ACTIONS.START_MATCH,
-    playerCount,
+    players,
   };
 }
 
@@ -35,7 +35,7 @@ function startMatch(playerCount: number): { type: string, playerCount: number } 
  *
  * @summary Select player to take first move, similarly to each player rolling a die
  * to begin the game.
- * @param firstPlayerIndex - Index of the first player.
+ * @param firstPlayer - Index of the first player.
  * @example
  * const { actionCreators, reduce } = require('warcode-core');
  * let state = reduce();
@@ -44,10 +44,10 @@ function startMatch(playerCount: number): { type: string, playerCount: number } 
  * action = actionCreators.selectFirstPlayer(0);
  * state = reduce(state, action);
  */
-function selectFirstPlayer(firstPlayerIndex: number): { type: string, firstPlayerIndex: number } {
+function selectFirstPlayer(firstPlayer: number): { type: string, firstPlayer: number } {
   return {
     type: ACTIONS.SELECT_FIRST_PLAYER,
-    firstPlayerIndex,
+    firstPlayer,
   };
 }
 
@@ -65,7 +65,7 @@ function selectFirstPlayer(firstPlayerIndex: number): { type: string, firstPlaye
  * * Turn is passed to the next player
  *
  * @summary Select territory to occupy.
- * @param territoryIndex - Index of territory to occupy. It must be unoccupied.
+ * @param territory - Index of territory to occupy. It must be unoccupied.
  * @example
  * const { actionCreators, reduce } = require('warcode-core');
  * let state = reduce();
@@ -73,10 +73,10 @@ function selectFirstPlayer(firstPlayerIndex: number): { type: string, firstPlaye
  * state = reduce(state, actionCreators.selectFirstPlayer(0));
  * state = reduce(state, actionCreators.occupyTerritory(0));
  */
-function occupyTerritory(territoryIndex: number): { type: string, territoryIndex: number } {
+function occupyTerritory(territory: number): { type: string, territory: number } {
   return {
     type: ACTIONS.OCCUPY_TERRITORY,
-    territoryIndex,
+    territory,
   };
 }
 
@@ -89,8 +89,8 @@ function occupyTerritory(territoryIndex: number): { type: string, territoryIndex
  * * The territory armies are incremented
  *
  * @summary Select a territory you own to place an additional army.
- * @param territoryIndex - Index of territory to place an additional army. You must occupy it.
- * @return {{ type: string; territoryIndex; } }
+ * @param territory - Index of territory to place an additional army. You must occupy it.
+ * @return {{ type: string; territory; } }
  * @example
  * const { actionCreators, reduce } = require('warcode-core');
  * let state = reduce();
@@ -101,10 +101,10 @@ function occupyTerritory(territoryIndex: number): { type: string, territoryIndex
  * // ...
  * state = reduce(state, actionCreators.placeAdditionalArmy(0));
  */
-function placeAdditionalArmy(territoryIndex: number): { type: string, territoryIndex: number } {
+function placeAdditionalArmy(territory: number): { type: string, territory: number } {
   return {
     type: ACTIONS.PLACE_ADDITIONAL_ARMY,
-    territoryIndex,
+    territory,
   };
 }
 
@@ -181,20 +181,20 @@ function endTrade(): { type: string } {
  * and from trading cards.
  *
  * @summary Place some undeployed armies on an occupied territory to start the turn
- * @param territoryIndex - index of territory to place new armies
+ * @param territory - index of territory to place new armies
  * @param armies - number of armies to place
  */
 function placeNewArmies(
-  territoryIndex: number,
+  territory: number,
   armies: number
 ): {
   type: string,
-  territoryIndex: number,
+  territory: number,
   armies: number,
 } {
   return {
     type: ACTIONS.PLACE_NEW_ARMIES,
-    territoryIndex,
+    territory,
     armies,
   };
 }
@@ -308,27 +308,27 @@ function capture(armies: number): { type: string, armies: number } {
  *
  * @summary Move armies between two of your adjacent territories before ending your turn.
  *
- * @param fromTerritoryIndex - Index of territory to move armies from. Must
- *   be owned by you, have more than one army, and be adjacent to toTerritoryIndex.
- * @param toTerritoryIndex - Index of territory to move armies to. Must be
- *   owned by you and adjacent to fromTerritoryIndex.
+ * @param fromTerritory - Index of territory to move armies from. Must
+ *   be owned by you, have more than one army, and be adjacent to toTerritory.
+ * @param toTerritory - Index of territory to move armies to. Must be
+ *   owned by you and adjacent to fromTerritory.
  * @param armies - Number of armies to move. You must leave one army behind,
- *   so the number may between one and the number of the armies on fromTerritoryIndex.
+ *   so the number may between one and the number of the armies on fromTerritory.
  */
 function fortify(
-  fromTerritoryIndex: number,
-  toTerritoryIndex: number,
+  fromTerritory: number,
+  toTerritory: number,
   armies: number
 ): {
   type: string,
-  fromTerritoryIndex: number,
-  toTerritoryIndex: number,
+  fromTerritory: number,
+  toTerritory: number,
   armies: number,
 } {
   return {
     type: ACTIONS.FORTIFY,
-    fromTerritoryIndex,
-    toTerritoryIndex,
+    fromTerritory,
+    toTerritory,
     armies,
   };
 }
@@ -347,12 +347,12 @@ function endTurn(): { type: string } {
  * Select a random index of a card for the player to draw from the deck.
  *
  * @summary Select "random" card for player to draw from the deck.
- * @param cardIndex - Index of the card to assign. Card owner must be currently undefined.
+ * @param card - Index of the card to assign. Card owner must be currently undefined.
  */
-function drawRandomCard(cardIndex: number): { type: string, cardIndex: number } {
+function drawRandomCard(card: number): { type: string, card: number } {
   return {
     type: ACTIONS.DRAW_RANDOM_CARD,
-    cardIndex,
+    card,
   };
 }
 

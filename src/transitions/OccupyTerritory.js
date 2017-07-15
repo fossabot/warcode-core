@@ -8,15 +8,15 @@ export default (
   config: MatchConfig,
   { territories, currentPlayer, playersUndeployedArmies }: MatchState
 ): TransitionType => ({
-  guard: ({ territoryIndex }) =>
-    Number.isInteger(territoryIndex) &&
-    territoryIndex >= 0 &&
-    territoryIndex < territories.length &&
-    territories[territoryIndex].owner === undefined &&
-    territories[territoryIndex].armies === 0,
-  reduce: ({ territoryIndex }) => ({
+  guard: ({ territory }) =>
+    Number.isInteger(territory) &&
+    territory >= 0 &&
+    territory < territories.length &&
+    territories[territory].owner === undefined &&
+    territories[territory].armies === 0,
+  reduce: ({ territory }) => ({
     territories: replaceElements(territories, {
-      [territoryIndex]: {
+      [territory]: {
         owner: currentPlayer,
         armies: 1,
       },

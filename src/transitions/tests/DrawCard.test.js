@@ -49,10 +49,10 @@ test('guard checks capture parameters', () => {
 
 test('reduce updates state', () => {
   const transition: TransitionType = DrawRandomCard(config, matchExtendedState);
-  const cardIndex = 1;
-  const action = actionCreators.drawRandomCard(cardIndex);
+  const card = 1;
+  const action = actionCreators.drawRandomCard(card);
   const n = transition.reduce(action);
 
-  expect(n.cardOwner[cardIndex]).toBe(matchExtendedState.currentPlayer);
+  expect(n.cardOwner[card]).toBe(matchExtendedState.currentPlayer);
   expect(n.cardOwner[0]).toBe(undefined);
 });

@@ -4,11 +4,11 @@ import type { MatchState } from '../MatchState';
 import type { TransitionType } from '../TransitionType';
 
 export default (config: MatchConfig, { playersUndeployedArmies }: MatchState): TransitionType => ({
-  guard: ({ firstPlayerIndex }) =>
-    Number.isInteger(firstPlayerIndex) &&
-    firstPlayerIndex >= 0 &&
-    firstPlayerIndex < playersUndeployedArmies.length,
-  reduce: ({ firstPlayerIndex }) => ({
-    currentPlayer: firstPlayerIndex,
+  guard: ({ firstPlayer }) =>
+    Number.isInteger(firstPlayer) &&
+    firstPlayer >= 0 &&
+    firstPlayer < playersUndeployedArmies.length,
+  reduce: ({ firstPlayer }) => ({
+    currentPlayer: firstPlayer,
   }),
 });

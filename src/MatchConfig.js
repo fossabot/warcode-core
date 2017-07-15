@@ -19,8 +19,8 @@ export type MatchConfig = {
 export default (config: MatchConfig = defaultConfig): MatchConfig => {
   // TODO: validate the configs graph, cards, etc
   // TODO: document this reducer
-  const reduce = (acc, [name, continentIndex, neighborIndicies], territoryIndex) =>
-    acc.concat(neighborIndicies.map(neighborIndex => [territoryIndex, neighborIndex]));
+  const reduce = (acc, [name, continentIndex, neighborIndicies], territory) =>
+    acc.concat(neighborIndicies.map(neighborIndex => [territory, neighborIndex]));
 
   return Object.assign({}, config, {
     edges: config.territories.reduce(reduce, []),

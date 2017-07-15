@@ -8,28 +8,28 @@ export default (
   { edges }: MatchConfig,
   { territories, currentPlayer }: MatchState
 ): TransitionType => ({
-  guard: ({ fromTerritoryIndex, toTerritoryIndex, armies }) =>
-    Number.isInteger(fromTerritoryIndex) &&
-    fromTerritoryIndex >= 0 &&
-    fromTerritoryIndex < territories.length &&
-    territories[fromTerritoryIndex].owner === currentPlayer &&
-    territories[fromTerritoryIndex].armies > 1 &&
-    Number.isInteger(toTerritoryIndex) &&
-    toTerritoryIndex >= 0 &&
-    toTerritoryIndex < territories.length &&
-    territories[toTerritoryIndex].owner === currentPlayer &&
-    edges.some(([a, b]) => a === fromTerritoryIndex && b === toTerritoryIndex) &&
+  guard: ({ fromTerritory, toTerritory, armies }) =>
+    Number.isInteger(fromTerritory) &&
+    fromTerritory >= 0 &&
+    fromTerritory < territories.length &&
+    territories[fromTerritory].owner === currentPlayer &&
+    territories[fromTerritory].armies > 1 &&
+    Number.isInteger(toTerritory) &&
+    toTerritory >= 0 &&
+    toTerritory < territories.length &&
+    territories[toTerritory].owner === currentPlayer &&
+    edges.some(([a, b]) => a === fromTerritory && b === toTerritory) &&
     armies >= 1 &&
-    armies < territories[fromTerritoryIndex].armies,
-  reduce: ({ fromTerritoryIndex, toTerritoryIndex, armies }) => ({
+    armies < territories[fromTerritory].armies,
+  reduce: ({ fromTerritory, toTerritory, armies }) => ({
     territories: replaceElements(territories, {
-      [fromTerritoryIndex]: {
-        owner: territories[fromTerritoryIndex].owner,
-        armies: territories[fromTerritoryIndex].armies - armies,
+      [fromTerritory]: {
+        owner: territories[fromTerritory].owner,
+        armies: territories[fromTerritory].armies - armies,
       },
-      [toTerritoryIndex]: {
-        owner: territories[toTerritoryIndex].owner,
-        armies: territories[toTerritoryIndex].armies + armies,
+      [toTerritory]: {
+        owner: territories[toTerritory].owner,
+        armies: territories[toTerritory].armies + armies,
       },
     }),
   }),
