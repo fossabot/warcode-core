@@ -6,6 +6,7 @@ Risk rules engine for browser games, bots, and multi-player game services
 [![Code Climate](https://codeclimate.com/github/matthewspivey/warcode-core/badges/gpa.svg)](https://codeclimate.com/github/matthewspivey/warcode-core)
 [![Test Coverage](https://codeclimate.com/github/matthewspivey/warcode-core/badges/coverage.svg)](https://codeclimate.com/github/matthewspivey/warcode-core/coverage)
 [![Dependency Status](https://gemnasium.com/badges/github.com/matthewspivey/warcode-core.svg)](https://gemnasium.com/github.com/matthewspivey/warcode-core)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fmatthewspivey%2Fwarcode-core.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fmatthewspivey%2Fwarcode-core?ref=badge_shield)
 
 * _Easy to use_ - send play move and state, receive new state
 * _Stateless_ - easily reply each player move
@@ -38,3 +39,7 @@ The design is inspired by the
 
 ### Testing
 Targeting 100% coverage.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fmatthewspivey%2Fwarcode-core.svg?type=large)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fmatthewspivey%2Fwarcode-core?ref=badge_large)
